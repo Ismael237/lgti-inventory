@@ -1,0 +1,43 @@
+{
+  "collection": "stock_snapshot",
+  "field": "unit_price_eur",
+  "type": "decimal",
+  "meta": {
+    "collection": "stock_snapshot",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "unit_price_eur",
+    "group": null,
+    "hidden": false,
+    "interface": "input",
+    "note": null,
+    "options": null,
+    "readonly": false,
+    "required": false,
+    "sort": 5,
+    "special": null,
+    "translations": null,
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "schema": {
+    "name": "unit_price_eur",
+    "table": "stock_snapshot",
+    "data_type": "decimal",
+    "default_value": null,
+    "max_length": null,
+    "numeric_precision": 10,
+    "numeric_scale": 2,
+    "is_nullable": true,
+    "is_unique": false,
+    "is_indexed": false,
+    "is_primary_key": false,
+    "is_generated": false,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "foreign_key_table": null,
+    "foreign_key_column": null
+  }
+}

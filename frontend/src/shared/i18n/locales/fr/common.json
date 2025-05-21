@@ -1,0 +1,638 @@
+{
+  "app": {
+    "title": "Système de gestion",
+    "welcome": "Bienvenue dans l'application"
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "total_products": "Total des produits",
+    "total_categories": "Total des catégories",
+    "total_movements": "Mouvements de stock",
+    "price_simulations": "Simulations de prix",
+    "stock_value": "Valeur totale du stock",
+    "add_product": "Ajouter un produit",
+    "add_movement": "Ajouter un mouvement",
+    "add_simulation": "Ajouter une simulation",
+    "recent_movements": "Mouvements récents",
+    "recent_simulations": "Simulations récentes",
+    "low_stock_products": "Produits en stock faible",
+    "no_recent_movements": "Aucun mouvement récent",
+    "no_recent_simulations": "Aucune simulation récente",
+    "no_low_stock": "Aucun produit en stock faible",
+    "unknown_product": "Produit inconnu",
+    "stock_in": "Entrée de stock",
+    "stock_out": "Sortie de stock",
+    "units": "unités",
+    "no_description": "Pas de description"
+  },
+  "sidebar": {
+    "menu": "Menu",
+    "dashboard": "Tableau de bord",
+    "products": "Produits",
+    "categories": "Catégories",
+    "movements": "Mouvements",
+    "price_simulations": "Simulations de prix"
+  },
+  "nav": {
+    "home": "Accueil",
+    "products": "Produits",
+    "categories": "Catégories",
+    "movements": "Mouvements",
+    "simulations": "Simulations de prix"
+  },
+  "common": {
+    "actions": "Actions",
+    "loading": "Chargement en cours...",
+    "noData": "Aucune donnée disponible",
+    "error": "Une erreur est survenue",
+    "success": "Opération réussie",
+    "warning": "Attention",
+    "info": "Information",
+    "errors": {
+      "id_required": "L'identifiant est requis",
+      "missing_parameters": "Paramètres manquants",
+      "product_id_required": "L'identifiant du produit est requis",
+      "category_id_required": "L'identifiant de la catégorie est requis",
+      "snapshot_event_id_required": "L'identifiant de l'événement de snapshot est requis"
+    },
+    "delete_warning": "Cette action ne peut pas être annulée.",
+    "id": "ID",
+    "created_at": "Créé le",
+    "created_by": "Créé par",
+    "updated_by": "Mis à jour par",
+    "last_updated": "Dernière mise à jour",
+    "status": "Statut",
+    "active": "Actif",
+    "yes": "Oui",
+    "no": "Non",
+    "checking": "Vérification...",
+    "unknown": "Inconnu",
+    "back": "Retour",
+    "system": "Système",
+    "na": "N/A",
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "name": "Nom",
+    "description": "Description",
+    "type": "Type",
+    "time": "Heure",
+    "total": "Total",
+    "notes": "Notes",
+    "inactive": "Inactif",
+    "enabled": "Activé",
+    "disabled": "Désactivé",
+    "none": "Aucun",
+    "all": "Tous",
+    "select": "Sélectionner",
+    "sort": "Trier",
+    "asc": "Croissant",
+    "desc": "Décroissant",
+    "page": "Page",
+    "of": "sur",
+    "items_per_page": "Éléments par page",
+    "first": "Premier",
+    "last": "Dernier",
+    "more": "Plus",
+    "less": "Moins",
+    "not_applicable": "N/A",
+    "never": "Jamais"
+  },
+  "tooltip": {
+    "back_to_previous": "Revenir à la page précédente"
+  },
+  "validation": {
+    "price_simulation": {
+      "scenario_name_required": "Le nom du scénario est requis",
+      "price_not_negative": "Le prix simulé ne peut pas être négatif",
+      "product_required": "Le produit est requis"
+    },
+    "movement": {
+      "type_required": "Le type de mouvement est requis",
+      "quantity_positive": "La quantité doit être supérieure à zéro",
+      "product_required": "Le produit est requis",
+      "price_not_negative": "Le prix unitaire ne peut pas être négatif"
+    },
+    "product": {
+      "reference_required": "La référence est requise",
+      "part_number_numeric": "Le numéro de pièce doit être un nombre",
+      "price_positive": "Le prix unitaire doit être positif"
+    },
+    "category": {
+      "name_required": "Le nom est requis",
+      "parent_required": "La catégorie parente est requise"
+    }
+  },
+  "data_table": {
+    "showing_results": "Affichage de {{startItem}} à {{endItem}} sur {{total}} résultats",
+    "previous": "Précédent",
+    "next": "Suivant"
+  },
+  "components": {
+    "info_tip": {
+      "aria_label": "info"
+    }
+  },
+  "header": {
+    "toggle_sidebar": "Basculer le menu latéral",
+    "toggle_color_mode": "Changer le mode de couleur",
+    "my_profile": "Mon profil",
+    "user_profile": "Profil utilisateur",
+    "user": "Utilisateur",
+    "additional_info": "Informations supplémentaires",
+    "role": "Rôle",
+    "last_login": "Dernière connexion"
+  },
+  "profile": {
+    "language": "Langue",
+    "email": "Email",
+    "role": "Rôle",
+    "last_login": "Dernière connexion",
+    "preferred_language": "Langue préférée",
+    "preferred_theme": "Theme préférée",
+    "not_available": "Non disponible",
+    "info": "Mes informations",
+    "settings": "Paramètres"
+  },
+  "categories": {
+    "list": {
+      "title": "Catégories",
+      "add_category": "Ajouter une catégorie",
+      "view_hierarchy": "Voir la hiérarchie",
+      "no_categories": "Aucune catégorie trouvée",
+      "columns": {
+        "name": "Nom",
+        "parent": "Catégorie parente",
+        "created_at": "Créé le",
+        "created_by": "Créé par"
+      }
+    },
+    "errors": {
+      "load_failed": "Échec du chargement des catégories",
+      "load_single_failed": "Échec du chargement de la catégorie",
+      "create_failed": "Échec de la création de la catégorie",
+      "update_failed": "Échec de la mise à jour de la catégorie",
+      "delete_failed": "Échec de la suppression de la catégorie",
+      "hierarchy_load_failed": "Échec du chargement de la hiérarchie des catégories"
+    },
+    "success": {
+      "loaded": "Catégories chargées avec succès",
+      "created": "Catégorie créée avec succès",
+      "updated": "Catégorie mise à jour avec succès",
+      "deleted": "Catégorie supprimée avec succès"
+    },
+    "dialog": {
+      "add_title": "Ajouter une catégorie",
+      "edit_title": "Modifier la catégorie",
+      "delete_title": "Supprimer la catégorie",
+      "details_title": "Détails de la catégorie",
+      "hierarchy_title": "Hiérarchie des catégories",
+      "export_title": "Exporter les catégories"
+    },
+    "delete": {
+      "confirm": "Êtes-vous sûr de vouloir supprimer cette catégorie ? Cela ne supprimera pas les produits de cette catégorie, mais ils ne seront plus catégorisés."
+    },
+    "details": {
+      "not_found": "Catégorie non trouvée",
+      "parent_category": "Catégorie parente",
+      "parent_info": "La catégorie parente directe",
+      "root_category": "Catégorie racine",
+      "has_children": "A des sous-catégories",
+      "children_info": "Indique si cette catégorie a des sous-catégories",
+      "hierarchy_position": "Position dans la hiérarchie",
+      "hierarchy_description": "Cette catégorie fait partie de la hiérarchie suivante :",
+      "root_level": "Niveau racine",
+      "nested_under": "Imbriquée sous {{parent}}"
+    },
+    "export": {
+      "filename": "export-categories",
+      "success": "Catégories exportées avec succès",
+      "loading": "Exportation en cours...",
+      "children_count": "Nombre de sous-catégories"
+    },
+    "form": {
+      "name": "Nom",
+      "name_placeholder": "Entrez le nom de la catégorie",
+      "parent_category": "Catégorie parente",
+      "parent_placeholder": "Sélectionnez la catégorie parente",
+      "parent_missing": "L'identifiant de la catégorie parente est manquant"
+    },
+    "hierarchy": {
+      "no_categories": "Aucune catégorie trouvée"
+    }
+  },
+  "actions": {
+    "create": "Créer",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Voir les détails",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "export": "Exporter",
+    "export_tooltip": "Exporter au format csv",
+    "import": "Importer",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "confirm": "Confirmer",
+    "go_back": "Retour",
+    "try_again": "Réessayer",
+    "go_home": "Accueil",
+    "retrying": "Nouvelle tentative...",
+    "retry": "Réessayer",
+    "menu_title": "Menu"
+  },
+  "form": {
+    "required": "Ce champ est requis",
+    "invalid": "Ce champ est invalide",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "saving": "Enregistrement..."
+  },
+  "auth": {
+    "username": "Nom d'utilisateur",
+    "rememberMe": "Se souvenir de moi",
+    "logout": {
+      "label": "Déconnexion",
+      "success": "Déconnecté avec succès",
+      "loading": "Déconnexion",
+      "error": "Erreur durant la tentative de déconnexion"
+    },
+    "login": {
+      "subtitle": "Connectez-vous pour gérer vos produits",
+      "email_label": "Adresse e-mail",
+      "email_placeholder": "exemple@entreprise.com",
+      "password_label": "Mot de passe",
+      "password_placeholder": "Entrez votre mot de passe",
+      "submit": "Se connecter",
+      "loading": "Connexion en cours...",
+      "invalid_credentials": "Les identifiants fournis sont incorrects",
+      "error_title": "Erreur de connexion !",
+      "success_title": "Connexion réussie",
+      "success_message": "Vous êtes maintenant connecté."
+    },
+    "errors": {
+      "authentication_failed": "Authentification échouée",
+      "login_failed": "Connexion échouée",
+      "logout_failed": "Déconnexion échouée"
+    }
+  },
+  "price_simulations": {
+    "list": {
+      "title": "Simulations de prix",
+      "create_simulation": "Créer une simulation",
+      "no_simulations": "Aucune simulation de prix trouvée",
+      "columns": {
+        "name": "Nom",
+        "factor": "Facteur",
+        "created_at": "Créé le",
+        "created_by": "Créé par"
+      }
+    },
+    "errors": {
+      "load_failed": "Échec du chargement des simulations de prix",
+      "load_single_failed": "Échec du chargement de la simulation de prix",
+      "create_failed": "Échec de la création de la simulation de prix",
+      "update_failed": "Échec de la mise à jour de la simulation de prix",
+      "delete_failed": "Échec de la suppression de la simulation de prix",
+      "load_by_product_failed": "Échec du chargement des simulations de prix par produit",
+      "load_with_differences_failed": "Échec du chargement des simulations de prix avec différences"
+    },
+    "success": {
+      "loaded": "Simulations de prix chargées avec succès",
+      "created": "Simulation de prix créée avec succès",
+      "updated": "Simulation de prix mise à jour avec succès",
+      "deleted": "Simulation de prix supprimée avec succès"
+    },
+    "dialog": {
+      "create_title": "Créer une simulation de prix",
+      "edit_title": "Modifier la simulation de prix",
+      "delete_title": "Supprimer la simulation de prix",
+      "details_title": "Détails de la simulation de prix",
+      "export_title": "Exporter les simulations de prix"
+    },
+    "delete": {
+      "not_found": "Simulation de prix non trouvée",
+      "confirm": "Êtes-vous sûr de vouloir supprimer la simulation de prix \"{{name}}\" ?"
+    },
+    "details": {
+      "general_info": "Informations générales",
+      "percentage_change": "Pourcentage de changement",
+      "factor_info": "Facteur de multiplication appliqué aux prix",
+      "metadata": "Métadonnées",
+      "impact": "Impact de la simulation",
+      "margin_impact": "Impact sur la marge",
+      "margin_impact_info": "Effet sur la marge bénéficiaire",
+      "recommendation": "Recommandation",
+      "positive": "Positif",
+      "negative": "Négatif",
+      "highly_recommended": "Fortement recommandé",
+      "recommended": "Recommandé",
+      "neutral": "Neutre",
+      "consider": "À considérer avec attention",
+      "not_recommended": "Non recommandé",
+      "not_found": "Simulation de prix non trouvée"
+    },
+    "form": {
+      "scenario_name": "Nom du scénario",
+      "scenario_name_placeholder": "Entrez le nom du scénario",
+      "factor": "Facteur de prix",
+      "factor_placeholder": "Entrez le facteur de prix (ex: 1.05 pour 5% d'augmentation)",
+      "factor_helper": "Valeurs supérieures à 1 augmentent les prix, inférieures à 1 les diminuent",
+      "error_loading": "Erreur lors du chargement de la simulation de prix"
+    }
+  },
+  "movements": {
+    "errors": {
+      "load_failed": "Échec du chargement des mouvements",
+      "load_single_failed": "Échec du chargement du mouvement",
+      "create_failed": "Échec de la création du mouvement",
+      "update_failed": "Échec de la mise à jour du mouvement",
+      "delete_failed": "Échec de la suppression du mouvement",
+      "load_by_product_failed": "Échec du chargement des mouvements par produit",
+      "stock_entry_failed": "Échec de la création de l'entrée de stock",
+      "stock_exit_failed": "Échec de la création de la sortie de stock",
+      "get_stock_failed": "Échec de l'obtention du stock actuel"
+    },
+    "success": {
+      "loaded": "Mouvements chargés avec succès",
+      "created": "Mouvement créé avec succès",
+      "updated": "Mouvement mis à jour avec succès",
+      "deleted": "Mouvement supprimé avec succès",
+      "stock_entry_created": "Entrée de stock créée avec succès",
+      "stock_exit_created": "Sortie de stock créée avec succès"
+    },
+    "list": {
+      "title": "Mouvements de stock",
+      "add_movement": "Ajouter un mouvement",
+      "no_movements": "Aucun mouvement trouvé",
+      "columns": {
+        "product_name": "Nom du produit",
+        "type": "Type",
+        "quantity": "Quantité",
+        "date": "Date",
+        "notes": "Notes",
+        "created_at": "Créé le",
+        "created_by": "Créé par"
+      },
+      "details_title": "Détails du mouvement",
+      "export_title": "Exporter les mouvements"
+    },
+    "dialog": {
+      "add_title": "Ajouter un mouvement",
+      "edit_title": "Modifier le mouvement",
+      "delete_title": "Supprimer le mouvement",
+      "details_title": "Détails du mouvement",
+      "export_title": "Exporter les mouvements"
+    },
+    "delete": {
+      "not_found": "Mouvement non trouvé",
+      "confirm": "Êtes-vous sûr de vouloir supprimer le mouvement \"{{reference}}\" ?"
+    },
+    "details": {
+      "title": "Détails du mouvement",
+      "not_found": "Mouvement non trouvé",
+      "general_info": "Informations générales",
+      "type": "Type",
+      "type_info": "Type de mouvement de stock",
+      "product": "Produit",
+      "product_info": "Produit affecté par ce mouvement",
+      "quantity": "Quantité",
+      "total_amount": "Montant total",
+      "total_amount_info": "Quantité × Prix unitaire",
+      "details": "Détails supplémentaires",
+      "notes": "Notes",
+      "no_notes": "Aucune note fournie",
+      "product_info_title": "Informations sur le produit",
+      "current_unit_price": "Prix unitaire actuel",
+      "recent_movements": "Mouvements récents pour ce produit",
+      "qty_short": "Qté",
+      "price_short": "Prix"
+    },
+    "form": {
+      "type": "Type de mouvement",
+      "type_placeholder": "Sélectionnez le type de mouvement",
+      "product": "Produit",
+      "product_placeholder": "Sélectionnez un produit",
+      "quantity": "Quantité",
+      "quantity_placeholder": "Entrez la quantité",
+      "unit_price": "Prix unitaire (EUR)",
+      "unit_price_placeholder": "Entrez le prix unitaire",
+      "notes": "Notes",
+      "notes_placeholder": "Entrez des notes optionnelles",
+      "product_missing": "L'identifiant du produit est manquant",
+      "type_missing": "Le type de mouvement est manquant",
+      "out_of_stock": "Stock insuffisant. Disponible: {{available}}, Demandé: {{requested}}",
+      "select_product_first": "Sélectionnez d'abord un produit",
+      "loading_stock": "Chargement du stock...",
+      "stock_unavailable": "Stock non disponible",
+      "available_stock_out": "Stock disponible: {{available}}",
+      "current_stock_in": "Stock actuel: {{current}}",
+      "current_stock": "Stock actuel: {{current}}",
+      "max_quantity": "Quantité maximale: {{max}}"
+    },
+    "types": {
+      "in": "Entrée",
+      "out": "Sortie"
+    }
+  },
+  "products": {
+    "errors": {
+      "load_failed": "Échec du chargement des produits",
+      "load_single_failed": "Échec du chargement du produit",
+      "create_failed": "Échec de la création du produit",
+      "update_failed": "Échec de la mise à jour du produit",
+      "delete_failed": "Échec de la suppression du produit",
+      "load_by_category_failed": "Échec du chargement des produits par catégorie",
+      "load_with_stock_failed": "Échec du chargement des produits avec stock"
+    },
+    "success": {
+      "loaded": "Produits chargés avec succès",
+      "created": "Produit créé avec succès",
+      "updated": "Produit mis à jour avec succès",
+      "deleted": "Produit supprimé avec succès"
+    },
+    "snapshots": {
+      "list": {
+        "title": "Historique des snapshots de ce produit",
+        "create_button": "Créer un nouvel snapshot",
+        "snapshot_number": "snapshot #{{id}}",
+        "products_count": "Nombre de produits",
+        "created_at": "Créé le",
+        "created_by": "Créé par",
+        "view_products": "Voir les produits",
+        "no_snapshots": "Aucun snapshot trouvé",
+        "create_first_snapshot": "Créez votre premier snapshot pour suivre l'historique des produits"
+      },
+      "dialog": {
+        "title": "Snapshots de produits",
+        "details_title": "Détails du snapshot",
+        "create_title": "Créer un snapshot de produit",
+        "export_title": "Exporter les produits du snapshot"
+      },
+      "details": {
+        "columns": {
+          "reference": "Référence",
+          "snapshotted_price": "Prix snapshot",
+          "actual_quantity": "Quantité actuelle",
+          "snapshotted_quantity": "Quantité snapshote",
+          "quantity_differences": "Différences de quantité"
+        },
+        "not_found": "snapshot non trouvé",
+        "products_title": "Produits dans cet snapshot",
+        "no_products": "Aucun produit dans cet snapshot"
+      },
+      "export": {
+        "loading": "Exportation des produits du snapshot...",
+        "success": "Produits du snapshot exportés avec succès",
+        "columns": {
+          "id": "ID",
+          "reference": "Référence",
+          "description": "Description",
+          "partNumber": "Numéro de pièce",
+          "unitPrice": "Prix unitaire (EUR)",
+          "category": "Catégorie",
+          "uncategorized": "Non catégorisé",
+          "currentStock": "Stock actuel",
+          "createdBy": "Créé par",
+          "createdDate": "Date de création",
+          "lastUpdatedBy": "Mis à jour par",
+          "lastUpdatedDate": "Date de mise à jour",
+          "snapshotted_price": "Prix snapshot",
+          "snapshotted_quantity": "Quantité snapshot"
+        }
+      },
+      "create": {
+        "title": "Créer un nouveau snapshot",
+        "description": "Créer un nouveau snapshot de l'état actuel du stock pour tous les produits",
+        "info_title": "Qu'est-ce qu'un snapshot ?",
+        "info_description": "Un snapshot capture l'état actuel de votre inventaire :",
+        "info_point1": "Enregistre les niveaux de stock actuels pour tous les produits",
+        "info_point2": "Préserve les prix actuels au moment du snapshot",
+        "info_point3": "Vous permet de suivre les changements d'inventaire au fil du temps",
+        "info_point4": "Fournit des données historiques pour l'analyse et les rapports",
+        "label_label": "Libeller du snapshot",
+        "label_placeholder": "Entrez un libeller pour ce snapshot...",
+        "description_label": "Description de l'snapshot",
+        "description_placeholder": "Entrez une description pour ce snapshot...",
+        "loading": "Création du snapshot...",
+        "submit": "Créer le snapshot"
+      }
+    },
+    "list": {
+      "title": "Produits",
+      "add_product": "Ajouter un produit",
+      "view_snapshots": "Voir les snapshots",
+      "no_products": "Aucun produit trouvé",
+      "uncategorized": "Non catégorisé",
+      "columns": {
+        "reference": "Référence",
+        "part_number": "Numéro de séries",
+        "category": "Catégorie",
+        "price": "Prix",
+        "quantity": "Quantité",
+        "last_updated": "Dernière mise à jour",
+        "actions": "Actions"
+      }
+    },
+    "dialog": {
+      "add_title": "Ajouter un produit",
+      "edit_title": "Modifier le produit",
+      "delete_title": "Supprimer le produit",
+      "details_title": "Détails du produit",
+      "export_title": "Exporter les produits"
+    },
+    "delete": {
+      "not_found": "Produit non trouvé",
+      "confirm": "Êtes-vous sûr de vouloir supprimer le produit \"{{reference}}\" (Numéro de pièce : {{part_number}}) ?",
+      "warning": "Cette action ne peut pas être annulée. Toutes les données associées, y compris les mouvements de stock et l'historique des prix, seront également supprimées.",
+      "no_part_number": "Non spécifié"
+    },
+    "export": {
+      "loading": "Exportation en cours...",
+      "success": "Produits exportés avec succès",
+      "columns": {
+        "id": "ID",
+        "reference": "Référence",
+        "description": "Description",
+        "partNumber": "Numéro de pièce",
+        "unitPrice": "Prix unitaire (EUR)",
+        "category": "Catégorie",
+        "uncategorized": "Non catégorisé",
+        "currentStock": "Stock actuel",
+        "createdBy": "Créé par",
+        "createdDate": "Date de création",
+        "lastUpdatedBy": "Mis à jour par",
+        "lastUpdatedDate": "Date de mise à jour"
+      }
+    },
+    "details": {
+      "title": "Détails du produit",
+      "not_found": "Produit non trouvé",
+      "general_info": "Informations générales",
+      "reference": "Référence",
+      "reference_info": "Référence unique du produit",
+      "part_number": "Numéro de pièce",
+      "not_specified": "Non spécifié",
+      "category": "Catégorie",
+      "uncategorized": "Non catégorisé",
+      "id": "ID",
+      "stock_price": "Stock & Prix",
+      "unit_price": "Prix unitaire",
+      "unit_price_info": "Prix unitaire en euros",
+      "current_stock": "Stock actuel",
+      "not_available": "Non disponible",
+      "stock_quantity_info": "Quantité disponible en stock",
+      "last_stock_snapshot": "Dernière snapshot du stock",
+      "metadata": "Métadonnées",
+      "created_at": "Créé le",
+      "created_by": "Créé par",
+      "last_updated": "Dernière mise à jour",
+      "never": "Jamais",
+      "updated_by": "Mis à jour par",
+      "na": "N/A",
+      "stock_history": "Historique des stocks",
+      "date": "Date",
+      "quantity": "Quantité",
+      "other_entries": "autres entrées",
+      "no_description": "Aucune description disponible",
+      "movements_title": "Mouvements du produit",
+      "no_movements": "Aucun mouvement trouvé pour ce produit",
+      "movement_type": "Type",
+      "movement_date": "Date",
+      "movement_quantity": "Quantité",
+      "movement_notes": "Notes",
+      "price_simulations_title": "Simulations de prix",
+      "no_price_simulations": "Aucune simulation de prix trouvée",
+      "simulation_name": "Scénario",
+      "simulation_factor": "Facteur",
+      "simulation_price": "Prix simulé",
+      "simulation_date": "Date",
+      "no_product": "Aucun historique de produit trouvé"
+    },
+    "form": {
+      "reference": "Référence",
+      "reference_placeholder": "Entrez la référence du produit",
+      "description": "Description",
+      "description_placeholder": "Entrez la description du produit",
+      "part_number": "Numéro de série",
+      "part_number_placeholder": "Entrez le numéro de série",
+      "unit_price": "Prix unitaire (EUR)",
+      "unit_price_placeholder": "Entrez le prix unitaire",
+      "category": "Catégorie",
+      "category_placeholder": "Sélectionnez une catégorie"
+    }
+  },
+  "snapshotEvents": {
+    "errors": {
+      "load_failed": "Échec du chargement des événements de snapshot",
+      "load_single_failed": "Échec du chargement de l'événement de snapshot",
+      "create_failed": "Échec de la création de l'événement de snapshot"
+    },
+    "success": {
+      "loaded": "Événements de snapshot chargés avec succès",
+      "created": "Événement de snapshot créé avec succès"
+    }
+  }
+}

@@ -1,0 +1,552 @@
+[
+  {
+    "name": "calculate_current_stock",
+    "key": "calculate_current_stock",
+    "type": "exec",
+    "position_x": 43,
+    "position_y": 22,
+    "options": {
+      "code": "module.exports = async function(data) {\n  const products = data.get_all_products;\n  const movements = data.get_product_movements;\n  const snapshot_event_id = data.create_snapshot_event[0];\n  \n  // Calculate stock for each product\n  const stockData = [];\n  \n  for (const product of products) {\n    let quantity = 0;\n    \n    // Sum all movements for this product\n    const productMovements = movements.filter(m => m.product_id === product.id);\n    \n    for (const movement of productMovements) {\n      if (movement.type === 'IN') {\n        quantity += Number(movement.quantity);\n      } else if (movement.type === 'OUT') {\n        quantity -= Number(movement.quantity);\n      }\n    }\n    \n    stockData.push({\n      snapshot_event_id: snapshot_event_id,\n      product_id: product.id,\n      quantity: quantity,\n      unit_price_eur: product.unit_price_eur\n    });\n  }\n  \n  return {\n    stock_data: stockData,\n    snapshot_count: stockData.length,\n    snapshot_event_id: snapshot_event_id,\n    trigger_source: data.snapshot_info.trigger_source\n  };\n};"
+    },
+    "resolve": "cac27996-6ea1-466f-ad85-c94e083db681",
+    "reject": null,
+    "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+    "_syncId": "898934c6-6d1c-4510-a724-74100ae6ca0a"
+  },
+  {
+    "name": "Check_if_snapshot_needed",
+    "key": "check_if_snapshot_needed",
+    "type": "condition",
+    "position_x": 41,
+    "position_y": 1,
+    "options": {
+      "filter": {
+        "check_snapshot_exists": {
+          "has_snapshot": {
+            "_eq": false
+          }
+        }
+      }
+    },
+    "resolve": "94c4795e-b325-4e79-8764-ae8da0970dec",
+    "reject": "d1269824-bffe-4b67-b1f4-025e1b622dec",
+    "flow": "76886496-7557-4a27-a006-1e010dbef5eb",
+    "_syncId": "707e8c29-e30c-4d73-9e85-8f114d76b354"
+  },
+  {
+    "name": "Check movement type",
+    "key": "check_movement_type",
+    "type": "condition",
+    "position_x": 3,
+    "position_y": 19,
+    "options": {
+      "filter": {
+        "$trigger": {
+          "payload": {
+            "type": {
+              "_eq": "OUT"
+            }
+          }
+        }
+      }
+    },
+    "resolve": "b5739284-77fa-44a6-9a0d-8b2ce1d1b3f1",
+    "reject": "975aad9a-465e-45f0-b71b-7d2fa9799397",
+    "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
+    "_syncId": "a1634ca9-2e43-4363-aafb-72fcbb4c933f"
+  },
+  {
+    "name": "Check quantity",
+    "key": "check_quantity",
+    "type": "exec",
+    "position_x": 23,
+    "position_y": 19,
+    "options": {
+      "code": "module.exports = async function(data) {\n  const stock_quantity = data.get_stock_quantity.data.stock_quantity;\n  const requested_qty = parseFloat(data.$trigger.payload.quantity) || 0;\n\n  if (stock_quantity < requested_qty) {\n    throw new Error(\n      `Insufficient stock: only ${stock_quantity} available, tried to remove ${requested_qty}`\n    );\n  }\n    \n  return {\n    status: 'success',\n    data: {\n      stock_quantity\n    }\n  };\n};"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
+    "_syncId": "d1a56eac-efdd-490e-9866-63065a47649c"
+  },
+  {
+    "name": "Check Single Update",
+    "key": "check_single_update",
+    "type": "exec",
+    "position_x": 3,
+    "position_y": 19,
+    "options": {
+      "code": "module.exports = async function(data) {\n    const keys = data.$trigger?.keys || [];\n\n    if (keys.length !== 1) {\n        throw new Error(\"Exactly one item must be updated.\");\n    }\n\n    return {\n        status: \"success\",\n\t\tmessage: \"One item was successfully updated.\",\n        data: {\n            updated_item_id: keys[0]\n        }\n    };\n};"
+    },
+    "resolve": "3730e27d-fdaa-4c29-b0a8-86c21b8304a6",
+    "reject": null,
+    "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
+    "_syncId": "792dd139-fd78-4113-8b87-d4d77d01568d"
+  },
+  {
+    "name": "Check snapshot exists",
+    "key": "check_snapshot_exists",
+    "type": "exec",
+    "position_x": 23,
+    "position_y": 19,
+    "options": {
+      "code": "module.exports = async function(data) {\n    const today = new Date().toISOString().split('T')[0];\n    \n    let has_snapshot = false;\n    if(data.query_existing_snapshot && data.query_existing_snapshot.length > 0){\n        has_snapshot = true;\n    }\n    \n    const now = new Date();\n    const formattedTime = String(now.getHours()).padStart(2, '0') + ':' + \n                          String(now.getMinutes()).padStart(2, '0');\n    \n    return {\n        has_snapshot,\n        source: \"scheduler\",\n        label: `Automatic daily snapshot - ${today}`,\n        notes: `Daily automated snapshot triggered by scheduler at ${formattedTime}. This snapshot captures the inventory state for all products as part of the regular daily monitoring process.`\n    };\n};"
+    },
+    "resolve": "707e8c29-e30c-4d73-9e85-8f114d76b354",
+    "reject": null,
+    "flow": "76886496-7557-4a27-a006-1e010dbef5eb",
+    "_syncId": "bb2d3e63-707d-4c2b-ae94-a07b5a903714"
+  },
+  {
+    "name": "compute_stock",
+    "key": "compute_stock",
+    "type": "exec",
+    "position_x": 37,
+    "position_y": 1,
+    "options": {
+      "code": "module.exports = async function(data) {\n  const product_movements = data.fetch_movement_of_product;\n\n  const stock_quantity = product_movements.reduce((accumulator, movement) => {\n    const qty = parseFloat(movement.quantity) || 0;\n    return accumulator + (movement.type === 'IN' ? qty : -qty);\n  }, 0);\n  return {\n    status: 'success',\n    data: {\n      stock_quantity\n    }\n  };\n};"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "850049b5-7595-4f53-a6b9-654039da9fc2",
+    "_syncId": "7d98cfaf-2c85-4b78-9467-3dc4147a445b"
+  },
+  {
+    "name": "create_snapshot_event",
+    "key": "create_snapshot_event",
+    "type": "item-create",
+    "position_x": 21,
+    "position_y": 1,
+    "options": {
+      "payload": {
+        "label": "{{snapshot_info.snapshot_label}}",
+        "notes": "{{snapshot_info.snapshot_notes}}"
+      },
+      "collection": "snapshot_event",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "27ff32bb-d0af-476b-a339-b372733dda7a",
+    "reject": null,
+    "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+    "_syncId": "4561ab5f-387a-4d55-a781-30e70e179462"
+  },
+  {
+    "name": "create_stock_snapshots",
+    "key": "create_stock_snapshots",
+    "type": "item-create",
+    "position_x": 61,
+    "position_y": 1,
+    "options": {
+      "payload": "{{$last.stock_data}}",
+      "collection": "stock_snapshot",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "b5733699-90dd-44c3-9828-e2b16f1e2336",
+    "reject": null,
+    "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+    "_syncId": "cac27996-6ea1-466f-ad85-c94e083db681"
+  },
+  {
+    "name": "Fetch movement of product",
+    "key": "fetch_movement_of_product",
+    "type": "item-read",
+    "position_x": 19,
+    "position_y": 1,
+    "options": {
+      "query": {
+        "filter": {
+          "product_id": {
+            "_eq": "{{$trigger.data.product_id}}"
+          }
+        }
+      },
+      "collection": "movement",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "7d98cfaf-2c85-4b78-9467-3dc4147a445b",
+    "reject": null,
+    "flow": "850049b5-7595-4f53-a6b9-654039da9fc2",
+    "_syncId": "a8b9a554-0193-4f4c-8ebf-27e6c4a5b369"
+  },
+  {
+    "name": "get_all_products",
+    "key": "get_all_products",
+    "type": "item-read",
+    "position_x": 23,
+    "position_y": 19,
+    "options": {
+      "collection": "product",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "6a8efcd2-b4bd-4f9b-9fae-e656758ae4ee",
+    "reject": null,
+    "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+    "_syncId": "27ff32bb-d0af-476b-a339-b372733dda7a"
+  },
+  {
+    "name": "Get old movement data",
+    "key": "get_old_movement_data",
+    "type": "item-read",
+    "position_x": 21,
+    "position_y": 1,
+    "options": {
+      "query": {
+        "filter": {
+          "id": {
+            "_eq": "{{$trigger.keys[0]}}"
+          }
+        }
+      },
+      "collection": "movement",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "13b69e41-6161-405b-96bb-4fbaaad98c8d",
+    "reject": null,
+    "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
+    "_syncId": "3730e27d-fdaa-4c29-b0a8-86c21b8304a6"
+  },
+  {
+    "name": "get_product_movements",
+    "key": "get_product_movements",
+    "type": "item-read",
+    "position_x": 41,
+    "position_y": 1,
+    "options": {
+      "collection": "movement",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "898934c6-6d1c-4510-a724-74100ae6ca0a",
+    "reject": null,
+    "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+    "_syncId": "6a8efcd2-b4bd-4f9b-9fae-e656758ae4ee"
+  },
+  {
+    "name": "Get snapshot event",
+    "key": "get_snapshot_event",
+    "type": "item-read",
+    "position_x": 55,
+    "position_y": 1,
+    "options": {
+      "query": {
+        "filter": {
+          "id": {
+            "_eq": "{{$last.snapshot_id}}"
+          }
+        }
+      },
+      "collection": "snapshot_event",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "47f0101a-42b6-4b20-a419-15924dc88cd2",
+    "reject": null,
+    "flow": "673e151e-6b89-4a04-bf04-010a44c2914b",
+    "_syncId": "af7541ed-c93e-49b7-89e8-e96e641913df"
+  },
+  {
+    "name": "Get stock quantity",
+    "key": "get_stock_quantity",
+    "type": "trigger",
+    "position_x": 21,
+    "position_y": 1,
+    "options": {
+      "flow": "850049b5-7595-4f53-a6b9-654039da9fc2",
+      "payload": {
+        "data": "{{ $trigger.payload }}",
+        "user": "{{ $accountability.user }}"
+      },
+      "iterationMode": "parallel"
+    },
+    "resolve": "d1a56eac-efdd-490e-9866-63065a47649c",
+    "reject": null,
+    "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
+    "_syncId": "b5739284-77fa-44a6-9a0d-8b2ce1d1b3f1"
+  },
+  {
+    "name": "Get stock quantity",
+    "key": "get_stock_quantity",
+    "type": "trigger",
+    "position_x": 41,
+    "position_y": 1,
+    "options": {
+      "flow": "850049b5-7595-4f53-a6b9-654039da9fc2",
+      "payload": {
+        "data": "{{ resolve_product_id.data }}",
+        "user": "{{ $accountability.user }}"
+      },
+      "iterationMode": "parallel"
+    },
+    "resolve": "7899fbb0-14fd-4156-b7ca-8ef71408dd81",
+    "reject": null,
+    "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
+    "_syncId": "cad60131-e3fa-4568-8cdb-c5dd18353b43"
+  },
+  {
+    "name": "Get today date",
+    "key": "get_today_date",
+    "type": "exec",
+    "position_x": 3,
+    "position_y": 19,
+    "options": {
+      "code": "module.exports = async function(data) {\n  const today = new Date().toISOString().split('T')[0];\n  return {\n    today: today,\n    today_start: today + 'T00:00:00.000Z',\n    today_end: today + 'T23:59:59.999Z'\n  };\n};"
+    },
+    "resolve": "558feed1-b5de-4f51-b5ec-331fe985f491",
+    "reject": null,
+    "flow": "76886496-7557-4a27-a006-1e010dbef5eb",
+    "_syncId": "473abbd5-5afa-45fc-b80c-efa5bbe5edc8"
+  },
+  {
+    "name": "log_no_action",
+    "key": "log_no_action",
+    "type": "log",
+    "position_x": 43,
+    "position_y": 18,
+    "options": {
+      "message": "No snapshot creation needed. A snapshot already exists for today (ID: {{query_existing_snapshot[0].id}})"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "76886496-7557-4a27-a006-1e010dbef5eb",
+    "_syncId": "d1269824-bffe-4b67-b1f4-025e1b622dec"
+  },
+  {
+    "name": "Log result",
+    "key": "log_result",
+    "type": "log",
+    "position_x": 55,
+    "position_y": 1,
+    "options": {
+      "message": "{{$last}}"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "0f961529-8bcf-4b1f-9d2c-6dc95e0466d7",
+    "_syncId": "d0990610-afb5-429f-b78d-d7e6049f2665"
+  },
+  {
+    "name": "log_snapshot_creation",
+    "key": "log_snapshot_creation",
+    "type": "log",
+    "position_x": 63,
+    "position_y": 19,
+    "options": {
+      "message": "Successfully created stock snapshot with {{calculate_current_stock.snapshot_count}} product records for event ID {{calculate_current_stock.snapshot_event_id}}"
+    },
+    "resolve": "0bfd6625-39fe-4224-b5bb-74c2ec18e326",
+    "reject": null,
+    "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+    "_syncId": "b5733699-90dd-44c3-9828-e2b16f1e2336"
+  },
+  {
+    "name": "prepare_api_response",
+    "key": "prepare_api_response",
+    "type": "exec",
+    "position_x": 74,
+    "position_y": 1,
+    "options": {
+      "code": "module.exports = async function(data) {\n  return data.get_snapshot_event[0];\n};"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "673e151e-6b89-4a04-bf04-010a44c2914b",
+    "_syncId": "47f0101a-42b6-4b20-a419-15924dc88cd2"
+  },
+  {
+    "name": "prepare_trigger_data",
+    "key": "prepare_trigger_data",
+    "type": "exec",
+    "position_x": 19,
+    "position_y": 1,
+    "options": {
+      "code": "module.exports = async function(data) {\n  const today = new Date().toISOString().split('T')[0];\n  return {\n    today: today,\n    source: \"manual\",\n    override: data.override === true,\n    label: data.label || `Manual snapshot - ${today}`\n  };\n};"
+    },
+    "resolve": "ed5b9a62-26b1-4ed8-998f-8fb2dfba4e5f",
+    "reject": null,
+    "flow": "0f961529-8bcf-4b1f-9d2c-6dc95e0466d7",
+    "_syncId": "eeefe12e-4d8f-4c24-942c-18adb5d2f0f7"
+  },
+  {
+    "name": "Query existing snapshot",
+    "key": "query_existing_snapshot",
+    "type": "item-read",
+    "position_x": 21,
+    "position_y": 1,
+    "options": {
+      "query": {
+        "limit": 1,
+        "filter": {
+          "_and": [
+            {
+              "date_created": {
+                "_gte": "{{$last.today_start}}"
+              }
+            },
+            {
+              "date_created": {
+                "_lte": "{{$last.today_end}}"
+              }
+            }
+          ]
+        }
+      },
+      "collection": "snapshot_event",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "bb2d3e63-707d-4c2b-ae94-a07b5a903714",
+    "reject": null,
+    "flow": "76886496-7557-4a27-a006-1e010dbef5eb",
+    "_syncId": "558feed1-b5de-4f51-b5ec-331fe985f491"
+  },
+  {
+    "name": "Resolve Product ID",
+    "key": "resolve_product_id",
+    "type": "exec",
+    "position_x": 23,
+    "position_y": 19,
+    "options": {
+      "code": "module.exports = async function (data) {\n    const newProductId = data.$trigger.payload?.product_id;\n    const oldMovementData = data.get_old_movement_data[0];\n\n    if (!newProductId && !oldMovementData?.product_id) {\n        throw new Error(\"No product_id found in payload or existing movement.\");\n    }\n\n    const resolvedProductId = newProductId || oldMovementData.product_id;\n\n    return {\n        status: \"success\",\n        data: {\n        \tproduct_id: resolvedProductId\n        }\n    };\n};"
+    },
+    "resolve": "cad60131-e3fa-4568-8cdb-c5dd18353b43",
+    "reject": null,
+    "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
+    "_syncId": "13b69e41-6161-405b-96bb-4fbaaad98c8d"
+  },
+  {
+    "name": "return_result_data",
+    "key": "return_result_data",
+    "type": "exec",
+    "position_x": 81,
+    "position_y": 1,
+    "options": {
+      "code": "module.exports = async function(data) {\n  const snapshotCreated = !!data.create_stock_snapshots[0];\n  \n  return {\n    success: true,\n    snapshot_created: snapshotCreated,\n    snapshot_id: data.calculate_current_stock.snapshot_event_id,\n    timestamp: new Date().toISOString()\n  };\n};"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+    "_syncId": "0bfd6625-39fe-4224-b5bb-74c2ec18e326"
+  },
+  {
+    "name": "Snapshot info",
+    "key": "snapshot_info",
+    "type": "exec",
+    "position_x": 3,
+    "position_y": 19,
+    "options": {
+      "code": "module.exports = async function(data) {\n  const trigger_source = data.$trigger.source || \"unknown\";\n  return {\n    trigger_source,\n    snapshot_label: data.$trigger.label || `Stock snapshot`,\n    snapshot_notes: data.$trigger.notes || `Created by ${trigger_source} trigger`\n  };\n};"
+    },
+    "resolve": "4561ab5f-387a-4d55-a781-30e70e179462",
+    "reject": null,
+    "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+    "_syncId": "662ef987-aa89-4dba-9b26-6266d04ce3d4"
+  },
+  {
+    "name": "Transform Payload",
+    "key": "transform_i4wac",
+    "type": "transform",
+    "position_x": 21,
+    "position_y": 35,
+    "options": {
+      "json": "{{$trigger.payload}}"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
+    "_syncId": "975aad9a-465e-45f0-b71b-7d2fa9799397"
+  },
+  {
+    "name": "trigger_snapshot_creator",
+    "key": "trigger_snapshot_creator",
+    "type": "trigger",
+    "position_x": 37,
+    "position_y": 1,
+    "options": {
+      "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+      "payload": {
+        "label": "{{validate_webhook.label}}",
+        "notes": "{{validate_webhook.notes}}",
+        "source": "{{validate_webhook.source}}"
+      },
+      "iterationMode": "parallel"
+    },
+    "resolve": "af7541ed-c93e-49b7-89e8-e96e641913df",
+    "reject": null,
+    "flow": "673e151e-6b89-4a04-bf04-010a44c2914b",
+    "_syncId": "ceb712f4-b7d8-4e12-b058-87bcd992a0da"
+  },
+  {
+    "name": "trigger_snapshot_creator",
+    "key": "trigger_snapshot_creator",
+    "type": "trigger",
+    "position_x": 37,
+    "position_y": 1,
+    "options": {
+      "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+      "payload": {
+        "label": "{{$last.label}}",
+        "today": "{{$last.today}}",
+        "source": "{{$last.source}}",
+        "override": "{{$last.override}}"
+      },
+      "iterationMode": "parallel"
+    },
+    "resolve": "d0990610-afb5-429f-b78d-d7e6049f2665",
+    "reject": null,
+    "flow": "0f961529-8bcf-4b1f-9d2c-6dc95e0466d7",
+    "_syncId": "ed5b9a62-26b1-4ed8-998f-8fb2dfba4e5f"
+  },
+  {
+    "name": "trigger_snapshot_creator",
+    "key": "trigger_snapshot_creator",
+    "type": "trigger",
+    "position_x": 59,
+    "position_y": 1,
+    "options": {
+      "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
+      "payload": {
+        "label": "{{check_snapshot_exists.label}}",
+        "notes": "{{check_snapshot_exists.notes}}",
+        "source": "{{check_snapshot_exists.source}}"
+      },
+      "iterationMode": "parallel"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "76886496-7557-4a27-a006-1e010dbef5eb",
+    "_syncId": "94c4795e-b325-4e79-8764-ae8da0970dec"
+  },
+  {
+    "name": "Validate stock out",
+    "key": "validate_stock_out",
+    "type": "exec",
+    "position_x": 43,
+    "position_y": 20,
+    "options": {
+      "code": "module.exports = async function (data) {\n  const payload = data.$trigger.payload;\n  const keys = data.$trigger.keys;\n\n  const movementId = keys?.[0];\n  if (!movementId) throw new Error('Missing movement ID');\n    \n  // Get current movement data\n  const currentMovement = data.get_old_movement_data[0];\n  if (!currentMovement) throw new Error('Could not find existing movement data');\n\n  // Get new values or use existing ones\n  const newType = payload.type ?? currentMovement.type;\n  const newQuantity = parseFloat(payload.quantity ?? currentMovement.quantity);\n  const productId = payload.product_id ?? currentMovement.product_id;\n\n  // Validation checks\n  if (!newType || !['IN', 'OUT'].includes(newType)) {\n    throw new Error('Invalid or missing movement type');\n  }\n\n  if (!productId) {\n    throw new Error('Missing product_id');\n  }\n\n  if (isNaN(newQuantity) || newQuantity <= 0) {\n    throw new Error('Invalid quantity: must be a positive number');\n  }\n    \n  // Get current stock quantity\n  const currentStockQuantity = parseFloat(data.get_stock_quantity?.data?.stock_quantity || 0);\n  \n  // Calculate the impact of the current movement on stock (before changes)\n  let adjustedStock = currentStockQuantity;\n  \n  // If editing an existing movement, first reverse its effect on the stock calculation\n  if (currentMovement.type === 'IN') {\n    adjustedStock -= parseFloat(currentMovement.quantity);\n  } else if (currentMovement.type === 'OUT') {\n    adjustedStock += parseFloat(currentMovement.quantity);\n  }\n  \n  // Now calculate what would happen after the change\n  let finalStock = adjustedStock;\n  \n  // Apply the new movement effect\n  if (newType === 'IN') {\n    finalStock += newQuantity;\n  } else if (newType === 'OUT') {\n    finalStock -= newQuantity;\n  }\n  \n  // Check if the operation would result in negative stock\n  if (finalStock < 0) {\n    throw new Error(`Operation would result in negative stock: ${adjustedStock} available before this movement, would become ${finalStock} after applying ${newType} of ${newQuantity}`);\n  }\n\n  return {\n    status: 'success',\n    data: {\n      product_id: productId,\n      movement_id: movementId,\n      stock_before_change: currentStockQuantity,\n      adjusted_stock: adjustedStock,\n      stock_after_change: finalStock,\n      old_type: currentMovement.type,\n      old_quantity: parseFloat(currentMovement.quantity),\n      new_type: newType,\n      new_quantity: newQuantity\n    }\n  };\n};"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
+    "_syncId": "7899fbb0-14fd-4156-b7ca-8ef71408dd81"
+  },
+  {
+    "name": "validate_webhook",
+    "key": "validate_webhook",
+    "type": "exec",
+    "position_x": 19,
+    "position_y": 1,
+    "options": {
+      "code": "module.exports = async function(data) {\n  const now = new Date();\n  const formattedDateTime = now.getFullYear() + '-' + \n                          String(now.getMonth() + 1).padStart(2, '0') + '-' + \n                          String(now.getDate()).padStart(2, '0') + ' ' + \n                          String(now.getHours()).padStart(2, '0') + ':' + \n                          String(now.getMinutes()).padStart(2, '0') + ':' + \n                          String(now.getSeconds()).padStart(2, '0');\n  const currentTime = new Date().toLocaleTimeString();\n  \n  return {\n    source: \"webhook\",\n    label: data.$trigger.body.label || `API triggered snapshot - ${formattedDateTime}`,\n    notes: data.$trigger.body.notes || `Automated snapshot created via API webhook at ${currentTime}. No additional notes provided.`\n  };\n};"
+    },
+    "resolve": "ceb712f4-b7d8-4e12-b058-87bcd992a0da",
+    "reject": null,
+    "flow": "673e151e-6b89-4a04-bf04-010a44c2914b",
+    "_syncId": "55e2aa5f-59dd-44f5-900b-ef9be5c64f49"
+  }
+]

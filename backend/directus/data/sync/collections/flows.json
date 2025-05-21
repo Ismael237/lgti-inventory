@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Create snapshot now",
+    "icon": "bolt",
+    "color": null,
+    "description": "Manually triggered flow to create a stock snapshot immediately, optionally overriding existing snapshots.",
+    "status": "active",
+    "trigger": "manual",
+    "accountability": "all",
+    "options": {
+      "collections": [
+        "category",
+        "movement",
+        "stock_snapshot",
+        "snapshot_event",
+        "product",
+        "price_simulation"
+      ],
+      "requireSelection": false
+    },
+    "operation": "eeefe12e-4d8f-4c24-942c-18adb5d2f0f7",
+    "_syncId": "0f961529-8bcf-4b1f-9d2c-6dc95e0466d7"
+  },
+  {
+    "name": "Api triggered snapshot",
+    "icon": "bolt",
+    "color": null,
+    "description": "Creates a stock snapshot when triggered by an external API call via webhook.",
+    "status": "active",
+    "trigger": "webhook",
+    "accountability": "all",
+    "options": {
+      "method": "POST",
+      "error_on_reject": true
+    },
+    "operation": "55e2aa5f-59dd-44f5-900b-ef9be5c64f49",
+    "_syncId": "673e151e-6b89-4a04-bf04-010a44c2914b"
+  },
+  {
+    "name": "Stock Snapshot Generator",
+    "icon": "bolt",
+    "color": null,
+    "description": "This flow runs hourly to check if a stock snapshot has been created for the current day. If no snapshot exists, it automatically creates one with current stock levels for all products.",
+    "status": "active",
+    "trigger": "operation",
+    "accountability": "all",
+    "options": {
+      "return": "$last"
+    },
+    "operation": "662ef987-aa89-4dba-9b26-6266d04ce3d4",
+    "_syncId": "6e1b2d7a-1427-4993-a404-30880fecc8ab"
+  },
+  {
+    "name": "Hourly Snapshot Check",
+    "icon": "bolt",
+    "color": null,
+    "description": "Runs hourly to check if a daily snapshot exists and triggers the main ",
+    "status": "active",
+    "trigger": "schedule",
+    "accountability": "all",
+    "options": {
+      "cron": "0 0 * * * *"
+    },
+    "operation": "473abbd5-5afa-45fc-b80c-efa5bbe5edc8",
+    "_syncId": "76886496-7557-4a27-a006-1e010dbef5eb"
+  },
+  {
+    "name": "Calculate Stock Quantity",
+    "icon": "bolt",
+    "color": null,
+    "description": "Given a product_id, compute the current stock (IN–OUT) and return it.",
+    "status": "active",
+    "trigger": "operation",
+    "accountability": "all",
+    "options": {
+      "return": "$last"
+    },
+    "operation": "a8b9a554-0193-4f4c-8ebf-27e6c4a5b369",
+    "_syncId": "850049b5-7595-4f53-a6b9-654039da9fc2"
+  },
+  {
+    "name": "Validate Stock Before OUT Movement",
+    "icon": "bolt",
+    "color": null,
+    "description": "Checks current stock level and throws an error if an OUT movement would drive stock negative.",
+    "status": "active",
+    "trigger": "event",
+    "accountability": "all",
+    "options": {
+      "type": "filter",
+      "scope": [
+        "items.create"
+      ],
+      "return": "",
+      "collections": [
+        "movement"
+      ]
+    },
+    "operation": "a1634ca9-2e43-4363-aafb-72fcbb4c933f",
+    "_syncId": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a"
+  },
+  {
+    "name": "Prevent Negative Stock on Movement Update",
+    "icon": "bolt",
+    "color": null,
+    "description": "A pre-write validation that ensures any OUT movement update does not drive the product’s stock below zero. If the requested quantity exceeds available stock, the update is blocked and an error is returned.",
+    "status": "active",
+    "trigger": "event",
+    "accountability": "all",
+    "options": {
+      "type": "filter",
+      "scope": [
+        "items.update"
+      ],
+      "collections": [
+        "movement"
+      ]
+    },
+    "operation": "792dd139-fd78-4113-8b87-d4d77d01568d",
+    "_syncId": "fa340850-1ab7-40a1-8003-cac7928b40df"
+  }
+]

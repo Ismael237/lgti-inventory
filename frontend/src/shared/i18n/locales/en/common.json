@@ -1,0 +1,674 @@
+{
+  "app": {
+    "title": "Management System",
+    "welcome": "Welcome to the application"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "total_products": "Total Products",
+    "total_categories": "Total Categories",
+    "total_movements": "Stock Movements",
+    "price_simulations": "Price Simulations",
+    "stock_value": "Total Stock Value",
+    "add_product": "Add Product",
+    "add_movement": "Add Movement",
+    "add_simulation": "Add Price Simulation",
+    "recent_movements": "Recent Movements",
+    "recent_simulations": "Recent Simulations",
+    "low_stock_products": "Low Stock Products",
+    "no_recent_movements": "No recent movements",
+    "no_recent_simulations": "No recent simulations",
+    "no_low_stock": "No products with low stock",
+    "unknown_product": "Unknown Product",
+    "stock_in": "Stock In",
+    "stock_out": "Stock Out",
+    "units": "units",
+    "no_description": "No description"
+  },
+  "sidebar": {
+    "menu": "Menu",
+    "dashboard": "Dashboard",
+    "products": "Products",
+    "categories": "Categories",
+    "movements": "Movements",
+    "price_simulations": "Price Simulations"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "movements": "Movements",
+    "simulations": "Price Simulations"
+  },
+  "common": {
+    "back": "Back",
+    "actions": "Actions",
+    "loading": "Loading...",
+    "noData": "No data available",
+    "error": "An error occurred",
+    "success": "Operation successful",
+    "warning": "Warning",
+    "info": "Information",
+    "delete_warning": "This action cannot be undone.",
+    "system": "System",
+    "na": "N/A",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "id": "ID",
+    "created_at": "Created at",
+    "created_by": "Created by",
+    "updated_at": "Updated at",
+    "updated_by": "Updated by",
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "type": "Type",
+    "date": "Date",
+    "time": "Time",
+    "quantity": "Quantity",
+    "price": "Price",
+    "total": "Total",
+    "notes": "Notes",
+    "active": "Active",
+    "inactive": "Inactive",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "yes": "Yes",
+    "no": "No",
+    "none": "None",
+    "all": "All",
+    "select": "Select",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "asc": "Ascending",
+    "desc": "Descending",
+    "page": "Page",
+    "of": "of",
+    "items_per_page": "Items per page",
+    "first": "First",
+    "last": "Last",
+    "next": "Next",
+    "previous": "Previous",
+    "more": "More",
+    "less": "Less",
+    "not_applicable": "N/A",
+    "never": "Never",
+    "last_login": "Last login",
+    "checking": "Checking...",
+    "unknown": "Unknown",
+    "errors": {
+      "id_required": "ID is required",
+      "missing_parameters": "Missing parameters",
+      "product_id_required": "Product ID is required",
+      "category_id_required": "Category ID is required",
+      "snapshot_event_id_required": "Snapshot event ID is required"
+    }
+  },
+  "tooltip": {
+    "back_to_previous": "Go back to the previous page"
+  },
+  "data_table": {
+    "showing_results": "Showing {{startItem}} to {{endItem}} of {{total}} results",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "components": {
+    "info_tip": {
+      "aria_label": "info"
+    }
+  },
+  "header": {
+    "toggle_sidebar": "Toggle sidebar",
+    "toggle_color_mode": "Toggle color mode",
+    "my_profile": "My profile",
+    "user_profile": "User profile",
+    "user": "User",
+    "additional_info": "Additional information",
+    "role": "Role",
+    "last_login": "Last login"
+  },
+  "profile": {
+    "language": "Language",
+    "email": "Email",
+    "role": "Role",
+    "last_login": "Last login",
+    "preferred_language": "Preferred language",
+    "preferred_theme": "Preferred theme",
+    "not_available": "Not available",
+    "info": "My information",
+    "settings": "Settings"
+  },
+  "categories": {
+    "list": {
+      "title": "Categories",
+      "add_category": "Add Category",
+      "view_hierarchy": "View Hierarchy",
+      "no_categories": "No categories found",
+      "columns": {
+        "name": "Name",
+        "parent": "Parent Category",
+        "created_at": "Created at",
+        "created_by": "Created by"
+      }
+    },
+    "errors": {
+      "load_failed": "Failed to load categories",
+      "load_single_failed": "Failed to load category",
+      "create_failed": "Failed to create category",
+      "update_failed": "Failed to update category",
+      "delete_failed": "Failed to delete category",
+      "hierarchy_load_failed": "Failed to load category hierarchy"
+    },
+    "success": {
+      "loaded": "Categories loaded successfully",
+      "created": "Category created successfully",
+      "updated": "Category updated successfully",
+      "deleted": "Category deleted successfully"
+    },
+    "dialog": {
+      "add_title": "Add Category",
+      "edit_title": "Edit Category",
+      "delete_title": "Delete Category",
+      "details_title": "Category Details",
+      "hierarchy_title": "Category Hierarchy",
+      "export_title": "Export Categories"
+    },
+    "delete": {
+      "confirm": "Are you sure you want to delete this category? This will not delete products in this category, but they will no longer be categorized."
+    },
+    "details": {
+      "not_found": "Category not found",
+      "parent_category": "Parent Category",
+      "parent_info": "The direct parent category",
+      "root_category": "Root Category",
+      "has_children": "Has Children",
+      "children_info": "Indicates if this category has subcategories",
+      "hierarchy_position": "Hierarchy Position",
+      "hierarchy_description": "This category is part of the following hierarchy:",
+      "root_level": "Root level",
+      "nested_under": "Nested under {{parent}}"
+    },
+    "export": {
+      "filename": "categories-export",
+      "success": "Categories exported successfully",
+      "loading": "Exporting...",
+      "children_count": "Children Count"
+    },
+    "form": {
+      "name": "Name",
+      "name_placeholder": "Enter category name",
+      "parent_category": "Parent Category",
+      "parent_placeholder": "Select parent category",
+      "parent_missing": "Parent category id is missing"
+    },
+    "hierarchy": {
+      "no_categories": "No categories found"
+    }
+  },
+  "actions": {
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View details",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "export": "Export",
+    "export_tooltip": "Export to csv format",
+    "import": "Import",
+    "search": "Search",
+    "filter": "Filter",
+    "confirm": "Confirm",
+    "go_back": "Go Back",
+    "try_again": "Try Again",
+    "go_home": "Go Home",
+    "retrying": "Retrying...",
+    "retry": "Retry",
+    "menu_title": "Menu"
+  },
+  "form": {
+    "required": "This field is required",
+    "invalid": "This field is invalid",
+    "save": "Save",
+    "cancel": "Cancel",
+    "saving": "Saving..."
+  },
+  "auth": {
+    "username": "Username",
+    "rememberMe": "Remember me",
+    "logout": {
+      "label": "Logout",
+      "success": "Successfully logged out",
+      "loading": "Logging out",
+      "error": "Error during logout attempt"
+    },
+    "login": {
+      "subtitle": "Sign in to manage your products",
+      "email_label": "Email address",
+      "email_placeholder": "example@company.com",
+      "password_label": "Password",
+      "password_placeholder": "Enter your password",
+      "submit": "Sign in",
+      "loading": "Signing in...",
+      "invalid_credentials": "The credentials provided are incorrect",
+      "error_title": "Login Error!",
+      "success_title": "Login Successful",
+      "success_message": "You are now logged in."
+    },
+    "errors": {
+      "authentication_failed": "Authentication failed",
+      "login_failed": "Login failed",
+      "logout_failed": "Logout failed"
+    }
+  },
+  "validation": {
+    "price_simulation": {
+      "scenario_name_required": "Scenario name is required",
+      "price_not_negative": "Simulated price cannot be negative",
+      "product_required": "Product is required"
+    },
+    "movement": {
+      "type_required": "Movement type is required",
+      "quantity_positive": "Quantity must be greater than zero",
+      "product_required": "Product is required",
+      "price_not_negative": "Unit price cannot be negative"
+    },
+    "product": {
+      "reference_required": "Reference is required",
+      "part_number_numeric": "Part number must be a number",
+      "price_positive": "Unit price must be positive"
+    },
+    "category": {
+      "name_required": "Name is required",
+      "parent_required": "Parent category is required"
+    }
+  },
+  "movements": {
+    "errors": {
+      "load_failed": "Failed to load movements",
+      "load_single_failed": "Failed to load movement",
+      "create_failed": "Failed to create movement",
+      "update_failed": "Failed to update movement",
+      "delete_failed": "Failed to delete movement",
+      "load_by_product_failed": "Failed to load movements by product",
+      "stock_entry_failed": "Failed to create stock entry",
+      "stock_exit_failed": "Failed to create stock exit",
+      "get_stock_failed": "Failed to get current stock"
+    },
+    "success": {
+      "loaded": "Movements loaded successfully",
+      "created": "Movement created successfully",
+      "updated": "Movement updated successfully",
+      "deleted": "Movement deleted successfully",
+      "stock_entry_created": "Stock entry created successfully",
+      "stock_exit_created": "Stock exit created successfully"
+    },
+    "list": {
+      "title": "Stock Movements",
+      "add_movement": "Add Movement",
+      "no_movements": "No movements found",
+      "columns": {
+        "product_name": "Product Name",
+        "type": "Type",
+        "quantity": "Quantity",
+        "date": "Date",
+        "notes": "Notes",
+        "created_at": "Created at",
+        "created_by": "Created by"
+      },
+      "details_title": "Movement Details",
+      "export_title": "Export Movements"
+    },
+    "dialog": {
+      "add_title": "Add Movement",
+      "edit_title": "Edit Movement",
+      "delete_title": "Delete Movement",
+      "details_title": "Movement Details",
+      "export_title": "Export Movements"
+    },
+    "delete": {
+      "not_found": "Movement not found",
+      "confirm": "Are you sure you want to delete the movement \"{{reference}}\"?"
+    },
+    "details": {
+      "title": "Movement Details",
+      "not_found": "Movement not found",
+      "general_info": "General Information",
+      "type": "Type",
+      "type_info": "Type of stock movement",
+      "product": "Product",
+      "product_info": "Product affected by this movement",
+      "quantity": "Quantity",
+      "total_amount": "Total Amount",
+      "total_amount_info": "Quantity × Unit Price",
+      "details": "Additional Details",
+      "notes": "Notes",
+      "no_notes": "No notes provided",
+      "product_info_title": "Product Information",
+      "current_unit_price": "Current Unit Price",
+      "recent_movements": "Recent Movements for this Product",
+      "qty_short": "Qty",
+      "price_short": "Price"
+    },
+    "form": {
+      "type": "Movement Type",
+      "type_placeholder": "Select movement type",
+      "product": "Product",
+      "product_placeholder": "Select a product",
+      "quantity": "Quantity",
+      "quantity_placeholder": "Enter quantity",
+      "unit_price": "Unit Price (EUR)",
+      "unit_price_placeholder": "Enter unit price",
+      "notes": "Notes",
+      "notes_placeholder": "Enter optional notes",
+      "product_missing": "Product ID is missing",
+      "type_missing": "Movement type is missing",
+      "out_of_stock": "Insufficient stock. Available: {{available}}, Requested: {{requested}}",
+      "select_product_first": "Select a product first",
+      "loading_stock": "Loading stock...",
+      "stock_unavailable": "Stock unavailable",
+      "available_stock_out": "Available stock: {{available}}",
+      "current_stock_in": "Current stock: {{current}}",
+      "current_stock": "Current stock: {{current}}",
+      "max_quantity": "Maximum quantity: {{max}}"
+    },
+    "types": {
+      "in": "In",
+      "out": "Out"
+    }
+  },
+  "price_simulations": {
+    "list": {
+      "title": "Price Simulations",
+      "create_simulation": "Create Simulation",
+      "no_simulations": "No price simulations found",
+      "columns": {
+        "name": "Name",
+        "factor": "Factor",
+        "created_at": "Created at",
+        "created_by": "Created by"
+      }
+    },
+    "errors": {
+      "load_failed": "Failed to load price simulations",
+      "load_single_failed": "Failed to load price simulation",
+      "create_failed": "Failed to create price simulation",
+      "update_failed": "Failed to update price simulation",
+      "delete_failed": "Failed to delete price simulation",
+      "load_by_product_failed": "Failed to load price simulations by product",
+      "load_with_differences_failed": "Failed to load price simulations with differences"
+    },
+    "success": {
+      "loaded": "Price simulations loaded successfully",
+      "created": "Price simulation created successfully",
+      "updated": "Price simulation updated successfully",
+      "deleted": "Price simulation deleted successfully"
+    },
+    "dialog": {
+      "create_title": "Create Price Simulation",
+      "edit_title": "Edit Price Simulation",
+      "delete_title": "Delete Price Simulation",
+      "details_title": "Price Simulation Details",
+      "export_title": "Export Price Simulations"
+    },
+    "delete": {
+      "not_found": "Price simulation not found",
+      "confirm": "Are you sure you want to delete the price simulation \"{{name}}\"?"
+    },
+    "details": {
+      "general_info": "General Information",
+      "percentage_change": "Percentage Change",
+      "factor_info": "Multiplication factor applied to prices",
+      "metadata": "Metadata",
+      "impact": "Simulation Impact",
+      "margin_impact": "Margin Impact",
+      "margin_impact_info": "Effect on profit margin",
+      "recommendation": "Recommendation",
+      "positive": "Positive",
+      "negative": "Negative",
+      "highly_recommended": "Highly Recommended",
+      "recommended": "Recommended",
+      "neutral": "Neutral",
+      "consider": "Consider Carefully",
+      "not_recommended": "Not Recommended",
+      "not_found": "Price simulation not found"
+    },
+    "form": {
+      "scenario_name": "Scenario Name",
+      "scenario_name_placeholder": "Enter scenario name",
+      "factor": "Price Factor",
+      "factor_placeholder": "Enter price factor (e.g. 1.05 for 5% increase)",
+      "factor_helper": "Values above 1 increase prices, below 1 decrease prices",
+      "error_loading": "Error loading price simulation"
+    }
+  },
+  "stockSnapshots": {
+    "errors": {
+      "load_failed": "Failed to load stock snapshots",
+      "load_single_failed": "Failed to load stock snapshot",
+      "load_by_event_failed": "Failed to load snapshots by event",
+      "load_by_product_failed": "Failed to load snapshots by product"
+    },
+    "success": {
+      "loaded": "Stock snapshots loaded successfully"
+    }
+  },
+  "snapshotEvents": {
+    "errors": {
+      "load_failed": "Failed to load snapshot events",
+      "load_single_failed": "Failed to load snapshot event",
+      "create_failed": "Failed to create snapshot event"
+    },
+    "success": {
+      "loaded": "Snapshot events loaded successfully",
+      "created": "Snapshot event created successfully"
+    }
+  },
+  "pages": {
+    "not_found": {
+      "title": "Page Not Found",
+      "message": "The page you are looking for doesn't exist or has been moved.",
+      "back_to_home": "Back to Home"
+    }
+  },
+  "errors": {
+    "unknown": "Unknown error",
+    "unknown_occurred": "Unknown error occurred",
+    "something_went_wrong": "Something went wrong",
+    "page_not_found": "Page not found",
+    "access_forbidden": "Access forbidden",
+    "unauthorized_access": "Unauthorized access",
+    "server_error": "Server error",
+    "details": "Error Details"
+  },
+  "products": {
+    "errors": {
+      "load_failed": "Failed to load products",
+      "load_single_failed": "Failed to load product",
+      "create_failed": "Failed to create product",
+      "update_failed": "Failed to update product",
+      "delete_failed": "Failed to delete product",
+      "load_by_category_failed": "Failed to load products by category",
+      "load_with_stock_failed": "Failed to load products with stock"
+    },
+    "success": {
+      "loaded": "Products loaded successfully",
+      "created": "Product created successfully",
+      "updated": "Product updated successfully",
+      "deleted": "Product deleted successfully"
+    },
+    "snapshots": {
+      "list": {
+        "title": "Product Snapshots History",
+        "create_button": "Create New Snapshot",
+        "snapshot_number": "Snapshot #{{id}}",
+        "products_count": "Products Count",
+        "created_at": "Created at",
+        "created_by": "Created by",
+        "view_products": "View Products",
+        "no_snapshots": "No snapshots found",
+        "create_first_snapshot": "Create your first snapshot to keep track of product history"
+      },
+      "dialog": {
+        "title": "Product Snapshots",
+        "details_title": "Snapshot Details",
+        "create_title": "Create Product Snapshot",
+        "export_title": "Export Snapshot Products"
+      },
+      "details": {
+        "columns": {
+          "reference": "Reference",
+          "snapshotted_price": "Snapshot Price",
+          "actual_quantity": "Current Quantity",
+          "snapshotted_quantity": "Snapshot Quantity",
+          "quantity_differences": "Quantity Differences"
+        },
+        "not_found": "Snapshot not found",
+        "products_title": "Products in this Snapshot",
+        "no_products": "No products in this snapshot"
+      },
+      "export": {
+        "loading": "Exporting snapshot products...",
+        "success": "Snapshot products exported successfully",
+        "columns": {
+          "id": "ID",
+          "reference": "Reference",
+          "description": "Description",
+          "partNumber": "Part Number",
+          "unitPrice": "Unit Price (EUR)",
+          "category": "Category",
+          "uncategorized": "Uncategorized",
+          "currentStock": "Current Stock",
+          "createdBy": "Created By",
+          "createdDate": "Created Date",
+          "lastUpdatedBy": "Last Updated By",
+          "lastUpdatedDate": "Last Updated Date",
+          "snapshotted_price": "Snapshot Price",
+          "snapshotted_quantity": "Snapshot Quantity"
+        }
+      },
+      "create": {
+        "title": "Create New Snapshot",
+        "description": "Create a new snapshot of the current stock state for all products",
+        "info_title": "What is a snapshot?",
+        "info_description": "A snapshot captures the current state of your inventory:",
+        "info_point1": "Records current stock levels for all products",
+        "info_point2": "Preserves current prices at the time of snapshot",
+        "info_point3": "Allows you to track inventory changes over time",
+        "info_point4": "Provides historical data for analysis and reporting",
+        "description_label": "Snapshot Description (Optional)",
+        "description_placeholder": "Enter a description for this snapshot...",
+        "loading": "Creating snapshot...",
+        "submit": "Create Snapshot",
+        "label_title": "Snapshot Label",
+        "label_placeholder": "Enter a label for this snapshot..."
+      }
+    },
+    "list": {
+      "title": "Products",
+      "add_product": "Add Product",
+      "view_snapshots": "View Snapshots",
+      "no_products": "No products found",
+      "uncategorized": "Uncategorized",
+      "columns": {
+        "reference": "Reference",
+        "part_number": "Part Number",
+        "category": "Category",
+        "price": "Price",
+        "quantity": "Quantity",
+        "last_updated": "Last Updated",
+        "actions": "Actions"
+      }
+    },
+    "dialog": {
+      "add_title": "Add Product",
+      "edit_title": "Edit Product",
+      "delete_title": "Delete Product",
+      "details_title": "Product Details",
+      "export_title": "Export Products"
+    },
+    "delete": {
+      "not_found": "Product not found",
+      "confirm": "Are you sure you want to delete the product \"{{reference}}\" (Part number: {{part_number}})?",
+      "warning": "This action cannot be undone. All related data including stock movements and price history will also be deleted.",
+      "no_part_number": "Not specified"
+    },
+    "export": {
+      "loading": "Exporting...",
+      "success": "Products exported successfully",
+      "columns": {
+        "id": "ID",
+        "reference": "Reference",
+        "description": "Description",
+        "partNumber": "Part Number",
+        "unitPrice": "Unit Price (EUR)",
+        "category": "Category",
+        "uncategorized": "Uncategorized",
+        "currentStock": "Current Stock",
+        "createdBy": "Created By",
+        "createdDate": "Created Date",
+        "lastUpdatedBy": "Last Updated By",
+        "lastUpdatedDate": "Last Updated Date"
+      }
+    },
+    "details": {
+      "title": "Product Details",
+      "not_found": "Product not found",
+      "general_info": "General Information",
+      "reference": "Reference",
+      "reference_info": "Unique product reference",
+      "part_number": "Part Number",
+      "not_specified": "Not specified",
+      "category": "Category",
+      "uncategorized": "Uncategorized",
+      "id": "ID",
+      "stock_price": "Stock & Price",
+      "unit_price": "Unit Price",
+      "unit_price_info": "Unit price in euros",
+      "current_stock": "Current Stock",
+      "not_available": "Not available",
+      "stock_quantity_info": "Available quantity in stock",
+      "last_stock_snapshot": "Last stock snapshot",
+      "metadata": "Metadata",
+      "created_at": "Created on",
+      "created_by": "Created by",
+      "last_updated": "Last updated",
+      "never": "Never",
+      "updated_by": "Updated by",
+      "na": "N/A",
+      "stock_history": "Stock History",
+      "date": "Date",
+      "quantity": "Quantity",
+      "other_entries": "other entries",
+      "no_description": "No description available",
+      "movements_title": "Product Movements",
+      "no_movements": "No movements found for this product",
+      "movement_type": "Type",
+      "movement_date": "Date",
+      "movement_quantity": "Quantity",
+      "movement_notes": "Notes",
+      "price_simulations_title": "Price Simulations",
+      "no_price_simulations": "No price simulations found",
+      "simulation_name": "Scenario",
+      "simulation_factor": "Factor",
+      "simulation_price": "Simulated Price",
+      "simulation_date": "Date",
+      "no_product": "No product history found"
+    },
+    "form": {
+      "reference": "Reference",
+      "reference_placeholder": "Enter product reference",
+      "description": "Description",
+      "description_placeholder": "Enter product description",
+      "part_number": "Part Number",
+      "part_number_placeholder": "Enter part number",
+      "unit_price": "Unit Price (EUR)",
+      "unit_price_placeholder": "Enter unit price",
+      "category": "Category",
+      "category_placeholder": "Select category"
+    }
+  }
+}

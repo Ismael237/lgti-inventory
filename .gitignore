@@ -1,0 +1,61 @@
+# Dependencies
+node_modules/
+**/node_modules/
+frontend/node_modules/
+frontend/docs/
+frontend/.vscode/
+
+# Data directories (persistent storage)
+backend/mysql/data/
+backend/directus/data/uploads/
+backend/directus/config/directus-sync.config.js
+backend/nginx/data/logs/
+backend/nginx/ssl/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Build directories
+frontend/dist/
+frontend/build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+*.swo
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache/
+.npm/
+.pnpm-store/
+
+# Testing
+coverage/
+
+# Temporary files
+.tmp/
+temp/
+
+diff.txt

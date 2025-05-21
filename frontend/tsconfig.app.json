@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+
+    "baseUrl": ".",
+
+    "paths": {
+      "@ui/*": ["src/presentation/components/ui/*"],
+      "@layout/*": ["src/presentation/components/layout/*"],
+      "@charts/*": ["src/presentation/components/charts/*"],
+      "@components/*": ["src/presentation/components/*"],
+      "@pages/*": ["src/presentation/pages/*"],
+      "@hooks/*": ["src/presentation/hooks/*"],
+      "@routes/*": ["src/presentation/routes/*"],
+      "@utils/*": ["src/shared/utils/*"],
+      "@types": ["src/shared/types"],
+      "@i18n": ["src/shared/i18n"],
+      "@i18n/*": ["src/shared/i18n/*"],
+      "@store/*": ["src/domain/store/*"],
+      "@entities/*": ["src/domain/entities/*"],
+      "@entities": ["src/domain/entities"],
+      "@domain/*": ["src/domain/*"],
+      "@api/*": ["src/infrastructure/api/*"],
+      "@infrastructure/*": ["src/infrastructure/*"],
+      "@/*": ["src/*"],
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

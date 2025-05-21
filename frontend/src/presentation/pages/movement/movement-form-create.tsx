@@ -1,0 +1,206 @@
+import { useEffect, type RefObject } from 'react';
+import { movementSchema, MovementType, type MovementDTO, type MovementDTOForm } from '@entities';
+import { useTranslation } from 'react-i18next';
+import { createListCollection } from '@chakra-ui/react';
+import { useMovements } from '@hooks/use-movements';
+import { useProducts } from '@hooks/use-products';
+import { makeField } from '@ui/field/form-field-type';
+import { SimpleForm } from '@ui/form/simple-form';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { LoadingSpinner } from '@ui/loading-spinner';
+import { useNavigate } from 'react-router-dom';
+import { getFirstId } from '@utils/id-helper';
+
+export const MovementFormCreate = ({ selectRef }: { selectRef: RefObject<HTMLElement> }) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const {
+    createMovementRequest,
+    getCurrentStockRequest,
+  } = useMovements();
+
+  const {
+    fetchProductsRequest,
+  } = useProducts();
+
+  const {
+    data: products,
+    execute: fetchProducts,
+    isLoading: isLoadingProducts
+  } = fetchProductsRequest;
+
+  const {
+    execute: createMovement,
+    isLoading: isLoadingMovementCreation
+  } = createMovementRequest;
+
+  const {
+    data: currentStock,
+    isLoading: isLoadingStock,
+    execute: getCurrentStock,
+  } = getCurrentStockRequest;
+
+  const {
+    control,
+    register,
+    handleSubmit,
+    setError,
+    watch,
+    formState: { errors, isSubmitting }
+  } = useForm<MovementDTOForm>({
+    resolver: zodResolver(movementSchema)
+  });
+
+  const selectedProductId = watch('product_id');
+  const selectedMovementType = watch('type');
+
+  const safeProducts = products ?? [];
+
+  const productOptions = createListCollection({
+    items: safeProducts.map(product => ({ value: product.id, label: product.reference }))
+  });
+
+  const movementTypeOptions = createListCollection({
+    items: [
+      { value: 'IN', label: t('movements.types.in') },
+      { value: 'OUT', label: t('movements.types.out') },
+    ]
+  });
+
+  const field = makeField<MovementDTOForm>();
+
+  const getStockHelperText = () => {
+    const movementType = getFirstId(selectedMovementType);
+
+    if (!selectedProductId) {
+      return t('movements.form.select_product_first');
+    }
+
+    if (isLoadingStock) {
+      return t('movements.form.loading_stock');
+    }
+
+    if (currentStock === null) {
+      return t('movements.form.stock_unavailable');
+    }
+
+    if (movementType === MovementType.OUT) {
+      return t('movements.form.available_stock_out', {
+        available: currentStock,
+      });
+    } else if (movementType === MovementType.IN) {
+      return t('movements.form.current_stock_in', {
+        current: currentStock,
+      });
+    }
+
+    return t('movements.form.current_stock', {
+      current: currentStock,
+    });
+  };
+
+  const fields = [
+    field({
+      name: 'type' as const,
+      label: t('movements.form.type'),
+      type: 'select' as const,
+      placeholder: t('movements.form.type_placeholder'),
+      contentRef: selectRef,
+      required: true,
+      multiple: false,
+      options: movementTypeOptions,
+    }),
+    field({
+      name: 'product_id' as const,
+      label: t('movements.form.product'),
+      type: 'select' as const,
+      placeholder: t('movements.form.product_placeholder'),
+      contentRef: selectRef,
+      required: true,
+      multiple: false,
+      options: productOptions,
+      helperText: getStockHelperText(),
+    }),
+    field({
+      name: 'quantity' as const,
+      label: t('movements.form.quantity'),
+      type: 'number' as const,
+      placeholder: t('movements.form.quantity_placeholder'),
+      required: true
+    }),
+    field({
+      name: 'notes' as const,
+      label: t('movements.form.notes'),
+      type: 'textarea' as const,
+      placeholder: t('movements.form.notes_placeholder'),
+      required: false
+    })
+  ];
+
+  const onSubmit = async (data: MovementDTOForm) => {
+    const productId = getFirstId(data.product_id);
+    const movementType = getFirstId(data.type);
+
+    if (!productId) throw Error(t('movements.form.product_missing'));
+    if (!movementType) throw Error(t('movements.form.type_missing'));
+
+    if (movementType === MovementType.OUT) {
+      const currentStock = await getCurrentStock(productId);
+
+      if (currentStock < data.quantity) {
+        setError("quantity", {
+          type: "manual",
+          message: t('movements.form.out_of_stock', {
+            available: currentStock,
+            requested: data.quantity
+          })
+        });
+        return;
+      }
+    }
+
+    const formattedData: MovementDTO = {
+      product_id: productId,
+      type: movementType,
+      quantity: data.quantity,
+      notes: data.notes,
+    };
+
+    await createMovement(formattedData);
+    navigate("/movements");
+  }
+
+
+  useEffect(() => {
+    fetchProducts({
+      fields: ['id', 'reference']
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const productId = getFirstId(selectedProductId);
+    if (productId) {
+      getCurrentStock(productId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedProductId]);
+
+  if (isLoadingProducts) {
+    return <LoadingSpinner />;
+  }
+
+  return (
+    <SimpleForm<MovementDTOForm>
+      fields={fields}
+      control={control}
+      register={register}
+      errors={errors}
+      redirectPath="/movements"
+      isSubmitting={isSubmitting || isLoadingMovementCreation}
+      handleSubmit={handleSubmit(onSubmit)}
+    />
+  );
+};

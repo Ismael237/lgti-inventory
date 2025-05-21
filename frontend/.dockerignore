@@ -1,0 +1,26 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+dist
+build
+
+# Development
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+.vscode
+*.log
+README.md
+
+# Testing
+coverage
+*.test.ts
+*.test.tsx
+
+# OS files
+.DS_Store
+Thumbs.db

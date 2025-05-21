@@ -1,0 +1,83 @@
+[
+  {
+    "name": "Administrator",
+    "icon": "verified",
+    "description": "$t:admin_description",
+    "ip_access": null,
+    "enforce_tfa": false,
+    "admin_access": true,
+    "app_access": true,
+    "roles": [
+      {
+        "role": "_sync_default_admin_role",
+        "sort": null
+      }
+    ],
+    "_syncId": "_sync_default_admin_policy"
+  },
+  {
+    "name": "Inventory Manager",
+    "icon": "inventory_2",
+    "description": "Responsible for managing products and inventory movements.",
+    "ip_access": null,
+    "enforce_tfa": false,
+    "admin_access": false,
+    "app_access": true,
+    "roles": [],
+    "_syncId": "_sync_default_public_policy"
+  },
+  {
+    "name": "Warehouse Staff",
+    "icon": "warehouse",
+    "description": "Responsible for recording incoming and outgoing stock.",
+    "ip_access": null,
+    "enforce_tfa": false,
+    "admin_access": false,
+    "app_access": true,
+    "roles": [],
+    "_syncId": "01c58910-c07d-406c-bd64-bad6c694556c"
+  },
+  {
+    "name": "$t:public_label",
+    "icon": "public",
+    "description": "$t:public_description",
+    "ip_access": null,
+    "enforce_tfa": false,
+    "admin_access": false,
+    "app_access": false,
+    "roles": [
+      {
+        "role": null,
+        "sort": 1
+      }
+    ],
+    "_syncId": "2442667e-ce02-4833-8ed4-83a571be554f"
+  },
+  {
+    "name": "Inventory Analyst",
+    "icon": "analytics",
+    "description": null,
+    "ip_access": null,
+    "enforce_tfa": false,
+    "admin_access": false,
+    "app_access": true,
+    "roles": [
+      {
+        "role": "3534d3d1-6f82-43ed-9b84-10a5b33931c8",
+        "sort": 3
+      }
+    ],
+    "_syncId": "802bcc83-2dfe-49c4-9d13-33439f3f5142"
+  },
+  {
+    "name": "Sales Analyst",
+    "icon": "bar_chart",
+    "description": "Simulates pricing and analyses stock levels for strategy.",
+    "ip_access": null,
+    "enforce_tfa": false,
+    "admin_access": false,
+    "app_access": true,
+    "roles": [],
+    "_syncId": "930c345d-127a-4b99-a7a8-741d5473631c"
+  }
+]
