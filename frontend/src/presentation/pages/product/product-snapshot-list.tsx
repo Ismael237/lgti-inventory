@@ -81,10 +81,10 @@ export const ProductSnapshotList = () => {
               </CardHeader>
               <CardBody>
                 <Stack gap={2}>
-                  <Flex justify="space-between">
+                  {/* <Flex justify="space-between">
                     <Text fontWeight="bold">{t('products.snapshots.list.products_count')}:</Text>
-                    <Text>{pagination.total}</Text>
-                  </Flex>
+                    <Text>{snapshot.}</Text>
+                  </Flex> */}
                   <Flex justify="space-between">
                     <Text fontWeight="bold">{t('products.snapshots.list.created_at')}:</Text>
                     <Text>{formatDateWithFallback(snapshot.date_created)}</Text>

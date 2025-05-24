@@ -87,6 +87,7 @@ class StockSnapshotApi {
                 }
             },
             sort: params?.sort || ['product_id.reference'],
+            ...params,
         })
     }
 
