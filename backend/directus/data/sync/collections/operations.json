@@ -3,10 +3,10 @@
     "name": "calculate_current_stock",
     "key": "calculate_current_stock",
     "type": "exec",
-    "position_x": 43,
-    "position_y": 22,
+    "position_x": 41,
+    "position_y": 1,
     "options": {
-      "code": "module.exports = async function(data) {\n  const products = data.get_all_products;\n  const movements = data.get_product_movements;\n  const snapshot_event_id = data.create_snapshot_event[0];\n  \n  // Calculate stock for each product\n  const stockData = [];\n  \n  for (const product of products) {\n    let quantity = 0;\n    \n    // Sum all movements for this product\n    const productMovements = movements.filter(m => m.product_id === product.id);\n    \n    for (const movement of productMovements) {\n      if (movement.type === 'IN') {\n        quantity += Number(movement.quantity);\n      } else if (movement.type === 'OUT') {\n        quantity -= Number(movement.quantity);\n      }\n    }\n    \n    stockData.push({\n      snapshot_event_id: snapshot_event_id,\n      product_id: product.id,\n      quantity: quantity,\n      unit_price_eur: product.unit_price_eur\n    });\n  }\n  \n  return {\n    stock_data: stockData,\n    snapshot_count: stockData.length,\n    snapshot_event_id: snapshot_event_id,\n    trigger_source: data.snapshot_info.trigger_source\n  };\n};"
+      "code": "module.exports = async function(data) {\n  const products = data.get_all_products;\n  const snapshot_event_id = data.create_snapshot_event[0];\n  \n  // Calculate stock for each product\n  const stockData = [];\n  \n  for (const product of products) {\n    stockData.push({\n      snapshot_event_id: snapshot_event_id,\n      product_id: product.current_stock,\n      quantity: quantity,\n      unit_price_eur: product.unit_price_eur\n    });\n  }\n  \n  return {\n    stock_data: stockData,\n    snapshot_count: stockData.length,\n    snapshot_event_id: snapshot_event_id,\n    trigger_source: data.snapshot_info.trigger_source\n  };\n};"
     },
     "resolve": "cac27996-6ea1-466f-ad85-c94e083db681",
     "reject": null,
@@ -32,42 +32,6 @@
     "reject": "d1269824-bffe-4b67-b1f4-025e1b622dec",
     "flow": "76886496-7557-4a27-a006-1e010dbef5eb",
     "_syncId": "707e8c29-e30c-4d73-9e85-8f114d76b354"
-  },
-  {
-    "name": "Check movement type",
-    "key": "check_movement_type",
-    "type": "condition",
-    "position_x": 3,
-    "position_y": 19,
-    "options": {
-      "filter": {
-        "$trigger": {
-          "payload": {
-            "type": {
-              "_eq": "OUT"
-            }
-          }
-        }
-      }
-    },
-    "resolve": "b5739284-77fa-44a6-9a0d-8b2ce1d1b3f1",
-    "reject": "975aad9a-465e-45f0-b71b-7d2fa9799397",
-    "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
-    "_syncId": "a1634ca9-2e43-4363-aafb-72fcbb4c933f"
-  },
-  {
-    "name": "Check quantity",
-    "key": "check_quantity",
-    "type": "exec",
-    "position_x": 23,
-    "position_y": 19,
-    "options": {
-      "code": "module.exports = async function(data) {\n  const stock_quantity = data.get_stock_quantity.data.stock_quantity;\n  const requested_qty = parseFloat(data.$trigger.payload.quantity) || 0;\n\n  if (stock_quantity < requested_qty) {\n    throw new Error(\n      `Insufficient stock: only ${stock_quantity} available, tried to remove ${requested_qty}`\n    );\n  }\n    \n  return {\n    status: 'success',\n    data: {\n      stock_quantity\n    }\n  };\n};"
-    },
-    "resolve": null,
-    "reject": null,
-    "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
-    "_syncId": "d1a56eac-efdd-490e-9866-63065a47649c"
   },
   {
     "name": "Check Single Update",
@@ -98,20 +62,6 @@
     "_syncId": "bb2d3e63-707d-4c2b-ae94-a07b5a903714"
   },
   {
-    "name": "compute_stock",
-    "key": "compute_stock",
-    "type": "exec",
-    "position_x": 37,
-    "position_y": 1,
-    "options": {
-      "code": "module.exports = async function(data) {\n  const product_movements = data.fetch_movement_of_product;\n\n  const stock_quantity = product_movements.reduce((accumulator, movement) => {\n    const qty = parseFloat(movement.quantity) || 0;\n    return accumulator + (movement.type === 'IN' ? qty : -qty);\n  }, 0);\n  return {\n    status: 'success',\n    data: {\n      stock_quantity\n    }\n  };\n};"
-    },
-    "resolve": null,
-    "reject": null,
-    "flow": "850049b5-7595-4f53-a6b9-654039da9fc2",
-    "_syncId": "7d98cfaf-2c85-4b78-9467-3dc4147a445b"
-  },
-  {
     "name": "create_snapshot_event",
     "key": "create_snapshot_event",
     "type": "item-create",
@@ -135,8 +85,8 @@
     "name": "create_stock_snapshots",
     "key": "create_stock_snapshots",
     "type": "item-create",
-    "position_x": 61,
-    "position_y": 1,
+    "position_x": 43,
+    "position_y": 19,
     "options": {
       "payload": "{{$last.stock_data}}",
       "collection": "stock_snapshot",
@@ -149,29 +99,6 @@
     "_syncId": "cac27996-6ea1-466f-ad85-c94e083db681"
   },
   {
-    "name": "Fetch movement of product",
-    "key": "fetch_movement_of_product",
-    "type": "item-read",
-    "position_x": 19,
-    "position_y": 1,
-    "options": {
-      "query": {
-        "filter": {
-          "product_id": {
-            "_eq": "{{$trigger.data.product_id}}"
-          }
-        }
-      },
-      "collection": "movement",
-      "emitEvents": false,
-      "permissions": "$full"
-    },
-    "resolve": "7d98cfaf-2c85-4b78-9467-3dc4147a445b",
-    "reject": null,
-    "flow": "850049b5-7595-4f53-a6b9-654039da9fc2",
-    "_syncId": "a8b9a554-0193-4f4c-8ebf-27e6c4a5b369"
-  },
-  {
     "name": "get_all_products",
     "key": "get_all_products",
     "type": "item-read",
@@ -182,7 +109,7 @@
       "emitEvents": false,
       "permissions": "$full"
     },
-    "resolve": "6a8efcd2-b4bd-4f9b-9fae-e656758ae4ee",
+    "resolve": "898934c6-6d1c-4510-a724-74100ae6ca0a",
     "reject": null,
     "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
     "_syncId": "27ff32bb-d0af-476b-a339-b372733dda7a"
@@ -211,20 +138,77 @@
     "_syncId": "3730e27d-fdaa-4c29-b0a8-86c21b8304a6"
   },
   {
-    "name": "get_product_movements",
-    "key": "get_product_movements",
+    "name": "Get old movement data",
+    "key": "get_old_movement_data",
     "type": "item-read",
-    "position_x": 41,
-    "position_y": 1,
+    "position_x": 3,
+    "position_y": 19,
     "options": {
+      "query": {
+        "fields": [
+          "*",
+          "product_id.*"
+        ],
+        "filter": {
+          "id": {
+            "_eq": "{{$trigger.payload[0]}}"
+          }
+        }
+      },
       "collection": "movement",
       "emitEvents": false,
       "permissions": "$full"
     },
-    "resolve": "898934c6-6d1c-4510-a724-74100ae6ca0a",
+    "resolve": "c82769d5-bf26-4fcc-aedf-e783ff289fad",
     "reject": null,
-    "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
-    "_syncId": "6a8efcd2-b4bd-4f9b-9fae-e656758ae4ee"
+    "flow": "826a0d5c-3d9f-4126-89ae-76bd0523e024",
+    "_syncId": "4d9218e2-79be-4d5d-98b5-0fbcba3aa072"
+  },
+  {
+    "name": "Get Products",
+    "key": "get_products",
+    "type": "item-read",
+    "position_x": 41,
+    "position_y": 1,
+    "options": {
+      "query": {
+        "filter": {
+          "id": {
+            "_eq": "{{ resolve_product_id.data.product_id }}"
+          }
+        }
+      },
+      "collection": "product",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "7899fbb0-14fd-4156-b7ca-8ef71408dd81",
+    "reject": null,
+    "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
+    "_syncId": "89ded23f-4644-403e-9d2f-92f2cee09faf"
+  },
+  {
+    "name": "Get Products",
+    "key": "get_products",
+    "type": "item-read",
+    "position_x": 3,
+    "position_y": 19,
+    "options": {
+      "query": {
+        "filter": {
+          "id": {
+            "_eq": "{{ $trigger.payload.product_id }}"
+          }
+        }
+      },
+      "collection": "product",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": "d1a56eac-efdd-490e-9866-63065a47649c",
+    "reject": null,
+    "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
+    "_syncId": "e8ce2556-4248-4d00-a045-0fb62abb4cc9"
   },
   {
     "name": "Get snapshot event",
@@ -248,44 +232,6 @@
     "reject": null,
     "flow": "673e151e-6b89-4a04-bf04-010a44c2914b",
     "_syncId": "af7541ed-c93e-49b7-89e8-e96e641913df"
-  },
-  {
-    "name": "Get stock quantity",
-    "key": "get_stock_quantity",
-    "type": "trigger",
-    "position_x": 21,
-    "position_y": 1,
-    "options": {
-      "flow": "850049b5-7595-4f53-a6b9-654039da9fc2",
-      "payload": {
-        "data": "{{ $trigger.payload }}",
-        "user": "{{ $accountability.user }}"
-      },
-      "iterationMode": "parallel"
-    },
-    "resolve": "d1a56eac-efdd-490e-9866-63065a47649c",
-    "reject": null,
-    "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
-    "_syncId": "b5739284-77fa-44a6-9a0d-8b2ce1d1b3f1"
-  },
-  {
-    "name": "Get stock quantity",
-    "key": "get_stock_quantity",
-    "type": "trigger",
-    "position_x": 41,
-    "position_y": 1,
-    "options": {
-      "flow": "850049b5-7595-4f53-a6b9-654039da9fc2",
-      "payload": {
-        "data": "{{ resolve_product_id.data }}",
-        "user": "{{ $accountability.user }}"
-      },
-      "iterationMode": "parallel"
-    },
-    "resolve": "7899fbb0-14fd-4156-b7ca-8ef71408dd81",
-    "reject": null,
-    "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
-    "_syncId": "cad60131-e3fa-4568-8cdb-c5dd18353b43"
   },
   {
     "name": "Get today date",
@@ -333,8 +279,8 @@
     "name": "log_snapshot_creation",
     "key": "log_snapshot_creation",
     "type": "log",
-    "position_x": 63,
-    "position_y": 19,
+    "position_x": 62,
+    "position_y": 1,
     "options": {
       "message": "Successfully created stock snapshot with {{calculate_current_stock.snapshot_count}} product records for event ID {{calculate_current_stock.snapshot_event_id}}"
     },
@@ -342,6 +288,34 @@
     "reject": null,
     "flow": "6e1b2d7a-1427-4993-a404-30880fecc8ab",
     "_syncId": "b5733699-90dd-44c3-9828-e2b16f1e2336"
+  },
+  {
+    "name": " Movement Deletion Validation and Stock Reversal",
+    "key": "movement_deletion_validation_and_stock_reversal",
+    "type": "exec",
+    "position_x": 21,
+    "position_y": 1,
+    "options": {
+      "code": "module.exports = async function (data) {\n  const keys = data.$trigger.payload;\n  \n  const movementId = keys?.[0];\n  if (!movementId) throw new Error('Missing movement ID');\n  \n  // Get the movement data that's being deleted\n  const deletedMovement = data.get_old_movement_data[0];\n  if (!deletedMovement) throw new Error('Could not find movement data to delete');\n  \n  // Get current product data\n  const currentProduct = deletedMovement.product_id;\n  if (!currentProduct) throw new Error('Could not find product data');\n  \n  // Validate movement data\n  const movementType = deletedMovement.type;\n  const movementQuantity = parseFloat(deletedMovement.quantity);\n  const productId = deletedMovement.product_id.id;\n  \n  if (!movementType || !['IN', 'OUT'].includes(movementType)) {\n    throw new Error(`Invalid movement type: ${movementType}`);\n  }\n  \n  if (isNaN(movementQuantity) || movementQuantity <= 0) {\n    throw new Error(`Invalid movement quantity: ${movementQuantity}`);\n  }\n  \n  if (!productId) {\n    throw new Error('Missing product_id in deleted movement');\n  }\n  \n  // Get current stock\n  const currentStock = parseFloat(currentProduct.current_stock || 0);\n  \n  // Calculate the stock after reversing the deleted movement\n  let newStock = currentStock;\n  \n  // Reverse the movement impact:\n  // - If it was an IN movement, subtract the quantity (reverse the addition)\n  // - If it was an OUT movement, add the quantity back (reverse the subtraction)\n  if (movementType === 'IN') {\n    newStock -= movementQuantity;\n  } else if (movementType === 'OUT') {\n    newStock += movementQuantity;\n  }\n  \n  // Check if reversing this movement would result in negative stock\n  // This could happen if other movements have been processed since this one\n  if (newStock < 0) {\n    throw new Error(\n      `Cannot delete movement: Reversing this ${movementType} movement of ${movementQuantity} ` +\n      `would result in negative stock (${newStock}). Current stock is ${currentStock}. ` +\n      `Please check if other movements depend on this one.`\n    );\n  }\n  \n  return {\n    status: 'success',\n    data: {\n      product_id: productId,\n      movement_id: movementId,\n      deleted_movement: {\n        type: movementType,\n        quantity: movementQuantity\n      },\n      stock_before_deletion: currentStock,\n      stock_after_deletion: newStock,\n      stock_adjustment: newStock - currentStock,\n    }\n  };\n};"
+    },
+    "resolve": "bd9a64d0-623c-4047-b7ca-079c200bb89e",
+    "reject": null,
+    "flow": "826a0d5c-3d9f-4126-89ae-76bd0523e024",
+    "_syncId": "c82769d5-bf26-4fcc-aedf-e783ff289fad"
+  },
+  {
+    "name": "Movement Update Validation",
+    "key": "movement_update_validation",
+    "type": "exec",
+    "position_x": 42,
+    "position_y": 19,
+    "options": {
+      "code": "module.exports = async function (data) {\n  const payload = data.$trigger.payload;\n  const keys = data.$trigger.keys;\n\n  const movementId = keys?.[0];\n  if (!movementId) throw new Error('Missing movement ID');\n    \n  // Get current movement data\n  const currentMovement = data.get_old_movement_data[0];\n  if (!currentMovement) throw new Error('Could not find existing movement data');\n\n  // Get current product data\n  const currentProduct = data.get_products[0];\n  if (!currentProduct) throw new Error('Could not find product data');\n\n  // Get new values or use existing ones\n  const newType = payload.type ?? currentMovement.type;\n  const newQuantity = parseFloat(payload.quantity ?? currentMovement.quantity);\n  const productId = payload.product_id ?? currentMovement.product_id;\n\n  // Validation checks\n  if (!newType || !['IN', 'OUT'].includes(newType)) {\n    throw new Error('Invalid or missing movement type');\n  }\n\n  if (!productId) {\n    throw new Error('Missing product_id');\n  }\n\n  if (isNaN(newQuantity) || newQuantity <= 0) {\n    throw new Error('Invalid quantity: must be a positive number');\n  }\n    \n  // Get current stock from product\n  const currentStock = parseFloat(currentProduct.current_stock || 0);\n  \n  // Calculate the stock after reversing the old movement effect\n  let stockAfterReverse = currentStock;\n  \n  // Reverse the effect of the old movement\n  if (currentMovement.type === 'IN') {\n    stockAfterReverse -= parseFloat(currentMovement.quantity);\n  } else if (currentMovement.type === 'OUT') {\n    stockAfterReverse += parseFloat(currentMovement.quantity);\n  }\n  \n  // Now apply the new movement effect\n  let finalStock = stockAfterReverse;\n  \n  if (newType === 'IN') {\n    finalStock += newQuantity;\n  } else if (newType === 'OUT') {\n    finalStock -= newQuantity;\n  }\n  \n  // Check if the operation would result in negative stock\n  if (finalStock < 0) {\n    throw new Error(\n      `Insufficient stock: Current stock is ${currentStock}. ` +\n      `After reversing old ${currentMovement.type} of ${currentMovement.quantity}, ` +\n      `available stock would be ${stockAfterReverse}. ` +\n      `Cannot apply ${newType} of ${newQuantity} as it would result in ${finalStock} stock.`\n    );\n  }\n\n  return {\n    status: 'success',\n    data: {\n      product_id: productId,\n      movement_id: movementId,\n      current_stock: currentStock,\n      stock_after_reverse: stockAfterReverse,\n      new_stock: finalStock,\n      stock_difference: finalStock - currentStock,\n      old_movement: {\n        type: currentMovement.type,\n        quantity: parseFloat(currentMovement.quantity)\n      },\n      new_movement: {\n        type: newType,\n        quantity: newQuantity\n      }\n    }\n  };\n};"
+    },
+    "resolve": "cc844164-46fc-49b2-9883-24be2a6ef5de",
+    "reject": null,
+    "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
+    "_syncId": "7899fbb0-14fd-4156-b7ca-8ef71408dd81"
   },
   {
     "name": "prepare_api_response",
@@ -413,7 +387,7 @@
     "options": {
       "code": "module.exports = async function (data) {\n    const newProductId = data.$trigger.payload?.product_id;\n    const oldMovementData = data.get_old_movement_data[0];\n\n    if (!newProductId && !oldMovementData?.product_id) {\n        throw new Error(\"No product_id found in payload or existing movement.\");\n    }\n\n    const resolvedProductId = newProductId || oldMovementData.product_id;\n\n    return {\n        status: \"success\",\n        data: {\n        \tproduct_id: resolvedProductId\n        }\n    };\n};"
     },
-    "resolve": "cad60131-e3fa-4568-8cdb-c5dd18353b43",
+    "resolve": "89ded23f-4644-403e-9d2f-92f2cee09faf",
     "reject": null,
     "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
     "_syncId": "13b69e41-6161-405b-96bb-4fbaaad98c8d"
@@ -422,8 +396,8 @@
     "name": "return_result_data",
     "key": "return_result_data",
     "type": "exec",
-    "position_x": 81,
-    "position_y": 1,
+    "position_x": 64,
+    "position_y": 19,
     "options": {
       "code": "module.exports = async function(data) {\n  const snapshotCreated = !!data.create_stock_snapshots[0];\n  \n  return {\n    success: true,\n    snapshot_created: snapshotCreated,\n    snapshot_id: data.calculate_current_stock.snapshot_event_id,\n    timestamp: new Date().toISOString()\n  };\n};"
     },
@@ -447,18 +421,18 @@
     "_syncId": "662ef987-aa89-4dba-9b26-6266d04ce3d4"
   },
   {
-    "name": "Transform Payload",
-    "key": "transform_i4wac",
-    "type": "transform",
+    "name": "Stock Validation and Calculation",
+    "key": "stock_validation_and_calculation",
+    "type": "exec",
     "position_x": 21,
-    "position_y": 35,
+    "position_y": 1,
     "options": {
-      "json": "{{$trigger.payload}}"
+      "code": "module.exports = async function(data) {\n  const current_stock = data.get_products[0].current_stock;\n  const requested_qty = parseFloat(data.$trigger.payload.quantity) || 0;\n  const movement_type = data.$trigger.payload.type;\n  \n  if (movement_type === 'OUT' && current_stock < requested_qty) {\n    throw new Error(\n      `Insufficient stock: only ${current_stock} available, attempted to remove ${requested_qty}`\n    );\n  }\n  \n  let new_current_stock;\n  if (movement_type === 'IN') {\n    new_current_stock = current_stock + requested_qty;\n  } else if (movement_type === 'OUT') {\n    new_current_stock = current_stock - requested_qty;\n  } else {\n    throw new Error(`Unrecognized movement type: ${movement_type}`);\n  }\n  \n  return {\n    status: 'success',\n    data: {\n      new_current_stock,\n      movement_type,\n      quantity_moved: requested_qty,\n      previous_stock: current_stock,\n      product_id: data.$trigger.payload.product_id\n    }\n  };\n};"
     },
-    "resolve": null,
+    "resolve": "e93aa8da-fecd-4e0a-ab30-72e4daef6d2b",
     "reject": null,
     "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
-    "_syncId": "975aad9a-465e-45f0-b71b-7d2fa9799397"
+    "_syncId": "d1a56eac-efdd-490e-9866-63065a47649c"
   },
   {
     "name": "trigger_snapshot_creator",
@@ -522,18 +496,82 @@
     "_syncId": "94c4795e-b325-4e79-8764-ae8da0970dec"
   },
   {
-    "name": "Validate stock out",
-    "key": "validate_stock_out",
-    "type": "exec",
-    "position_x": 43,
+    "name": "Update product",
+    "key": "update_product",
+    "type": "item-update",
+    "position_x": 23,
     "position_y": 20,
     "options": {
-      "code": "module.exports = async function (data) {\n  const payload = data.$trigger.payload;\n  const keys = data.$trigger.keys;\n\n  const movementId = keys?.[0];\n  if (!movementId) throw new Error('Missing movement ID');\n    \n  // Get current movement data\n  const currentMovement = data.get_old_movement_data[0];\n  if (!currentMovement) throw new Error('Could not find existing movement data');\n\n  // Get new values or use existing ones\n  const newType = payload.type ?? currentMovement.type;\n  const newQuantity = parseFloat(payload.quantity ?? currentMovement.quantity);\n  const productId = payload.product_id ?? currentMovement.product_id;\n\n  // Validation checks\n  if (!newType || !['IN', 'OUT'].includes(newType)) {\n    throw new Error('Invalid or missing movement type');\n  }\n\n  if (!productId) {\n    throw new Error('Missing product_id');\n  }\n\n  if (isNaN(newQuantity) || newQuantity <= 0) {\n    throw new Error('Invalid quantity: must be a positive number');\n  }\n    \n  // Get current stock quantity\n  const currentStockQuantity = parseFloat(data.get_stock_quantity?.data?.stock_quantity || 0);\n  \n  // Calculate the impact of the current movement on stock (before changes)\n  let adjustedStock = currentStockQuantity;\n  \n  // If editing an existing movement, first reverse its effect on the stock calculation\n  if (currentMovement.type === 'IN') {\n    adjustedStock -= parseFloat(currentMovement.quantity);\n  } else if (currentMovement.type === 'OUT') {\n    adjustedStock += parseFloat(currentMovement.quantity);\n  }\n  \n  // Now calculate what would happen after the change\n  let finalStock = adjustedStock;\n  \n  // Apply the new movement effect\n  if (newType === 'IN') {\n    finalStock += newQuantity;\n  } else if (newType === 'OUT') {\n    finalStock -= newQuantity;\n  }\n  \n  // Check if the operation would result in negative stock\n  if (finalStock < 0) {\n    throw new Error(`Operation would result in negative stock: ${adjustedStock} available before this movement, would become ${finalStock} after applying ${newType} of ${newQuantity}`);\n  }\n\n  return {\n    status: 'success',\n    data: {\n      product_id: productId,\n      movement_id: movementId,\n      stock_before_change: currentStockQuantity,\n      adjusted_stock: adjustedStock,\n      stock_after_change: finalStock,\n      old_type: currentMovement.type,\n      old_quantity: parseFloat(currentMovement.quantity),\n      new_type: newType,\n      new_quantity: newQuantity\n    }\n  };\n};"
+      "query": {
+        "filter": {
+          "id": {
+            "_eq": "{{ $trigger.payload.product_id }}"
+          }
+        }
+      },
+      "payload": {
+        "current_stock": "{{$last.data.new_current_stock}}"
+      },
+      "collection": "product",
+      "emitEvents": false,
+      "permissions": "$trigger"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a",
+    "_syncId": "e93aa8da-fecd-4e0a-ab30-72e4daef6d2b"
+  },
+  {
+    "name": "Update Product Stock",
+    "key": "update_product_stock",
+    "type": "item-update",
+    "position_x": 23,
+    "position_y": 19,
+    "options": {
+      "query": {
+        "filter": {
+          "id": {
+            "_eq": "{{ $last.data.product_id }}"
+          }
+        }
+      },
+      "payload": {
+        "current_stock": "{{$last.data.stock_after_deletion}}"
+      },
+      "collection": "product",
+      "emitEvents": false,
+      "permissions": "$full"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "826a0d5c-3d9f-4126-89ae-76bd0523e024",
+    "_syncId": "bd9a64d0-623c-4047-b7ca-079c200bb89e"
+  },
+  {
+    "name": "Update Product Stock",
+    "key": "update_product_stock",
+    "type": "item-update",
+    "position_x": 60,
+    "position_y": 1,
+    "options": {
+      "query": {
+        "filter": {
+          "id": {
+            "_eq": "{{ resolve_product_id.data.product_id }}"
+          }
+        }
+      },
+      "payload": {
+        "current_stock": "{{$last.data.new_stock}}"
+      },
+      "collection": "product",
+      "emitEvents": false,
+      "permissions": "$trigger"
     },
     "resolve": null,
     "reject": null,
     "flow": "fa340850-1ab7-40a1-8003-cac7928b40df",
-    "_syncId": "7899fbb0-14fd-4156-b7ca-8ef71408dd81"
+    "_syncId": "cc844164-46fc-49b2-9883-24be2a6ef5de"
   },
   {
     "name": "validate_webhook",

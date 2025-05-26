@@ -895,6 +895,7 @@ type product {
   part_number: Int
   unit_price_eur: Float
   category_id(filter: category_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): category
+  current_stock: Int
 }
 
 type product_aggregated {
@@ -921,6 +922,7 @@ type product_aggregated_count {
   part_number: Int
   unit_price_eur: Int
   category_id: Int
+  current_stock: Int
 }
 
 type product_aggregated_fields {
@@ -928,6 +930,7 @@ type product_aggregated_fields {
   part_number: Float
   unit_price_eur: Float
   category_id: Float
+  current_stock: Float
 }
 
 type product_mutated {
@@ -1075,6 +1078,7 @@ type version_product {
   part_number: Int
   unit_price_eur: Float
   category_id: JSON
+  current_stock: Int
 }
 
 """"""
@@ -1297,6 +1301,7 @@ input create_product_input {
   part_number: Int
   unit_price_eur: Float
   category_id: create_category_input
+  current_stock: Int
 }
 
 input create_snapshot_event_input {
@@ -1868,6 +1873,7 @@ input product_filter {
   part_number: number_filter_operators
   unit_price_eur: number_filter_operators
   category_id: category_filter
+  current_stock: number_filter_operators
   _and: [product_filter]
   _or: [product_filter]
 }
@@ -2077,6 +2083,7 @@ input update_product_input {
   part_number: Int
   unit_price_eur: Float
   category_id: update_category_input
+  current_stock: Int
 }
 
 input update_snapshot_event_input {

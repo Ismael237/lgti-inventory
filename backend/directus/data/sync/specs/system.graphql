@@ -1676,6 +1676,7 @@ type product {
   part_number: Int
   unit_price_eur: Float
   category_id(filter: category_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): category
+  current_stock: Int
 }
 
 type product_mutated {
@@ -2777,6 +2778,7 @@ input product_filter {
   part_number: number_filter_operators
   unit_price_eur: number_filter_operators
   category_id: category_filter
+  current_stock: number_filter_operators
   _and: [product_filter]
   _or: [product_filter]
 }

@@ -18,11 +18,11 @@ export const MovementFormCreate = ({ selectRef }: { selectRef: RefObject<HTMLEle
 
   const {
     createMovementRequest,
-    getCurrentStockRequest,
   } = useMovements();
 
   const {
     fetchProductsRequest,
+    fetchProductByIdRequest,
   } = useProducts();
 
   const {
@@ -37,10 +37,10 @@ export const MovementFormCreate = ({ selectRef }: { selectRef: RefObject<HTMLEle
   } = createMovementRequest;
 
   const {
-    data: currentStock,
-    isLoading: isLoadingStock,
-    execute: getCurrentStock,
-  } = getCurrentStockRequest;
+    data: product,
+    isLoading: isLoadingProduct,
+    execute: fetchProductById,
+  } = fetchProductByIdRequest;
 
   const {
     control,
@@ -78,26 +78,26 @@ export const MovementFormCreate = ({ selectRef }: { selectRef: RefObject<HTMLEle
       return t('movements.form.select_product_first');
     }
 
-    if (isLoadingStock) {
+    if (isLoadingProduct) {
       return t('movements.form.loading_stock');
     }
 
-    if (currentStock === null) {
+    if (product === null) {
       return t('movements.form.stock_unavailable');
     }
 
     if (movementType === MovementType.OUT) {
       return t('movements.form.available_stock_out', {
-        available: currentStock,
+        available: product.current_stock,
       });
     } else if (movementType === MovementType.IN) {
       return t('movements.form.current_stock_in', {
-        current: currentStock,
+        current: product.current_stock,
       });
     }
 
     return t('movements.form.current_stock', {
-      current: currentStock,
+      current: product.current_stock,
     });
   };
 
@@ -147,9 +147,9 @@ export const MovementFormCreate = ({ selectRef }: { selectRef: RefObject<HTMLEle
     if (!movementType) throw Error(t('movements.form.type_missing'));
 
     if (movementType === MovementType.OUT) {
-      const currentStock = await getCurrentStock(productId);
+      const currentStock = (await fetchProductById(productId))?.current_stock;
 
-      if (currentStock < data.quantity) {
+      if (currentStock !== undefined && currentStock < data.quantity) {
         setError("quantity", {
           type: "manual",
           message: t('movements.form.out_of_stock', {
@@ -183,7 +183,7 @@ export const MovementFormCreate = ({ selectRef }: { selectRef: RefObject<HTMLEle
   useEffect(() => {
     const productId = getFirstId(selectedProductId);
     if (productId) {
-      getCurrentStock(productId);
+      fetchProductById(productId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProductId]);

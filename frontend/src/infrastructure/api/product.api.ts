@@ -2,8 +2,6 @@ import { readItems, readItem, createItem, updateItem, deleteItem } from '@direct
 import { directus } from './directus/client';
 import type { Product, ProductApiItem, ProductDTO } from '@entities';
 import type { PaginatedResponse, QueryParams } from '@types';
-import { MovementType } from '@entities';
-import { movementApi } from './movement.api';
 
 const collectionName = "product";
 
@@ -26,47 +24,12 @@ class ProductApi {
     }
 
     /**
-     * Get products with current stock calculation
-     * @param params - Query parameters for filtering, sorting, and pagination
-     * @returns Promise with products including stock information
-     */
-    async getProductsWithStock(params?: QueryParams): Promise<Product[]> {
-        // Get products
-        const products = await this.getAll(params);
-        
-        // Get movements for stock calculation
-        const movements = await directus.request(
-            readItems('movement', {
-                fields: ['product_id', 'type', 'quantity']
-            })
-        );
-        
-        // Calculate current stock for each product
-        return products.map(product => {
-            const productMovements = movements.filter(m => m.product_id === product.id);
-            
-            const incomingQuantity = productMovements
-                .filter(m => m.type === MovementType.IN)
-                .reduce((sum, m) => sum + Number(m.quantity), 0);
-                
-            const outgoingQuantity = productMovements
-                .filter(m => m.type === MovementType.OUT)
-                .reduce((sum, m) => sum + Number(m.quantity), 0);
-                
-            return {
-                ...product,
-                current_stock: incomingQuantity - outgoingQuantity
-            };
-        });
-    }
-
-    /**
      * Get products with pagination
      * @param params - Query parameters for filtering, sorting, and pagination
      * @returns Promise with paginated product response
      */
     async getPaginated(params?: QueryParams): Promise<PaginatedResponse<Product>> {
-        const items = await this.getProductsWithStock(params);
+        const products = await this.getAll(params);
         const countResponse = await directus.request<{ count: number }[]>(
             readItems(collectionName, {
                 filter: params?.filter || {},
@@ -74,21 +37,13 @@ class ProductApi {
             })
         );
 
-        const products = await Promise.all(items.map(async (item) => {
-            const current_stock = await movementApi.getCurrentStock(item.id);
-            return {
-                ...item,
-                current_stock
-            } as Product
-        }))
-
         return {
             data: products,
             meta: {
                 total_count: countResponse[0].count,
                 page: params?.page || 1,
-                limit: params?.limit || items.length,
-                total_pages: Math.ceil(countResponse[0].count / (params?.limit || items.length))
+                limit: params?.limit || products.length,
+                total_pages: Math.ceil(countResponse[0].count / (params?.limit || products.length))
             }
         };
     }
@@ -99,18 +54,13 @@ class ProductApi {
      * @returns Promise with product data
      */
     async getById(id: number): Promise<Product> {
-        const item = await directus.request<ProductApiItem>(
+        const product = await directus.request<ProductApiItem>(
             readItem(collectionName, id, {
                 fields: ['*.*']
             })
         );
 
-        const current_stock = await movementApi.getCurrentStock(item.id);
-
-        return {
-            ...item,
-            current_stock
-        }
+        return product;
     }
 
     /**

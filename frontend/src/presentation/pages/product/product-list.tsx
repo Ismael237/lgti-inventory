@@ -120,7 +120,7 @@ const ProductList = ({ viewType }: ProductListComponentProps) => {
               <LuHistory />
               {t('products.list.view_snapshots')}
             </LinkButton>
-            <LinkButton 
+            <LinkButton
               loading={loading}
               to={`${baseUrl}/new`}
             >

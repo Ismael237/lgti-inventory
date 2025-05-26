@@ -1,7 +1,6 @@
 import { readItems, readItem, createItem, updateItem, deleteItem } from '@directus/sdk';
 import { directus } from './directus/client';
 import type { Movement, MovementApiItem, MovementDTO } from '@entities';
-import { MovementType } from '@entities';
 import type { PaginatedResponse, QueryParams } from '@types';
 
 const collectionName = "movement";
@@ -112,25 +111,6 @@ class MovementApi {
             },
             ...params
         });
-    }
-
-    /**
-     * Get current stock for a specific product
-     * @param productId - Product ID
-     * @returns Promise with current stock quantity
-     */
-    async getCurrentStock(productId: number): Promise<number> {
-        const movements = await this.getMovementsByProduct(productId);
-
-        const incomingQuantity = movements.data
-            .filter(m => m.type === MovementType.IN)
-            .reduce((sum, m) => sum + Number(m.quantity), 0);
-
-        const outgoingQuantity = movements.data
-            .filter(m => m.type === MovementType.OUT)
-            .reduce((sum, m) => sum + Number(m.quantity), 0);
-
-        return incomingQuantity - outgoingQuantity;
     }
 }
 

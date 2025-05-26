@@ -65,24 +65,30 @@
     "_syncId": "76886496-7557-4a27-a006-1e010dbef5eb"
   },
   {
-    "name": "Calculate Stock Quantity",
+    "name": "Stock Movement Deletion and Stock Reversal",
     "icon": "bolt",
     "color": null,
-    "description": "Given a product_id, compute the current stock (IN–OUT) and return it.",
+    "description": "Handles deletion of stock movements by reversing their impact on product inventory levels to maintain accurate stock quantities and prevent inventory discrepancies.",
     "status": "active",
-    "trigger": "operation",
+    "trigger": "event",
     "accountability": "all",
     "options": {
-      "return": "$last"
+      "type": "filter",
+      "scope": [
+        "items.delete"
+      ],
+      "collections": [
+        "movement"
+      ]
     },
-    "operation": "a8b9a554-0193-4f4c-8ebf-27e6c4a5b369",
-    "_syncId": "850049b5-7595-4f53-a6b9-654039da9fc2"
+    "operation": "4d9218e2-79be-4d5d-98b5-0fbcba3aa072",
+    "_syncId": "826a0d5c-3d9f-4126-89ae-76bd0523e024"
   },
   {
-    "name": "Validate Stock Before OUT Movement",
+    "name": "Stock Movement Creation and Validation",
     "icon": "bolt",
     "color": null,
-    "description": "Checks current stock level and throws an error if an OUT movement would drive stock negative.",
+    "description": "Validates stock availability for outbound movements, calculates new stock levels for inventory transactions, and automatically updates product stock quantities when new movements are created.",
     "status": "active",
     "trigger": "event",
     "accountability": "all",
@@ -96,14 +102,14 @@
         "movement"
       ]
     },
-    "operation": "a1634ca9-2e43-4363-aafb-72fcbb4c933f",
+    "operation": "e8ce2556-4248-4d00-a045-0fb62abb4cc9",
     "_syncId": "99d8a9ae-fb8a-4f02-a0ec-419a24f6a48a"
   },
   {
-    "name": "Prevent Negative Stock on Movement Update",
+    "name": "Stock Movement Update and Revalidation",
     "icon": "bolt",
     "color": null,
-    "description": "A pre-write validation that ensures any OUT movement update does not drive the product’s stock below zero. If the requested quantity exceeds available stock, the update is blocked and an error is returned.",
+    "description": "Handles updates to existing stock movements by reversing the original stock impact, validating the new movement parameters, and recalculating product stock levels to maintain inventory accuracy.",
     "status": "active",
     "trigger": "event",
     "accountability": "all",

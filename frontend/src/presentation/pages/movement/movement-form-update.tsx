@@ -20,11 +20,11 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
   const {
     fetchMovementByIdRequest,
     updateMovementRequest,
-    getCurrentStockRequest,
   } = useMovements();
 
   const {
     fetchProductsRequest,
+    fetchProductByIdRequest,
   } = useProducts();
 
   const {
@@ -46,10 +46,10 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
   } = updateMovementRequest;
 
   const {
-    data: currentStock,
-    isLoading: isLoadingStock,
-    execute: getCurrentStock,
-  } = getCurrentStockRequest;
+    data: product,
+    isLoading: isLoadingProduct,
+    execute: fetchProductById,
+  } = fetchProductByIdRequest;
 
   const {
     control,
@@ -88,15 +88,15 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
       return t('movements.form.select_product_first');
     }
 
-    if (isLoadingStock) {
+    if (isLoadingProduct) {
       return t('movements.form.loading_stock');
     }
 
-    if (currentStock === null || currentStock === undefined) {
+    if (product === null || product === undefined) {
       return t('movements.form.stock_unavailable');
     }
 
-    let stockAfterSimulation = currentStock;
+    let stockAfterSimulation = product.current_stock || 0;
 
     if (movement && selectedProductId) {
       const productId = getFirstId(selectedProductId);
@@ -174,9 +174,9 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
     if (!movementType) throw Error(t('movements.form.type_missing'));
 
     if (movementType === MovementType.OUT) {
-      const currentStock = await getCurrentStock(productId);
+      const currentStock = await fetchProductById(productId);
 
-      let stockAfterUpdate = currentStock;
+      let stockAfterUpdate = currentStock?.current_stock || 0;
 
       if (movement.type === MovementType.OUT) {
         stockAfterUpdate += movement.quantity;
@@ -232,7 +232,7 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
   useEffect(() => {
     const productId = getFirstId(selectedProductId);
     if (productId) {
-      getCurrentStock(productId);
+      fetchProductById(productId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProductId]);

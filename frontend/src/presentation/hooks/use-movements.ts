@@ -109,18 +109,6 @@ export const useMovements = () => {
     }
   );
 
-  const getCurrentStockRequest = useApiRequest<number, number>(
-    (productId) => {
-      if (productId === undefined) {
-        throw new Error(t('common.errors.product_id_required'));
-      }
-      return movementApi.getCurrentStock(productId);
-    },
-    {
-      errorMessage: t('movements.errors.get_stock_failed')
-    }
-  );
-
   return {
     // Store state
     movements,
@@ -141,6 +129,5 @@ export const useMovements = () => {
     createMovementRequest,
     updateMovementRequest,
     deleteMovementRequest,
-    getCurrentStockRequest
   };
 };

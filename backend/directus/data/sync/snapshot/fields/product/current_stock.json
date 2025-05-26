@@ -1,0 +1,45 @@
+{
+  "collection": "product",
+  "field": "current_stock",
+  "type": "integer",
+  "meta": {
+    "collection": "product",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "current_stock",
+    "group": null,
+    "hidden": false,
+    "interface": "input",
+    "note": null,
+    "options": {
+      "min": 0
+    },
+    "readonly": false,
+    "required": false,
+    "sort": 11,
+    "special": null,
+    "translations": null,
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "schema": {
+    "name": "current_stock",
+    "table": "product",
+    "data_type": "int",
+    "default_value": 0,
+    "max_length": null,
+    "numeric_precision": 10,
+    "numeric_scale": 0,
+    "is_nullable": true,
+    "is_unique": false,
+    "is_indexed": false,
+    "is_primary_key": false,
+    "is_generated": false,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "foreign_key_table": null,
+    "foreign_key_column": null
+  }
+}

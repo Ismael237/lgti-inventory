@@ -12552,6 +12552,10 @@
                 "$ref": "#/components/schemas/ItemsCategory"
               }
             ]
+          },
+          "current_stock": {
+            "nullable": true,
+            "type": "integer"
           }
         },
         "x-collection": "product"

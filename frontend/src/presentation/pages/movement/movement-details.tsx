@@ -58,7 +58,7 @@ const MovementDetails = () => {
   
   useEffect(() => {
     if (movement && movement.product_id) {
-      fetchRelatedMovements(movement.product_id.id);
+      fetchRelatedMovements({ productId: movement.product_id.id});
       fetchProductDetails(movement.product_id.id);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
