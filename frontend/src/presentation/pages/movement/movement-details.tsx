@@ -53,7 +53,7 @@ const MovementDetails = () => {
     if (id) {
       fetchMovementById(Number(id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   }, [id]);
   
   useEffect(() => {
@@ -61,7 +61,7 @@ const MovementDetails = () => {
       fetchRelatedMovements({ productId: movement.product_id.id});
       fetchProductDetails(movement.product_id.id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   }, [movement]);
 
   const getTypeColor = (type: MovementType): string => {
@@ -110,13 +110,13 @@ const MovementDetails = () => {
           <Box>
             <Heading as="h3" size="md" mb={3}>{t('movements.details.general_info')}</Heading>
             <DataListRoot>
-              <DataListItem 
-                label={t('common.id')} 
-                value={movement.id} 
+              <DataListItem
+                label={t('common.id')}
+                value={movement.id}
               />
               
-              <DataListItem 
-                label={t('movements.details.type')} 
+              <DataListItem
+                label={t('movements.details.type')}
                 value={
                   <Badge colorPalette={getTypeColor(movement.type)}>
                     {movement.type === MovementType.IN ? t('movements.types.in') : t('movements.types.out')}
@@ -129,6 +129,12 @@ const MovementDetails = () => {
                 label={t('movements.details.product')} 
                 value={movement.product_id.reference} 
                 info={t('movements.details.product_info')}
+              />
+              
+              <DataListItem 
+                label={t('movements.details.partner')} 
+                value={movement.partner_id?.name || t('movements.details.no_partner')} 
+                info={t('movements.details.partner_info')}
               />
               
               <DataListItem 
@@ -182,9 +188,9 @@ const MovementDetails = () => {
           <Box mt={4}>
             <Heading as="h3" size="md" mb={3}>{t('movements.details.product_info_title')}</Heading>
             <DataListRoot>
-              <DataListItem 
-                label={t('products.details.reference')} 
-                value={productDetails.reference} 
+              <DataListItem
+                label={t('products.details.reference')}
+                value={productDetails.reference}
               />
               
               <DataListItem 
@@ -201,6 +207,12 @@ const MovementDetails = () => {
               <DataListItem 
                 label={t('movements.details.current_unit_price')} 
                 value={formatEURwithXAF(productDetails.unit_price_eur)} 
+              />
+              
+              <DataListItem 
+                label={t('movements.details.current_stock')} 
+                value={productDetails.current_stock !== undefined ? productDetails.current_stock : t('products.details.not_available')} 
+                info={t('movements.details.current_stock_info')}
               />
             </DataListRoot>
           </Box>

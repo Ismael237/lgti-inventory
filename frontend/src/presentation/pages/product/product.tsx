@@ -114,7 +114,7 @@ const Product: React.FC<ProductComponentProps> = ({
         setDialogContent(<ProductSnapshotDetails />);
         setDialogFooter(null);
         setDialogProps({
-          size: "lg"
+          size: "cover"
         })
         break;
 
@@ -140,7 +140,7 @@ const Product: React.FC<ProductComponentProps> = ({
       default:
         break;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [productId, snapshotId, viewType]);
 
   useEffect(() => {
@@ -176,12 +176,12 @@ const Product: React.FC<ProductComponentProps> = ({
         scrollBehavior="inside"
         {...dialogProps}
       >
-        <DialogContent ref={contentRef}>
+        <DialogContent h="100%" maxH={ dialogProps.size === "cover" ? "100%" : "auto"} ref={contentRef}>
           <DialogHeader>
             <DialogTitle>{dialogTitle}</DialogTitle>
             <DialogCloseTrigger />
           </DialogHeader>
-          <DialogBody>
+          <DialogBody h="100%">
             {dialogContent}
           </DialogBody>
           {dialogFooter && <DialogFooter>{dialogFooter}</DialogFooter>}

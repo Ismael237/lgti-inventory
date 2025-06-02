@@ -1383,6 +1383,126 @@
     "_syncId": "413ed2a9-5014-452b-a2df-0b7fdc5a663a"
   },
   {
+    "collection": "document_line",
+    "action": "create",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "846486d7-c1cc-434e-b60d-bb41c5833481"
+  },
+  {
+    "collection": "document_line",
+    "action": "delete",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "ff6bb5f2-776d-48a3-8084-f30349dd0655"
+  },
+  {
+    "collection": "document_line",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "ffe3670d-b38e-4c16-bdfd-79d01f728584"
+  },
+  {
+    "collection": "document_line",
+    "action": "share",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "dfe18c4e-1c4e-48d4-ae3c-989df9210916"
+  },
+  {
+    "collection": "document_line",
+    "action": "update",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "fe1bc66c-0747-4fd3-a218-94dd6e547a07"
+  },
+  {
+    "collection": "document",
+    "action": "create",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "5fc7fdd5-7800-4fbc-8877-43835b836076"
+  },
+  {
+    "collection": "document",
+    "action": "delete",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "388e63c5-9a76-4c1a-8871-8e3297844b56"
+  },
+  {
+    "collection": "document",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "620976c3-cedf-4d98-b898-d1f5cc677809"
+  },
+  {
+    "collection": "document",
+    "action": "share",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "13821953-de30-4227-b333-206a4d33d15a"
+  },
+  {
+    "collection": "document",
+    "action": "update",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "26b9c3c8-1655-40d9-995f-25093a643403"
+  },
+  {
     "collection": "movement",
     "action": "create",
     "permissions": null,
@@ -1441,6 +1561,186 @@
     ],
     "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
     "_syncId": "a4c1d8f9-8d62-4c6f-9b6e-bd36d8fcf90f"
+  },
+  {
+    "collection": "partner_partner_type",
+    "action": "create",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "8f8e5a5e-1e41-4809-8bfe-f82c5d2b5c53"
+  },
+  {
+    "collection": "partner_partner_type",
+    "action": "delete",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "5b42b0cf-80ab-421b-94e4-6c566be33d59"
+  },
+  {
+    "collection": "partner_partner_type",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "c4856492-b209-4997-8aae-1bd867a1f125"
+  },
+  {
+    "collection": "partner_partner_type",
+    "action": "share",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "c48c7f0f-5a20-411b-a6db-397478971cbc"
+  },
+  {
+    "collection": "partner_partner_type",
+    "action": "update",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "08337081-cb8c-40c4-840c-05e50dd14aa6"
+  },
+  {
+    "collection": "partner_type",
+    "action": "create",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "d48b07b2-5dc6-47b6-9b38-604aa6cd627b"
+  },
+  {
+    "collection": "partner_type",
+    "action": "delete",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "2992c56e-388a-4837-ae51-4e80bcae5fe8"
+  },
+  {
+    "collection": "partner_type",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "675feefc-3bf9-4e55-a759-abeea36b5efa"
+  },
+  {
+    "collection": "partner_type",
+    "action": "share",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "22aaec6f-dfa9-4f90-9b4f-addb26eb3a91"
+  },
+  {
+    "collection": "partner_type",
+    "action": "update",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "9b91fe4f-3994-426c-8ccd-740429d23e87"
+  },
+  {
+    "collection": "partner",
+    "action": "create",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "63174176-dc0d-4ae0-8068-991ad26dfd02"
+  },
+  {
+    "collection": "partner",
+    "action": "delete",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "a3f0e667-9ac8-40f1-abbe-7abe69793ea1"
+  },
+  {
+    "collection": "partner",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "03008e53-9da4-45c1-a552-855860b2cd94"
+  },
+  {
+    "collection": "partner",
+    "action": "share",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "37a59f8e-aa83-4d4d-a812-078dbc4db52e"
+  },
+  {
+    "collection": "partner",
+    "action": "update",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "802bcc83-2dfe-49c4-9d13-33439f3f5142",
+    "_syncId": "601233e3-e52d-4471-9a5c-26673872409f"
   },
   {
     "collection": "price_simulation",

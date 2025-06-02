@@ -62,7 +62,7 @@ export const ProductSnapshotDetails = () => {
         limit: pageSize
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [snapshotId, page, pageSize]);
 
   const columns: Column<StockSnapshot>[] = [

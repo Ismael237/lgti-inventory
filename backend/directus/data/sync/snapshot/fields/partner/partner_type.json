@@ -1,0 +1,27 @@
+{
+  "collection": "partner",
+  "field": "partner_type",
+  "type": "alias",
+  "meta": {
+    "collection": "partner",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "partner_type",
+    "group": null,
+    "hidden": false,
+    "interface": "list-m2m",
+    "note": null,
+    "options": null,
+    "readonly": false,
+    "required": false,
+    "sort": 4,
+    "special": [
+      "m2m"
+    ],
+    "translations": null,
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  }
+}

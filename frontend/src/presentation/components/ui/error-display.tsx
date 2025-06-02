@@ -1,4 +1,4 @@
-import { Alert, Box, Button } from '@chakra-ui/react';
+import { Alert, Box, Button, Flex } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 
 interface ErrorDisplayProps {
@@ -12,15 +12,15 @@ export const ErrorDisplay = ({ error, onRetry }: ErrorDisplayProps) => {
     <Box my={4}>
       <Alert.Root status="error" borderRadius="md">
         <Alert.Indicator />
-        <Alert.Content>
-          <Box flex="1">
+        <Alert.Content gap={4}>
+          <Flex flex="1" gap={2} flexDirection="column">
             <Alert.Title fontSize="lg">{t('common.error')}</Alert.Title>
             <Alert.Description display="block">
               {error}
             </Alert.Description>
-          </Box>
+          </Flex>
           {onRetry && (
-            <Button colorPalette="red" variant="outline" onClick={onRetry} size="sm">
+            <Button colorPalette="red" variant="solid" onClick={onRetry} size="sm" maxWidth="max-content">
               {t('actions.retry')}
             </Button>
           )}

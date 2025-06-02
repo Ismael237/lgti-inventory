@@ -20,6 +20,7 @@ import { ProductViewType as ViewType } from '@entities';
 import { LinkButton } from '@ui/link-button';
 import { ExportButton } from '@ui/export-button';
 import { ActionMenu } from '@ui/action-menu';
+import type { ContextMenuConfig } from '@ui/context-menu';
 
 interface ProductListComponentProps {
   viewType?: ViewType;
@@ -41,6 +42,12 @@ const ProductList = ({ viewType }: ProductListComponentProps) => {
   } = useProducts();
 
   const products = getStoreProducts();
+
+  const contextMenuConfig: ContextMenuConfig<Product> = {
+    viewUrl: ({ id }) => `${baseUrl}/${id}`,
+    editUrl: ({ id }) => `${baseUrl}/${id}/edit`,
+    deleteUrl: ({ id }) => `${baseUrl}/${id}/delete`,
+  };
 
   const columns: Column<Product>[] = [
     {
@@ -143,6 +150,8 @@ const ProductList = ({ viewType }: ProductListComponentProps) => {
         onPageSizeChange={setPageSize}
         keyExtractor={(product) => product.id}
         emptyMessage={t('products.list.no_products')}
+        enableContextMenu={true}
+        contextMenuConfig={contextMenuConfig}
       />
     </Box>
   );

@@ -7,7 +7,10 @@ import {
   LuDatabase,
   LuTag,
   LuArrowRightLeft,
-  LuChartColumn
+  LuChartColumn,
+  LuUsers,
+  LuFileText,
+  LuChartPie
 } from 'react-icons/lu';
 import { useColorModeValue } from '@ui/chakra/color-mode';
 import { LgtiLogo } from '@ui/assets/LgtiLogo';
@@ -39,8 +42,11 @@ const getNavConfig = (t: (key: string) => string): NavSection[] => [
       { icon: LuHouse, label: t('nav.home'), path: '/' },
       { icon: LuTag, label: t('nav.categories'), path: '/categories' },
       { icon: LuDatabase, label: t('nav.products'), path: '/products' },
+      { icon: LuUsers, label: t('nav.partners'), path: '/partners' },
       { icon: LuArrowRightLeft, label: t('nav.movements'), path: '/movements' },
+      { icon: LuChartPie, label: t('nav.product_movement_stats'), path: '/products/movement-stats' },
       { icon: LuChartColumn, label: t('nav.simulations'), path: '/price-simulations' },
+      { icon: LuFileText, label: t('nav.documents'), path: '/documents' },
     ]
   }
 ];

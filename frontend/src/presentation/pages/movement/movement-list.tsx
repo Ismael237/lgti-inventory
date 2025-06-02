@@ -20,6 +20,7 @@ import { MovementViewType, type Movement } from '@entities';
 import { ExportButton } from '@ui/export-button';
 import { LinkButton } from '@ui/link-button';
 import { ActionMenu } from '@ui/action-menu';
+import type { ContextMenuConfig } from '@ui/context-menu';
 
 interface MovementListComponentProps {
   viewType?: MovementViewType;
@@ -49,6 +50,12 @@ const MovementList = ({ viewType }: MovementListComponentProps) => {
     });
   }, [fetchMovements, page, pageSize]);
 
+  const contextMenuConfig: ContextMenuConfig<Movement> = {
+    viewUrl: ({ id }) => `${baseUrl}/${id}`,
+    editUrl: ({ id }) => `${baseUrl}/${id}/edit`,
+    deleteUrl: ({ id }) => `${baseUrl}/${id}/delete`,
+  };
+
   const columns: Column<Movement>[] = [
     {
       header: t('movements.list.columns.product_name'),
@@ -66,8 +73,19 @@ const MovementList = ({ viewType }: MovementListComponentProps) => {
       },
     },
     {
+      header: t('movements.list.columns.partner'),
+      accessor: (movement: Movement) => movement.partner_id?.name || t('movements.list.no_partner'),
+    },
+    {
       header: t('movements.list.columns.quantity'),
       accessor: 'quantity',
+    },
+    {
+      header: t('movements.list.columns.current_stock'),
+      accessor: (movement: Movement) => 
+        movement.product_id.current_stock !== undefined 
+          ? movement.product_id.current_stock 
+          : t('products.details.not_available'),
     },
     {
       header: t('movements.list.columns.created_at'),
@@ -131,6 +149,8 @@ const MovementList = ({ viewType }: MovementListComponentProps) => {
         onPageSizeChange={setPageSize}
         keyExtractor={(movement) => movement.id}
         emptyMessage={t('movements.list.no_movements')}
+        enableContextMenu={true}
+        contextMenuConfig={contextMenuConfig}
       />
     </Box>
   );

@@ -90,7 +90,7 @@ const ProductDetails = () => {
       });
       fetchProductSnapshots(productId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [id]);
 
   const getStockLevelColor = (quantity: number | null | undefined): string => {
@@ -220,7 +220,7 @@ const ProductDetails = () => {
                         {product.current_stock}
                       </Badge>
                     ) : (
-                      <Badge colorPalette="gray">{t('products.details.not_available')}</Badge>
+                      <Badge colorPalette="gray">{t('products.details.not_available')} = 0</Badge>
                     )
                   }
                   info={t('products.details.stock_quantity_info')}

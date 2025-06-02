@@ -100,7 +100,6 @@ const Category: React.FC<CategoryComponentProps> = ({
       default:
         break;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId, viewType]);
 
   useEffect(() => {

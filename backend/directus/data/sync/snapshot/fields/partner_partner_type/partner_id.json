@@ -1,0 +1,43 @@
+{
+  "collection": "partner_partner_type",
+  "field": "partner_id",
+  "type": "integer",
+  "meta": {
+    "collection": "partner_partner_type",
+    "conditions": null,
+    "display": null,
+    "display_options": null,
+    "field": "partner_id",
+    "group": null,
+    "hidden": true,
+    "interface": null,
+    "note": null,
+    "options": null,
+    "readonly": false,
+    "required": false,
+    "sort": 2,
+    "special": null,
+    "translations": null,
+    "validation": null,
+    "validation_message": null,
+    "width": "full"
+  },
+  "schema": {
+    "name": "partner_id",
+    "table": "partner_partner_type",
+    "data_type": "int unsigned",
+    "default_value": null,
+    "max_length": null,
+    "numeric_precision": 10,
+    "numeric_scale": 0,
+    "is_nullable": true,
+    "is_unique": false,
+    "is_indexed": true,
+    "is_primary_key": false,
+    "is_generated": false,
+    "generation_expression": null,
+    "has_auto_increment": false,
+    "foreign_key_table": "partner",
+    "foreign_key_column": "id"
+  }
+}

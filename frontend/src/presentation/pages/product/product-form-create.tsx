@@ -37,7 +37,7 @@ export const ProductFormCreate = ({ selectRef }: { selectRef: RefObject<HTMLElem
 
   useEffect(() => {
     fetchCategories();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   }, []);
 
   const safeCategories = categories ?? [];
@@ -68,7 +68,8 @@ export const ProductFormCreate = ({ selectRef }: { selectRef: RefObject<HTMLElem
       label: t('products.form.unit_price'),
       type: 'number' as const,
       placeholder: t('products.form.unit_price_placeholder'),
-      required: true
+      required: true,
+      step: 0.01
     }),
     field({
       name: 'category_id' as const,

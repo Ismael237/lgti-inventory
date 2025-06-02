@@ -103,6 +103,24 @@ export const convertEURtoXAF = (
 };
 
 /**
+ * Converts an amount from XAF to EUR with two decimal places
+ *
+ * @param {number} xafAmount - The amount in XAF
+ * @param {number} conversionRate - The conversion rate from XAF to EUR (default: 0.001524)
+ * @returns {number} The amount converted to EUR with two decimal places
+ *
+ * @example
+ * // Returns 0.1524 (100000 XAF converted to EUR)
+ * convertXAFtoEUR(100000)
+ */
+export const convertXAFtoEUR = (
+    xafAmount: number,
+    conversionRate: number = 0.00152439
+): number => {
+    return Number((xafAmount * conversionRate).toFixed(2));
+};
+
+/**
  * Formats a price in EUR with its XAF equivalent in parentheses
  *
  * @param {number} eurAmount - The amount in EUR
@@ -237,7 +255,7 @@ export const formatDateWithFallback = (
 
 /**
  * Formats a given Date object into a string suitable for filenames.
- * 
+ *
  * The format used is: `dd-mm-yyyy_HH-MM`, where:
  * - `dd` is the day (2 digits)
  * - `mm` is the month (2 digits)

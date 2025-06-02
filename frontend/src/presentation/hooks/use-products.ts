@@ -106,13 +106,6 @@ export const useProducts = () => {
     }
   );
 
-  const fetchProductsWithStock = useApiRequest<Product[], QueryParams>(
-    (params) => productApi.getProductsWithStock(params),
-    {
-      errorMessage: t('products.errors.load_with_stock_failed')
-    }
-  );
-
   return {
     // Store state
     products,
@@ -133,6 +126,5 @@ export const useProducts = () => {
     updateProductRequest,
     deleteProductRequest,
     fetchProductsByCategory,
-    fetchProductsWithStock
   };
 };

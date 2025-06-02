@@ -7,10 +7,30 @@ type Query {
   directus_sync_id_map_by_id(id: ID!, version: String): directus_sync_id_map
   directus_sync_id_map_aggregated(groupBy: [String], filter: directus_sync_id_map_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [directus_sync_id_map_aggregated!]!
   directus_sync_id_map_by_version(version: String!, id: ID!): version_directus_sync_id_map
+  document(filter: document_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [document!]!
+  document_by_id(id: ID!, version: String): document
+  document_aggregated(groupBy: [String], filter: document_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [document_aggregated!]!
+  document_by_version(version: String!, id: ID!): version_document
+  document_line(filter: document_line_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [document_line!]!
+  document_line_by_id(id: ID!, version: String): document_line
+  document_line_aggregated(groupBy: [String], filter: document_line_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [document_line_aggregated!]!
+  document_line_by_version(version: String!, id: ID!): version_document_line
   movement(filter: movement_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [movement!]!
   movement_by_id(id: ID!, version: String): movement
   movement_aggregated(groupBy: [String], filter: movement_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [movement_aggregated!]!
   movement_by_version(version: String!, id: ID!): version_movement
+  partner(filter: partner_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [partner!]!
+  partner_by_id(id: ID!, version: String): partner
+  partner_aggregated(groupBy: [String], filter: partner_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [partner_aggregated!]!
+  partner_by_version(version: String!, id: ID!): version_partner
+  partner_partner_type(filter: partner_partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [partner_partner_type!]!
+  partner_partner_type_by_id(id: ID!, version: String): partner_partner_type
+  partner_partner_type_aggregated(groupBy: [String], filter: partner_partner_type_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [partner_partner_type_aggregated!]!
+  partner_partner_type_by_version(version: String!, id: ID!): version_partner_partner_type
+  partner_type(filter: partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [partner_type!]!
+  partner_type_by_id(id: ID!, version: String): partner_type
+  partner_type_aggregated(groupBy: [String], filter: partner_type_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [partner_type_aggregated!]!
+  partner_type_by_version(version: String!, id: ID!): version_partner_type
   price_simulation(filter: price_simulation_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [price_simulation!]!
   price_simulation_by_id(id: ID!, version: String): price_simulation
   price_simulation_aggregated(groupBy: [String], filter: price_simulation_filter, limit: Int, offset: Int, page: Int, search: String, sort: [String]): [price_simulation_aggregated!]!
@@ -34,8 +54,18 @@ type Mutation {
   create_category_item(data: create_category_input!): category
   create_directus_sync_id_map_items(filter: directus_sync_id_map_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_directus_sync_id_map_input!]): [directus_sync_id_map!]!
   create_directus_sync_id_map_item(data: create_directus_sync_id_map_input!): directus_sync_id_map
+  create_document_items(filter: document_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_document_input!]): [document!]!
+  create_document_item(data: create_document_input!): document
+  create_document_line_items(filter: document_line_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_document_line_input!]): [document_line!]!
+  create_document_line_item(data: create_document_line_input!): document_line
   create_movement_items(filter: movement_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_movement_input!]): [movement!]!
   create_movement_item(data: create_movement_input!): movement
+  create_partner_items(filter: partner_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_partner_input!]): [partner!]!
+  create_partner_item(data: create_partner_input!): partner
+  create_partner_partner_type_items(filter: partner_partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_partner_partner_type_input!]): [partner_partner_type!]!
+  create_partner_partner_type_item(data: create_partner_partner_type_input!): partner_partner_type
+  create_partner_type_items(filter: partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_partner_type_input!]): [partner_type!]!
+  create_partner_type_item(data: create_partner_type_input!): partner_type
   create_price_simulation_items(filter: price_simulation_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_price_simulation_input!]): [price_simulation!]!
   create_price_simulation_item(data: create_price_simulation_input!): price_simulation
   create_product_items(filter: product_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [create_product_input!]): [product!]!
@@ -50,9 +80,24 @@ type Mutation {
   update_directus_sync_id_map_items(filter: directus_sync_id_map_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_directus_sync_id_map_input!): [directus_sync_id_map!]!
   update_directus_sync_id_map_batch(filter: directus_sync_id_map_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_directus_sync_id_map_input!]): [directus_sync_id_map!]!
   update_directus_sync_id_map_item(id: ID!, data: update_directus_sync_id_map_input!): directus_sync_id_map
+  update_document_items(filter: document_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_document_input!): [document!]!
+  update_document_batch(filter: document_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_document_input!]): [document!]!
+  update_document_item(id: ID!, data: update_document_input!): document
+  update_document_line_items(filter: document_line_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_document_line_input!): [document_line!]!
+  update_document_line_batch(filter: document_line_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_document_line_input!]): [document_line!]!
+  update_document_line_item(id: ID!, data: update_document_line_input!): document_line
   update_movement_items(filter: movement_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_movement_input!): [movement!]!
   update_movement_batch(filter: movement_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_movement_input!]): [movement!]!
   update_movement_item(id: ID!, data: update_movement_input!): movement
+  update_partner_items(filter: partner_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_partner_input!): [partner!]!
+  update_partner_batch(filter: partner_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_partner_input!]): [partner!]!
+  update_partner_item(id: ID!, data: update_partner_input!): partner
+  update_partner_partner_type_items(filter: partner_partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_partner_partner_type_input!): [partner_partner_type!]!
+  update_partner_partner_type_batch(filter: partner_partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_partner_partner_type_input!]): [partner_partner_type!]!
+  update_partner_partner_type_item(id: ID!, data: update_partner_partner_type_input!): partner_partner_type
+  update_partner_type_items(filter: partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_partner_type_input!): [partner_type!]!
+  update_partner_type_batch(filter: partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_partner_type_input!]): [partner_type!]!
+  update_partner_type_item(id: ID!, data: update_partner_type_input!): partner_type
   update_price_simulation_items(filter: price_simulation_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, ids: [ID]!, data: update_price_simulation_input!): [price_simulation!]!
   update_price_simulation_batch(filter: price_simulation_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String, data: [update_price_simulation_input!]): [price_simulation!]!
   update_price_simulation_item(id: ID!, data: update_price_simulation_input!): price_simulation
@@ -69,8 +114,18 @@ type Mutation {
   delete_category_item(id: ID!): delete_one
   delete_directus_sync_id_map_items(ids: [ID]!): delete_many
   delete_directus_sync_id_map_item(id: ID!): delete_one
+  delete_document_items(ids: [ID]!): delete_many
+  delete_document_item(id: ID!): delete_one
+  delete_document_line_items(ids: [ID]!): delete_many
+  delete_document_line_item(id: ID!): delete_one
   delete_movement_items(ids: [ID]!): delete_many
   delete_movement_item(id: ID!): delete_one
+  delete_partner_items(ids: [ID]!): delete_many
+  delete_partner_item(id: ID!): delete_one
+  delete_partner_partner_type_items(ids: [ID]!): delete_many
+  delete_partner_partner_type_item(id: ID!): delete_one
+  delete_partner_type_items(ids: [ID]!): delete_many
+  delete_partner_type_item(id: ID!): delete_one
   delete_price_simulation_items(ids: [ID]!): delete_many
   delete_price_simulation_item(id: ID!): delete_one
   delete_product_items(ids: [ID]!): delete_many
@@ -105,7 +160,12 @@ type Subscription {
   directus_users_mutated(event: EventEnum): directus_users_mutated
   directus_versions_mutated(event: EventEnum): directus_versions_mutated
   directus_webhooks_mutated(event: EventEnum): directus_webhooks_mutated
+  document_mutated(event: EventEnum): document_mutated
+  document_line_mutated(event: EventEnum): document_line_mutated
   movement_mutated(event: EventEnum): movement_mutated
+  partner_mutated(event: EventEnum): partner_mutated
+  partner_partner_type_mutated(event: EventEnum): partner_partner_type_mutated
+  partner_type_mutated(event: EventEnum): partner_type_mutated
   price_simulation_mutated(event: EventEnum): price_simulation_mutated
   product_mutated(event: EventEnum): product_mutated
   snapshot_event_mutated(event: EventEnum): snapshot_event_mutated
@@ -206,6 +266,14 @@ type category_mutated {
 
 type count_functions {
   count: Int
+}
+
+type date_functions {
+  year: Int
+  month: Int
+  week: Int
+  day: Int
+  weekday: Int
 }
 
 type datetime_functions {
@@ -785,6 +853,121 @@ type directus_webhooks_mutated {
   data: directus_webhooks
 }
 
+type document {
+  id: ID!
+  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_updated: Date
+  date_updated_func: datetime_functions
+  type: String
+  reference: String!
+  client_name: String!
+  client_address: String
+  client_phone: String
+  client_niu: String
+  notes: String
+  amount_words: String
+  date_document: Date
+  date_document_func: date_functions
+  client_rc: String
+  total_ht: Int
+  document_line(filter: document_line_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [document_line]
+  document_line_func: count_functions
+}
+
+type document_aggregated {
+  group: JSON
+  countAll: Int
+  count: document_aggregated_count
+  countDistinct: document_aggregated_count
+  avg: document_aggregated_fields
+  sum: document_aggregated_fields
+  avgDistinct: document_aggregated_fields
+  sumDistinct: document_aggregated_fields
+  min: document_aggregated_fields
+  max: document_aggregated_fields
+}
+
+type document_aggregated_count {
+  id: Int
+  user_created: Int
+  date_created: Int
+  user_updated: Int
+  date_updated: Int
+  type: Int
+  reference: Int
+  client_name: Int
+  client_address: Int
+  client_phone: Int
+  client_niu: Int
+  notes: Int
+  amount_words: Int
+  date_document: Int
+  client_rc: Int
+  total_ht: Int
+  document_line: Int
+}
+
+type document_aggregated_fields {
+  id: Float
+  total_ht: Float
+}
+
+type document_line {
+  id: ID!
+  document_id(filter: document_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): document
+  designation: String
+  reference: String
+  quantity: Int
+  unit_price: Int
+  total_price: Int
+}
+
+type document_line_aggregated {
+  group: JSON
+  countAll: Int
+  count: document_line_aggregated_count
+  countDistinct: document_line_aggregated_count
+  avg: document_line_aggregated_fields
+  sum: document_line_aggregated_fields
+  avgDistinct: document_line_aggregated_fields
+  sumDistinct: document_line_aggregated_fields
+  min: document_line_aggregated_fields
+  max: document_line_aggregated_fields
+}
+
+type document_line_aggregated_count {
+  id: Int
+  document_id: Int
+  designation: Int
+  reference: Int
+  quantity: Int
+  unit_price: Int
+  total_price: Int
+}
+
+type document_line_aggregated_fields {
+  id: Float
+  document_id: Float
+  quantity: Float
+  unit_price: Float
+  total_price: Float
+}
+
+type document_line_mutated {
+  key: ID!
+  event: EventEnum
+  data: document_line
+}
+
+type document_mutated {
+  key: ID!
+  event: EventEnum
+  data: document
+}
+
 type movement {
   id: ID!
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
@@ -797,6 +980,7 @@ type movement {
   quantity: Int
   notes: String
   product_id(filter: product_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): product
+  partner_id(filter: partner_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): partner
 }
 
 type movement_aggregated {
@@ -822,18 +1006,154 @@ type movement_aggregated_count {
   quantity: Int
   notes: Int
   product_id: Int
+  partner_id: Int
 }
 
 type movement_aggregated_fields {
   id: Float
   quantity: Float
   product_id: Float
+  partner_id: Float
 }
 
 type movement_mutated {
   key: ID!
   event: EventEnum
   data: movement
+}
+
+type partner {
+  id: ID!
+  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_updated: Date
+  date_updated_func: datetime_functions
+  name: String
+  contact_email: String
+  movement(filter: movement_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [movement]
+  movement_func: count_functions
+  partner_type(filter: partner_partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [partner_partner_type]
+  partner_type_func: count_functions
+}
+
+type partner_aggregated {
+  group: JSON
+  countAll: Int
+  count: partner_aggregated_count
+  countDistinct: partner_aggregated_count
+  avg: partner_aggregated_fields
+  sum: partner_aggregated_fields
+  avgDistinct: partner_aggregated_fields
+  sumDistinct: partner_aggregated_fields
+  min: partner_aggregated_fields
+  max: partner_aggregated_fields
+}
+
+type partner_aggregated_count {
+  id: Int
+  user_created: Int
+  date_created: Int
+  user_updated: Int
+  date_updated: Int
+  name: Int
+  contact_email: Int
+  movement: Int
+  partner_type: Int
+}
+
+type partner_aggregated_fields {
+  id: Float
+}
+
+type partner_mutated {
+  key: ID!
+  event: EventEnum
+  data: partner
+}
+
+type partner_partner_type {
+  id: ID!
+  partner_id(filter: partner_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): partner
+  partner_type_id(filter: partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): partner_type
+}
+
+type partner_partner_type_aggregated {
+  group: JSON
+  countAll: Int
+  count: partner_partner_type_aggregated_count
+  countDistinct: partner_partner_type_aggregated_count
+  avg: partner_partner_type_aggregated_fields
+  sum: partner_partner_type_aggregated_fields
+  avgDistinct: partner_partner_type_aggregated_fields
+  sumDistinct: partner_partner_type_aggregated_fields
+  min: partner_partner_type_aggregated_fields
+  max: partner_partner_type_aggregated_fields
+}
+
+type partner_partner_type_aggregated_count {
+  id: Int
+  partner_id: Int
+  partner_type_id: Int
+}
+
+type partner_partner_type_aggregated_fields {
+  id: Float
+  partner_id: Float
+  partner_type_id: Float
+}
+
+type partner_partner_type_mutated {
+  key: ID!
+  event: EventEnum
+  data: partner_partner_type
+}
+
+type partner_type {
+  id: ID!
+  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_updated: Date
+  date_updated_func: datetime_functions
+  type_name: String
+  partner(filter: partner_partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [partner_partner_type]
+  partner_func: count_functions
+}
+
+type partner_type_aggregated {
+  group: JSON
+  countAll: Int
+  count: partner_type_aggregated_count
+  countDistinct: partner_type_aggregated_count
+  avg: partner_type_aggregated_fields
+  sum: partner_type_aggregated_fields
+  avgDistinct: partner_type_aggregated_fields
+  sumDistinct: partner_type_aggregated_fields
+  min: partner_type_aggregated_fields
+  max: partner_type_aggregated_fields
+}
+
+type partner_type_aggregated_count {
+  id: Int
+  user_created: Int
+  date_created: Int
+  user_updated: Int
+  date_updated: Int
+  type_name: Int
+  partner: Int
+}
+
+type partner_type_aggregated_fields {
+  id: Float
+}
+
+type partner_type_mutated {
+  key: ID!
+  event: EventEnum
+  data: partner_type
 }
 
 type price_simulation {
@@ -896,6 +1216,8 @@ type product {
   unit_price_eur: Float
   category_id(filter: category_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): category
   current_stock: Int
+  movement(filter: movement_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [movement]
+  movement_func: count_functions
 }
 
 type product_aggregated {
@@ -923,6 +1245,7 @@ type product_aggregated_count {
   unit_price_eur: Int
   category_id: Int
   current_stock: Int
+  movement: Int
 }
 
 type product_aggregated_fields {
@@ -1043,6 +1366,38 @@ type version_directus_sync_id_map {
 }
 
 """"""
+type version_document {
+  id: ID
+  user_created: JSON
+  date_created: Date
+  user_updated: JSON
+  date_updated: Date
+  type: String
+  reference: String
+  client_name: String
+  client_address: String
+  client_phone: String
+  client_niu: String
+  notes: String
+  amount_words: String
+  date_document: Date
+  client_rc: String
+  total_ht: Int
+  document_line: JSON
+}
+
+""""""
+type version_document_line {
+  id: ID
+  document_id: JSON
+  designation: String
+  reference: String
+  quantity: Int
+  unit_price: Int
+  total_price: Int
+}
+
+""""""
 type version_movement {
   id: ID
   user_created: JSON
@@ -1053,6 +1408,38 @@ type version_movement {
   quantity: Int
   notes: String
   product_id: JSON
+  partner_id: JSON
+}
+
+""""""
+type version_partner {
+  id: ID
+  user_created: JSON
+  date_created: Date
+  user_updated: JSON
+  date_updated: Date
+  name: String
+  contact_email: String
+  movement: JSON
+  partner_type: JSON
+}
+
+""""""
+type version_partner_partner_type {
+  id: ID
+  partner_id: JSON
+  partner_type_id: JSON
+}
+
+""""""
+type version_partner_type {
+  id: ID
+  user_created: JSON
+  date_created: Date
+  user_updated: JSON
+  date_updated: Date
+  type_name: String
+  partner: JSON
 }
 
 """"""
@@ -1079,6 +1466,7 @@ type version_product {
   unit_price_eur: Float
   category_id: JSON
   current_stock: Int
+  movement: JSON
 }
 
 """"""
@@ -1268,6 +1656,36 @@ input create_directus_users_input {
   policies: [create_directus_access_input]
 }
 
+input create_document_input {
+  id: ID
+  user_created: create_directus_users_input
+  date_created: Date
+  user_updated: create_directus_users_input
+  date_updated: Date
+  type: String
+  reference: String!
+  client_name: String!
+  client_address: String
+  client_phone: String
+  client_niu: String
+  notes: String
+  amount_words: String
+  date_document: Date
+  client_rc: String
+  total_ht: Int
+  document_line: [create_document_line_input]
+}
+
+input create_document_line_input {
+  id: ID
+  document_id: create_document_input
+  designation: String
+  reference: String
+  quantity: Int
+  unit_price: Int
+  total_price: Int
+}
+
 input create_movement_input {
   id: ID
   user_created: create_directus_users_input
@@ -1278,6 +1696,35 @@ input create_movement_input {
   quantity: Int
   notes: String
   product_id: create_product_input
+  partner_id: create_partner_input
+}
+
+input create_partner_input {
+  id: ID
+  user_created: create_directus_users_input
+  date_created: Date
+  user_updated: create_directus_users_input
+  date_updated: Date
+  name: String
+  contact_email: String
+  movement: [create_movement_input]
+  partner_type: [create_partner_partner_type_input]
+}
+
+input create_partner_partner_type_input {
+  id: ID
+  partner_id: create_partner_input
+  partner_type_id: create_partner_type_input
+}
+
+input create_partner_type_input {
+  id: ID
+  user_created: create_directus_users_input
+  date_created: Date
+  user_updated: create_directus_users_input
+  date_updated: Date
+  type_name: String
+  partner: [create_partner_partner_type_input]
 }
 
 input create_price_simulation_input {
@@ -1302,6 +1749,7 @@ input create_product_input {
   unit_price_eur: Float
   category_id: create_category_input
   current_stock: Int
+  movement: [create_movement_input]
 }
 
 input create_snapshot_event_input {
@@ -1333,6 +1781,14 @@ input date_filter_operators {
   _nin: [String]
   _between: [GraphQLStringOrFloat]
   _nbetween: [GraphQLStringOrFloat]
+}
+
+input date_function_filter_operators {
+  year: number_filter_operators
+  month: number_filter_operators
+  week: number_filter_operators
+  day: number_filter_operators
+  weekday: number_filter_operators
 }
 
 input datetime_function_filter_operators {
@@ -1786,6 +2242,59 @@ input directus_versions_filter {
   _or: [directus_versions_filter]
 }
 
+input document_filter {
+  id: number_filter_operators
+  user_created: directus_users_filter
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: directus_users_filter
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  type: string_filter_operators
+  reference: string_filter_operators
+  client_name: string_filter_operators
+  client_address: string_filter_operators
+  client_phone: string_filter_operators
+  client_niu: string_filter_operators
+  notes: string_filter_operators
+  amount_words: string_filter_operators
+  date_document: date_filter_operators
+  date_document_func: date_function_filter_operators
+  client_rc: string_filter_operators
+  total_ht: number_filter_operators
+  document_line: document_line_quantifier_filter
+  document_line_func: count_function_filter_operators
+  _and: [document_filter]
+  _or: [document_filter]
+}
+
+input document_line_filter {
+  id: number_filter_operators
+  document_id: document_filter
+  designation: string_filter_operators
+  reference: string_filter_operators
+  quantity: number_filter_operators
+  unit_price: number_filter_operators
+  total_price: number_filter_operators
+  _and: [document_line_filter]
+  _or: [document_line_filter]
+}
+
+""""""
+input document_line_quantifier_filter {
+  id: number_filter_operators
+  document_id: document_filter
+  designation: string_filter_operators
+  reference: string_filter_operators
+  quantity: number_filter_operators
+  unit_price: number_filter_operators
+  total_price: number_filter_operators
+  _and: [document_line_filter]
+  _or: [document_line_filter]
+  _some: document_line_filter
+  _none: document_line_filter
+}
+
 input hash_filter_operators {
   _null: Boolean
   _nnull: Boolean
@@ -1827,8 +2336,29 @@ input movement_filter {
   quantity: number_filter_operators
   notes: string_filter_operators
   product_id: product_filter
+  partner_id: partner_filter
   _and: [movement_filter]
   _or: [movement_filter]
+}
+
+""""""
+input movement_quantifier_filter {
+  id: number_filter_operators
+  user_created: directus_users_filter
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: directus_users_filter
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  type: string_filter_operators
+  quantity: number_filter_operators
+  notes: string_filter_operators
+  product_id: product_filter
+  partner_id: partner_filter
+  _and: [movement_filter]
+  _or: [movement_filter]
+  _some: movement_filter
+  _none: movement_filter
 }
 
 input number_filter_operators {
@@ -1844,6 +2374,58 @@ input number_filter_operators {
   _nnull: Boolean
   _between: [GraphQLStringOrFloat]
   _nbetween: [GraphQLStringOrFloat]
+}
+
+input partner_filter {
+  id: number_filter_operators
+  user_created: directus_users_filter
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: directus_users_filter
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  name: string_filter_operators
+  contact_email: string_filter_operators
+  movement: movement_quantifier_filter
+  movement_func: count_function_filter_operators
+  partner_type: partner_partner_type_quantifier_filter
+  partner_type_func: count_function_filter_operators
+  _and: [partner_filter]
+  _or: [partner_filter]
+}
+
+input partner_partner_type_filter {
+  id: number_filter_operators
+  partner_id: partner_filter
+  partner_type_id: partner_type_filter
+  _and: [partner_partner_type_filter]
+  _or: [partner_partner_type_filter]
+}
+
+""""""
+input partner_partner_type_quantifier_filter {
+  id: number_filter_operators
+  partner_id: partner_filter
+  partner_type_id: partner_type_filter
+  _and: [partner_partner_type_filter]
+  _or: [partner_partner_type_filter]
+  _some: partner_partner_type_filter
+  _none: partner_partner_type_filter
+}
+
+input partner_type_filter {
+  id: number_filter_operators
+  user_created: directus_users_filter
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: directus_users_filter
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  type_name: string_filter_operators
+  partner: partner_partner_type_quantifier_filter
+  partner_func: count_function_filter_operators
+  _and: [partner_type_filter]
+  _or: [partner_type_filter]
 }
 
 input price_simulation_filter {
@@ -1874,6 +2456,8 @@ input product_filter {
   unit_price_eur: number_filter_operators
   category_id: category_filter
   current_stock: number_filter_operators
+  movement: movement_quantifier_filter
+  movement_func: count_function_filter_operators
   _and: [product_filter]
   _or: [product_filter]
 }
@@ -2050,6 +2634,36 @@ input update_directus_users_input {
   policies: [update_directus_access_input]
 }
 
+input update_document_input {
+  id: ID
+  user_created: update_directus_users_input
+  date_created: Date
+  user_updated: update_directus_users_input
+  date_updated: Date
+  type: String
+  reference: String
+  client_name: String
+  client_address: String
+  client_phone: String
+  client_niu: String
+  notes: String
+  amount_words: String
+  date_document: Date
+  client_rc: String
+  total_ht: Int
+  document_line: [update_document_line_input]
+}
+
+input update_document_line_input {
+  id: ID
+  document_id: update_document_input
+  designation: String
+  reference: String
+  quantity: Int
+  unit_price: Int
+  total_price: Int
+}
+
 input update_movement_input {
   id: ID
   user_created: update_directus_users_input
@@ -2060,6 +2674,35 @@ input update_movement_input {
   quantity: Int
   notes: String
   product_id: update_product_input
+  partner_id: update_partner_input
+}
+
+input update_partner_input {
+  id: ID
+  user_created: update_directus_users_input
+  date_created: Date
+  user_updated: update_directus_users_input
+  date_updated: Date
+  name: String
+  contact_email: String
+  movement: [update_movement_input]
+  partner_type: [update_partner_partner_type_input]
+}
+
+input update_partner_partner_type_input {
+  id: ID
+  partner_id: update_partner_input
+  partner_type_id: update_partner_type_input
+}
+
+input update_partner_type_input {
+  id: ID
+  user_created: update_directus_users_input
+  date_created: Date
+  user_updated: update_directus_users_input
+  date_updated: Date
+  type_name: String
+  partner: [update_partner_partner_type_input]
 }
 
 input update_price_simulation_input {
@@ -2084,6 +2727,7 @@ input update_product_input {
   unit_price_eur: Float
   category_id: update_category_input
   current_stock: Int
+  movement: [update_movement_input]
 }
 
 input update_snapshot_event_input {

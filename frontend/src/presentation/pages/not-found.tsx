@@ -1,8 +1,9 @@
-import { Box, Heading, Text, Button, VStack } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 import { useColorModeValue } from '@ui/chakra/color-mode';
 import { Link } from 'react-router-dom';
 import { LuHouse } from 'react-icons/lu';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@ui/chakra/button';
 
 const NotFound = () => {
   const bgColor = useColorModeValue('white', 'gray.800');
@@ -16,11 +17,11 @@ const NotFound = () => {
       minHeight="70vh"
     >
       <VStack
-        gap={6}
+        gap={4}
         p={8}
-        borderRadius="lg" 
-        bg={bgColor} 
-        boxShadow="sm" 
+        borderRadius="lg"
+        bg={bgColor}
+        boxShadow="sm"
         textAlign="center"
         maxW="md"
         w="full"
@@ -30,7 +31,7 @@ const NotFound = () => {
         <Text color="gray.500">
           {t('pages.not_found.message')}
         </Text>
-        <Button 
+        <Button
           as={Link}
         >
           <LuHouse size={16} />

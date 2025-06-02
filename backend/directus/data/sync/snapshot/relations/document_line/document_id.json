@@ -1,0 +1,25 @@
+{
+  "collection": "document_line",
+  "field": "document_id",
+  "related_collection": "document",
+  "meta": {
+    "junction_field": null,
+    "many_collection": "document_line",
+    "many_field": "document_id",
+    "one_allowed_collections": null,
+    "one_collection": "document",
+    "one_collection_field": null,
+    "one_deselect_action": "nullify",
+    "one_field": "document_line",
+    "sort_field": null
+  },
+  "schema": {
+    "table": "document_line",
+    "column": "document_id",
+    "foreign_key_table": "document",
+    "foreign_key_column": "id",
+    "constraint_name": "document_line_document_id_foreign",
+    "on_update": "NO ACTION",
+    "on_delete": "SET NULL"
+  }
+}

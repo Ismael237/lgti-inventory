@@ -20,6 +20,7 @@ interface ActionMenuProps {
   buttonText?: string;
   baseUrl?: string;
   placement?: 'bottom-end' | 'bottom-start' | 'top-end' | 'top-start';
+  addUrl?: string;
 }
 
 export const ActionMenu: React.FC<ActionMenuProps> = ({
@@ -28,7 +29,8 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({
   placement = 'bottom-end',
   baseUrl,
   addLabel,
-  isLoading
+  isLoading,
+  addUrl
 }) => {
   const { t } = useTranslation();
   const displayText = buttonText || t('actions.menu_title');
@@ -37,7 +39,7 @@ export const ActionMenu: React.FC<ActionMenuProps> = ({
     {
       label: addLabel || t('actions.add'),
       icon: <LuPlus />,
-      to: `${baseUrl}/new`,
+      to: addUrl || `${baseUrl}/new`,
     },
     ...items || [],
     {

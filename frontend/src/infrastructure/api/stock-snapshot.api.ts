@@ -2,7 +2,6 @@ import { readItems, readItem } from '@directus/sdk';
 import { directus } from './directus/client';
 import type { StockSnapshot, StockSnapshotApiItem } from '@entities';
 import type { PaginatedResponse, QueryParams } from '@types';
-import { movementApi } from './movement.api';
 
 const collectionName = "stock_snapshot";
 
@@ -38,19 +37,8 @@ class StockSnapshotApi {
             })
         );
 
-        const stockSnapshots = await Promise.all(items.map(async (item) => {
-            const current_stock = await movementApi.getCurrentStock(item.product_id.id);
-            return {
-                ...item,
-                product_id: {
-                    ...item.product_id,
-                    current_stock
-                }
-            } as StockSnapshot
-        }))
-
         return {
-            data: stockSnapshots,
+            data: items,
             meta: {
                 total_count: countResponse[0].count,
                 page: params?.page || 1,

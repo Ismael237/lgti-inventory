@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from '@i18n';
 import type { SnapshotEvent } from './snapshot-event.types';
 import type { Product } from './product.types';
 

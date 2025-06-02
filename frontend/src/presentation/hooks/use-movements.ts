@@ -15,6 +15,8 @@ export const useMovements = () => {
     fetchMovements: storeFetchMovements,
     selectedMovementId,
     setSelectedMovementId,
+    selectedMonth,
+    setSelectedMonth,
   } = useMovementStore();
 
   const getStoreMovements = (): Movement[] => {
@@ -117,6 +119,8 @@ export const useMovements = () => {
     pagination,
     selectedMovementId,
     setSelectedMovementId,
+    selectedMonth,
+    setSelectedMonth,
 
     storeFetchMovements,
     getStoreMovements,

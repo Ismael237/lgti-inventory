@@ -1,6 +1,7 @@
-import { z } from 'zod';
+import { z } from '@i18n';
 import type { Product } from './product.types';
 import type { DirectusMetadata } from '@types';
+import type { Partner } from './partner.types';
 
 /**
  * Enum for Movement Type
@@ -18,6 +19,7 @@ export interface MovementBase extends DirectusMetadata {
   type: MovementType;
   quantity: number;
   product_id: Product;
+  partner_id: Partner;
   notes: string | null;
 }
 
@@ -50,8 +52,9 @@ export const movementSchema = z.object({
   type: z.nativeEnum(MovementType, {
     errorMap: () => ({ message: 'validation.movement.type_required' })
   }).array(),
-  quantity: z.number().min(1, { message: 'validation.movement.quantity_positive' }),
+  quantity: z.coerce.number().min(1, { message: 'validation.movement.quantity_positive' }),
   product_id: z.number().int().positive({ message: 'validation.movement.product_required' }).array(),
+  partner_id: z.number().int().positive({ message: 'validation.movement.partner_required' }).array(),
   notes: z.string().nullable(),
 });
 
@@ -61,6 +64,7 @@ export type MovementDTO = {
   type: MovementType,
   quantity: number,
   product_id: number,
+  partner_id: number,
   notes: string | null,
 };
 

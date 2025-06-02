@@ -264,7 +264,12 @@ type Subscription {
   directus_users_mutated(event: EventEnum): directus_users_mutated
   directus_versions_mutated(event: EventEnum): directus_versions_mutated
   directus_webhooks_mutated(event: EventEnum): directus_webhooks_mutated
+  document_mutated(event: EventEnum): document_mutated
+  document_line_mutated(event: EventEnum): document_line_mutated
   movement_mutated(event: EventEnum): movement_mutated
+  partner_mutated(event: EventEnum): partner_mutated
+  partner_partner_type_mutated(event: EventEnum): partner_partner_type_mutated
+  partner_type_mutated(event: EventEnum): partner_type_mutated
   price_simulation_mutated(event: EventEnum): price_simulation_mutated
   product_mutated(event: EventEnum): product_mutated
   snapshot_event_mutated(event: EventEnum): snapshot_event_mutated
@@ -359,6 +364,14 @@ type category_mutated {
 
 type count_functions {
   count: Int
+}
+
+type date_functions {
+  year: Int
+  month: Int
+  week: Int
+  day: Int
+  weekday: Int
 }
 
 type datetime_functions {
@@ -1619,6 +1632,52 @@ type directus_webhooks_mutated {
   data: directus_webhooks
 }
 
+type document {
+  id: ID!
+  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_updated: Date
+  date_updated_func: datetime_functions
+  type: String
+  reference: String!
+  client_name: String!
+  client_address: String
+  client_phone: String
+  client_niu: String
+  notes: String
+  amount_words: String
+  date_document: Date
+  date_document_func: date_functions
+  client_rc: String
+  total_ht: Int
+  document_line(filter: document_line_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [document_line]
+  document_line_func: count_functions
+}
+
+type document_line {
+  id: ID!
+  document_id(filter: document_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): document
+  designation: String
+  reference: String
+  quantity: Int
+  unit_price: Int
+  total_price: Int
+}
+
+type document_line_mutated {
+  key: ID!
+  event: EventEnum
+  data: document_line
+}
+
+type document_mutated {
+  key: ID!
+  event: EventEnum
+  data: document
+}
+
 type movement {
   id: ID!
   user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
@@ -1631,12 +1690,66 @@ type movement {
   quantity: Int
   notes: String
   product_id(filter: product_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): product
+  partner_id(filter: partner_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): partner
 }
 
 type movement_mutated {
   key: ID!
   event: EventEnum
   data: movement
+}
+
+type partner {
+  id: ID!
+  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_updated: Date
+  date_updated_func: datetime_functions
+  name: String
+  contact_email: String
+  movement(filter: movement_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [movement]
+  movement_func: count_functions
+  partner_type(filter: partner_partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [partner_partner_type]
+  partner_type_func: count_functions
+}
+
+type partner_mutated {
+  key: ID!
+  event: EventEnum
+  data: partner
+}
+
+type partner_partner_type {
+  id: ID!
+  partner_id(filter: partner_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): partner
+  partner_type_id(filter: partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): partner_type
+}
+
+type partner_partner_type_mutated {
+  key: ID!
+  event: EventEnum
+  data: partner_partner_type
+}
+
+type partner_type {
+  id: ID!
+  user_created(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_created: Date
+  date_created_func: datetime_functions
+  user_updated(filter: directus_users_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): directus_users
+  date_updated: Date
+  date_updated_func: datetime_functions
+  type_name: String
+  partner(filter: partner_partner_type_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [partner_partner_type]
+  partner_func: count_functions
+}
+
+type partner_type_mutated {
+  key: ID!
+  event: EventEnum
+  data: partner_type
 }
 
 type policy_me_globals_type {
@@ -1677,6 +1790,8 @@ type product {
   unit_price_eur: Float
   category_id(filter: category_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): category
   current_stock: Int
+  movement(filter: movement_filter, sort: [String], limit: Int, offset: Int, page: Int, search: String): [movement]
+  movement_func: count_functions
 }
 
 type product_mutated {
@@ -2182,6 +2297,14 @@ input date_filter_operators {
   _nin: [String]
   _between: [GraphQLStringOrFloat]
   _nbetween: [GraphQLStringOrFloat]
+}
+
+input date_function_filter_operators {
+  year: number_filter_operators
+  month: number_filter_operators
+  week: number_filter_operators
+  day: number_filter_operators
+  weekday: number_filter_operators
 }
 
 input datetime_function_filter_operators {
@@ -2721,6 +2844,59 @@ input directus_webhooks_filter {
   _or: [directus_webhooks_filter]
 }
 
+input document_filter {
+  id: number_filter_operators
+  user_created: directus_users_filter
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: directus_users_filter
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  type: string_filter_operators
+  reference: string_filter_operators
+  client_name: string_filter_operators
+  client_address: string_filter_operators
+  client_phone: string_filter_operators
+  client_niu: string_filter_operators
+  notes: string_filter_operators
+  amount_words: string_filter_operators
+  date_document: date_filter_operators
+  date_document_func: date_function_filter_operators
+  client_rc: string_filter_operators
+  total_ht: number_filter_operators
+  document_line: document_line_quantifier_filter
+  document_line_func: count_function_filter_operators
+  _and: [document_filter]
+  _or: [document_filter]
+}
+
+input document_line_filter {
+  id: number_filter_operators
+  document_id: document_filter
+  designation: string_filter_operators
+  reference: string_filter_operators
+  quantity: number_filter_operators
+  unit_price: number_filter_operators
+  total_price: number_filter_operators
+  _and: [document_line_filter]
+  _or: [document_line_filter]
+}
+
+""""""
+input document_line_quantifier_filter {
+  id: number_filter_operators
+  document_id: document_filter
+  designation: string_filter_operators
+  reference: string_filter_operators
+  quantity: number_filter_operators
+  unit_price: number_filter_operators
+  total_price: number_filter_operators
+  _and: [document_line_filter]
+  _or: [document_line_filter]
+  _some: document_line_filter
+  _none: document_line_filter
+}
+
 input hash_filter_operators {
   _null: Boolean
   _nnull: Boolean
@@ -2750,6 +2926,43 @@ input id_filter_operators {
   _nempty: Boolean
 }
 
+input movement_filter {
+  id: number_filter_operators
+  user_created: directus_users_filter
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: directus_users_filter
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  type: string_filter_operators
+  quantity: number_filter_operators
+  notes: string_filter_operators
+  product_id: product_filter
+  partner_id: partner_filter
+  _and: [movement_filter]
+  _or: [movement_filter]
+}
+
+""""""
+input movement_quantifier_filter {
+  id: number_filter_operators
+  user_created: directus_users_filter
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: directus_users_filter
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  type: string_filter_operators
+  quantity: number_filter_operators
+  notes: string_filter_operators
+  product_id: product_filter
+  partner_id: partner_filter
+  _and: [movement_filter]
+  _or: [movement_filter]
+  _some: movement_filter
+  _none: movement_filter
+}
+
 input number_filter_operators {
   _eq: GraphQLStringOrFloat
   _neq: GraphQLStringOrFloat
@@ -2763,6 +2976,58 @@ input number_filter_operators {
   _nnull: Boolean
   _between: [GraphQLStringOrFloat]
   _nbetween: [GraphQLStringOrFloat]
+}
+
+input partner_filter {
+  id: number_filter_operators
+  user_created: directus_users_filter
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: directus_users_filter
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  name: string_filter_operators
+  contact_email: string_filter_operators
+  movement: movement_quantifier_filter
+  movement_func: count_function_filter_operators
+  partner_type: partner_partner_type_quantifier_filter
+  partner_type_func: count_function_filter_operators
+  _and: [partner_filter]
+  _or: [partner_filter]
+}
+
+input partner_partner_type_filter {
+  id: number_filter_operators
+  partner_id: partner_filter
+  partner_type_id: partner_type_filter
+  _and: [partner_partner_type_filter]
+  _or: [partner_partner_type_filter]
+}
+
+""""""
+input partner_partner_type_quantifier_filter {
+  id: number_filter_operators
+  partner_id: partner_filter
+  partner_type_id: partner_type_filter
+  _and: [partner_partner_type_filter]
+  _or: [partner_partner_type_filter]
+  _some: partner_partner_type_filter
+  _none: partner_partner_type_filter
+}
+
+input partner_type_filter {
+  id: number_filter_operators
+  user_created: directus_users_filter
+  date_created: date_filter_operators
+  date_created_func: datetime_function_filter_operators
+  user_updated: directus_users_filter
+  date_updated: date_filter_operators
+  date_updated_func: datetime_function_filter_operators
+  type_name: string_filter_operators
+  partner: partner_partner_type_quantifier_filter
+  partner_func: count_function_filter_operators
+  _and: [partner_type_filter]
+  _or: [partner_type_filter]
 }
 
 input product_filter {
@@ -2779,6 +3044,8 @@ input product_filter {
   unit_price_eur: number_filter_operators
   category_id: category_filter
   current_stock: number_filter_operators
+  movement: movement_quantifier_filter
+  movement_func: count_function_filter_operators
   _and: [product_filter]
   _or: [product_filter]
 }

@@ -82,7 +82,7 @@ const PriceSimulation: React.FC<PriceSimulationComponentProps> = ({
       default:
         break;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [simulationId, viewType]);
 
   useEffect(() => {

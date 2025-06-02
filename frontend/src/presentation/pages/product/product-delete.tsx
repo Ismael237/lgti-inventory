@@ -26,7 +26,7 @@ export const ProductDeleteContent = () => {
     if (id) {
       fetchProductById(Number(id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   }, [id]);
 
   if (isLoading) {

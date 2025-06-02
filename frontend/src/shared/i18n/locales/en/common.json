@@ -37,11 +37,17 @@
     "home": "Home",
     "products": "Products",
     "categories": "Categories",
+    "partners": "Partners",
     "movements": "Movements",
-    "simulations": "Price Simulations"
+    "simulations": "Price Simulations",
+    "product_movement_stats": "Product Statistics",
+    "documents": "Documents"
   },
   "common": {
     "back": "Back",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "back_to_list": "Back to list",
     "actions": "Actions",
     "loading": "Loading...",
     "noData": "No data available",
@@ -52,6 +58,20 @@
     "delete_warning": "This action cannot be undone.",
     "system": "System",
     "na": "N/A",
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
     "pagination": {
       "previous": "Previous",
       "next": "Next"
@@ -104,7 +124,10 @@
       "missing_parameters": "Missing parameters",
       "product_id_required": "Product ID is required",
       "category_id_required": "Category ID is required",
-      "snapshot_event_id_required": "Snapshot event ID is required"
+      "snapshot_event_id_required": "Snapshot event ID is required",
+      "type_required": "Type ID is required",
+      "search_term_required": "Search term is required",
+      "document_id_required": "Document ID is required"
     }
   },
   "tooltip": {
@@ -208,6 +231,147 @@
       "no_categories": "No categories found"
     }
   },
+  "documents": {
+    "errors": {
+      "load_failed": "Failed to load documents",
+      "load_single_failed": "Failed to load document",
+      "create_failed": "Failed to create document",
+      "update_failed": "Failed to update document",
+      "delete_failed": "Failed to delete document",
+      "load_by_type_failed": "Failed to load documents by type",
+      "search_failed": "Failed to search documents"
+    },
+    "success": {
+      "created": "Document created successfully",
+      "updated": "Document updated successfully",
+      "deleted": "Document deleted successfully"
+    },
+    "pdf": {
+      "loading": "Loading document...",
+      "not_found": "Document not found",
+      "title": "Document PDF",
+      "view": "View PDF",
+      "download": "Download PDF",
+      "preview": "PDF Preview",
+      "preview_placeholder": "Preview not available. Click the View PDF button to see the document."
+    },
+    "types": {
+      "invoice": "Invoice",
+      "estimate": "Quote"
+    },
+    "list": {
+      "title": "Documents",
+      "columns": {
+        "reference": "Reference",
+        "type": "Type",
+        "client": "Client",
+        "date": "Date",
+        "total": "Total"
+      },
+      "add_document": "Add Document",
+      "export": "Export",
+      "view_pdf": "View PDF",
+      "no_documents": "No documents found"
+    },
+    "create": {
+      "title": "Create Document",
+      "general_info": "General Information",
+      "client_info": "Client Information",
+      "items": "Items",
+      "add_line": "Add Line",
+      "remove_line": "Remove Line",
+      "submit": "Create Document",
+      "success": "Document created successfully",
+      "error": "Error creating document",
+      "notes": "Notes"
+    },
+    "detail": {
+      "title": "Document Details",
+      "not_found": "Document not found",
+      "info": "Document Information",
+      "reference": "Reference",
+      "date": "Date",
+      "client": "Client",
+      "client_address": "Address",
+      "client_phone": "Phone",
+      "client_niu": "NIU",
+      "client_rc": "RC",
+      "notes": "Notes",
+      "lines": "Document Lines",
+      "designation": "Designation",
+      "quantity": "Quantity",
+      "unit_price": "Unit Price",
+      "total": "Total",
+      "total_ht": "Total (excl. tax)",
+      "amount_words": "Amount in words",
+      "no_lines": "No lines found",
+      "print": "Print",
+      "created_at": "Created at",
+      "updated_at": "Updated at"
+    },
+    "edit": {
+      "title": "Edit Document",
+      "not_found": "Document not found",
+      "general_info": "General Information",
+      "client_info": "Client Information",
+      "items": "Items",
+      "add_line": "Add Line",
+      "remove_line": "Remove Line",
+      "submit": "Update Document",
+      "success": "Document updated successfully",
+      "error": "Error updating document",
+      "notes": "Notes"
+    },
+    "fields": {
+      "type": "Type",
+      "reference": "Reference",
+      "date": "Date",
+      "client_name": "Client Name",
+      "client_address": "Client Address",
+      "client_phone": "Client Phone",
+      "client_niu": "Client NIU",
+      "client_rc": "Client RC",
+      "designation": "Designation",
+      "quantity": "Quantity",
+      "unit_price": "Unit Price",
+      "total_price": "Total Price",
+      "total_ht": "Total (excl. tax)",
+      "amount_words": "Amount in Words"
+    },
+    "export": {
+      "loading": "Exporting documents...",
+      "success": "Documents exported successfully",
+      "columns": {
+        "id": "ID",
+        "reference": "Reference",
+        "type": "Type",
+        "client": "Client",
+        "date": "Date",
+        "total": "Total",
+        "createdBy": "Created By",
+        "createdDate": "Created Date",
+        "lastUpdatedBy": "Last Updated By",
+        "lastUpdatedDate": "Last Updated Date"
+      }
+    }
+  },
+  "document_lines": {
+    "errors": {
+      "load_failed": "Failed to load document lines",
+      "load_single_failed": "Failed to load document line",
+      "load_by_document_failed": "Failed to load document lines by document",
+      "create_failed": "Failed to create document line",
+      "update_failed": "Failed to update document line",
+      "delete_failed": "Failed to delete document line",
+      "batch_create_failed": "Failed to create document lines"
+    },
+    "success": {
+      "created": "Document line created successfully",
+      "updated": "Document line updated successfully",
+      "deleted": "Document line deleted successfully",
+      "batch_created": "Document lines created successfully"
+    }
+  },
   "actions": {
     "create": "Create",
     "edit": "Edit",
@@ -236,6 +400,7 @@
     "cancel": "Cancel",
     "saving": "Saving..."
   },
+
   "auth": {
     "username": "Username",
     "rememberMe": "Remember me",
@@ -268,12 +433,14 @@
     "price_simulation": {
       "scenario_name_required": "Scenario name is required",
       "price_not_negative": "Simulated price cannot be negative",
+      "factor_not_negative": "Factor cannot be negative",
       "product_required": "Product is required"
     },
     "movement": {
       "type_required": "Movement type is required",
       "quantity_positive": "Quantity must be greater than zero",
       "product_required": "Product is required",
+      "partner_required": "Partner is required",
       "price_not_negative": "Unit price cannot be negative"
     },
     "product": {
@@ -284,6 +451,25 @@
     "category": {
       "name_required": "Name is required",
       "parent_required": "Parent category is required"
+    },
+    "partner": {
+      "name_required": "Name is required",
+      "email_invalid": "Email is invalid",
+      "type_required": "Partner type is required"
+    }
+  },
+  "priceSimulations": {
+    "errors": {
+      "load_failed": "Failed to load price simulations",
+      "load_single_failed": "Failed to load price simulation",
+      "create_failed": "Failed to create price simulation",
+      "update_failed": "Failed to update price simulation",
+      "delete_failed": "Failed to delete price simulation"
+    },
+    "success": {
+      "created": "Price simulation created successfully",
+      "updated": "Price simulation updated successfully",
+      "deleted": "Price simulation deleted successfully"
     }
   },
   "movements": {
@@ -310,10 +496,13 @@
       "title": "Stock Movements",
       "add_movement": "Add Movement",
       "no_movements": "No movements found",
+      "no_partner": "No partner",
       "columns": {
         "product_name": "Product Name",
         "type": "Type",
+        "partner": "Partner",
         "quantity": "Quantity",
+        "current_stock": "Current Stock",
         "date": "Date",
         "notes": "Notes",
         "created_at": "Created at",
@@ -341,6 +530,9 @@
       "type_info": "Type of stock movement",
       "product": "Product",
       "product_info": "Product affected by this movement",
+      "partner": "Partner",
+      "partner_info": "Partner involved in this movement",
+      "no_partner": "No partner associated",
       "quantity": "Quantity",
       "total_amount": "Total Amount",
       "total_amount_info": "Quantity × Unit Price",
@@ -349,6 +541,8 @@
       "no_notes": "No notes provided",
       "product_info_title": "Product Information",
       "current_unit_price": "Current Unit Price",
+      "current_stock": "Current Stock",
+      "current_stock_info": "Current available quantity in stock",
       "recent_movements": "Recent Movements for this Product",
       "qty_short": "Qty",
       "price_short": "Price"
@@ -358,6 +552,8 @@
       "type_placeholder": "Select movement type",
       "product": "Product",
       "product_placeholder": "Select a product",
+      "partner": "Partner",
+      "partner_placeholder": "Select a partner",
       "quantity": "Quantity",
       "quantity_placeholder": "Enter quantity",
       "unit_price": "Unit Price (EUR)",
@@ -365,6 +561,7 @@
       "notes": "Notes",
       "notes_placeholder": "Enter optional notes",
       "product_missing": "Product ID is missing",
+      "partner_missing": "Partner ID is missing",
       "type_missing": "Movement type is missing",
       "out_of_stock": "Insufficient stock. Available: {{available}}, Requested: {{requested}}",
       "select_product_first": "Select a product first",
@@ -484,6 +681,91 @@
     "server_error": "Server error",
     "details": "Error Details"
   },
+  "partners": {
+    "errors": {
+      "load_failed": "Failed to load partners",
+      "load_single_failed": "Failed to load partner",
+      "create_failed": "Failed to create partner",
+      "update_failed": "Failed to update partner",
+      "delete_failed": "Failed to delete partner",
+      "load_by_type_failed": "Failed to load partners by type"
+    },
+    "success": {
+      "loaded": "Partners loaded successfully",
+      "created": "Partner created successfully",
+      "updated": "Partner updated successfully",
+      "deleted": "Partner deleted successfully"
+    },
+    "list": {
+      "title": "Partners",
+      "add_partner": "Add Partner",
+      "no_partners": "No partners found",
+      "untyped": "Untyped",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "type": "Type",
+        "last_updated": "Last Updated"
+      }
+    },
+    "delete": {
+      "not_found": "Partner not found",
+      "confirm": "Are you sure you want to delete the partner \"{{name}}\" (Email: {{email}})",
+      "warning": "This action cannot be undone. All related data will also be deleted.",
+      "no_email": "No email"
+    },
+    "form": {
+      "name": "Name",
+      "name_placeholder": "Enter partner name",
+      "email": "Email",
+      "email_placeholder": "Enter partner email",
+      "type": "Type",
+      "type_placeholder": "Select partner type",
+      "error_loading": "Error loading partner: {{error}}",
+      "not_found": "Partner not found"
+    },
+    "details": {
+      "not_found": "Partner not found",
+      "general_info": "General Information",
+      "name": "Name",
+      "email": "Email",
+      "type": "Type",
+      "not_specified": "Not specified",
+      "untyped": "Untyped",
+      "id": "ID",
+      "address_info": "Address Information",
+      "address": "Address",
+      "metadata": "Metadata",
+      "created_at": "Created on",
+      "created_by": "Created by",
+      "last_updated": "Last updated",
+      "never": "Never",
+      "updated_by": "Updated by",
+      "na": "N/A"
+    },
+    "dialog": {
+      "add_title": "Add Partner",
+      "edit_title": "Edit Partner",
+      "delete_title": "Delete Partner",
+      "details_title": "Partner Details",
+      "export_title": "Export Partners"
+    },
+    "export": {
+      "loading": "Exporting...",
+      "success": "Partners exported successfully",
+      "columns": {
+        "id": "ID",
+        "name": "Name",
+        "email": "Email",
+        "types": "Types",
+        "untyped": "Untyped",
+        "createdBy": "Created By",
+        "createdDate": "Created Date",
+        "lastUpdatedBy": "Last Updated By",
+        "lastUpdatedDate": "Last Updated Date"
+      }
+    }
+  },
   "products": {
     "errors": {
       "load_failed": "Failed to load products",
@@ -499,6 +781,42 @@
       "created": "Product created successfully",
       "updated": "Product updated successfully",
       "deleted": "Product deleted successfully"
+    },
+    "movement_stats": {
+      "title": "Product Movement Statistics",
+      "no_data": "No movement statistics available",
+      "cards": {
+        "total_in": "Total In",
+        "total_out": "Total Out",
+        "total_in_amount": "Total In Amount",
+        "total_out_amount": "Total Out Amount",
+        "profit_loss": "Profit/Loss",
+        "units": "units",
+        "currency": "EUR/XAF"
+      },
+      "columns": {
+        "product": "Product",
+        "total_in": "Total In",
+        "total_out": "Total Out",
+        "difference": "Difference",
+        "total_in_amount": "Total In Amount",
+        "total_out_amount": "Total Out Amount",
+        "profit_loss": "Profit/Loss"
+      },
+      "export": {
+        "loading": "Exporting product movement statistics...",
+        "success": "Product movement statistics exported successfully",
+        "columns": {
+          "product_id": "Product ID",
+          "product_name": "Product Name",
+          "total_in": "Total In",
+          "total_out": "Total Out",
+          "difference": "Difference",
+          "total_in_amount": "Total In Amount (EUR)",
+          "total_out_amount": "Total Out Amount (EUR)",
+          "profit_loss": "Profit/Loss (EUR)"
+        }
+      }
     },
     "snapshots": {
       "list": {

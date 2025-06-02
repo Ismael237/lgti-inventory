@@ -87,7 +87,7 @@ const CategoryHierarchy = () => {
 
   useEffect(() => {
     fetchCategoryHierarchy();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   }, []);
 
   if (isLoading && (!categoryTree || categoryTree.length === 0)) {

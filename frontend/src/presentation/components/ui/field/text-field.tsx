@@ -16,7 +16,7 @@ export const TextField = <T extends FieldValues, K extends Path<T>>({
     errors
 }: TextFieldProps<T, K>) => {
     const { t } = useTranslation();
-    const { name, label, placeholder, required, helperText } = field;
+    const { name, label, placeholder, required, helperText, type } = field;
     const errorText = errors[name]?.message as string;
     const isInvalid = !!errors[name];
     const optionalText = !required ? "(optional)" : undefined;
@@ -32,6 +32,7 @@ export const TextField = <T extends FieldValues, K extends Path<T>>({
         >
             <Input
                 placeholder={placeholder}
+                type={type}
                 {...register(name, { required: required ? `${label} est requis` : false })}
             />
         </Field>

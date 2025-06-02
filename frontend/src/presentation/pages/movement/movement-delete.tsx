@@ -25,7 +25,7 @@ export const MovementDeleteContent = () => {
     if (id) {
       fetchMovementById(Number(id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   }, [id]);
 
   if (isLoading) {

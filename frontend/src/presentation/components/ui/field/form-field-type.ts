@@ -8,7 +8,7 @@ export interface FieldConfig<T extends FieldValues, K extends Path<T>> {
   label: string;
   type: T[K] extends boolean ? 'switch' | 'checkbox' :
   T[K] extends number ? 'number' | 'select' :
-  T[K] extends string ? 'text' | 'textarea' | 'select' :
+  T[K] extends string ? 'text' | 'textarea' | 'select' | 'date' :
   T[K] extends number | null ? 'select' :
   FieldType;
   placeholder?: string;
@@ -19,6 +19,7 @@ export interface FieldConfig<T extends FieldValues, K extends Path<T>> {
   defaultValue?: PathValue<T, K>;
   contentRef?: RefObject<HTMLElement>;
   multiple?: boolean;
+  step?: number;
 }
 
 export function makeField<T extends FieldValues>() {

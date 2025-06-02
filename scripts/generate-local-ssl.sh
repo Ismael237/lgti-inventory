@@ -9,7 +9,7 @@ IFS=$'\n\t'
 
 # ------------ CONFIGURATION ------------
 # Target directory for local certs
-LOCAL_SSL_DIR="./backend/nginx/ssl/local"
+LOCAL_SSL_DIR="./backend/nginx/ssl"
 
 # ------------ FUNCTIONS ------------
 usage() {
@@ -38,8 +38,8 @@ run_mkcert() {
   mkcert -install
 
   echo "Generating local certs for: ${domains[*]}"
-  mkcert -key-file "${LOCAL_SSL_DIR}/local.key" \
-         -cert-file "${LOCAL_SSL_DIR}/local.crt" \
+  mkcert -key-file "${LOCAL_SSL_DIR}/key.pem" \
+         -cert-file "${LOCAL_SSL_DIR}/cert.pem" \
          "${domains[@]}"
 
   echo "✅ Local certificates available in ${LOCAL_SSL_DIR}"

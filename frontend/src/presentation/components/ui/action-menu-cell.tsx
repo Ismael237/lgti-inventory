@@ -45,13 +45,18 @@ export const ActionMenuCell: React.FC<ActionMenuCellProps> = ({
   return (
     <Menu.Root positioning={{ placement: "left-start" }}>
       <Menu.Trigger asChild>
-        <IconButton size={menuButtonSize} variant="ghost" aria-label={ariaLabel}>
+        <IconButton
+          size={menuButtonSize}
+          variant="outline"
+          aria-label={ariaLabel}
+          onClick={(e) => e.stopPropagation()}
+        >
           <LuEllipsisVertical size={16} />
         </IconButton>
       </Menu.Trigger>
       <Portal>
         <Menu.Positioner>
-          <Menu.Content>
+          <Menu.Content onClick={(e) => e.stopPropagation()}>
             {options.map((option, index) => {
               const menuItemContent = (
                 <>
@@ -59,7 +64,7 @@ export const ActionMenuCell: React.FC<ActionMenuCellProps> = ({
                   {option.label}
                 </>
               );
-              
+
               return option.to ? (
                 <Menu.Item
                   asChild

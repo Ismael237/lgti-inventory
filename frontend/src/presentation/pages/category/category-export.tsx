@@ -22,7 +22,6 @@ export const CategoryExport: FC<CategoryExportProps> = ({
     { header: t('common.id'), accessor: 'id' },
     { header: t('categories.list.columns.name'), accessor: 'name' },
     { header: t('categories.details.parent_category'), accessor: (c: Category) => c.parent_id?.name || '' },
-    { header: t('categories.export.children_count'), accessor: (c: Category) => c.children?.length || 0 },
     { header: t('common.created_by'), accessor: (c: Category) => c.user_created?.email || c.user_created?.first_name || '' },
     { header: t('common.created_at'), accessor: (c: Category) => c.date_created || '' },
     { header: t('common.updated_by'), accessor: (c: Category) => c.user_updated?.email || c.user_updated?.first_name || '' },

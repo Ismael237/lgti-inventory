@@ -33,7 +33,7 @@ export const CategoryFormCreate = ({ selectRef }: { selectRef: RefObject<HTMLEle
 
   useEffect(() => {
     fetchCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   const safeCategories = categories ?? [];

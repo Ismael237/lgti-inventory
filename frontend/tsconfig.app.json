@@ -43,6 +43,7 @@
       "@domain/*": ["src/domain/*"],
       "@api/*": ["src/infrastructure/api/*"],
       "@infrastructure/*": ["src/infrastructure/*"],
+      "@assets/*": ["src/assets/*"],
       "@/*": ["src/*"],
     }
   },

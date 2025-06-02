@@ -45,7 +45,7 @@ export const CategoryFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
     if (categoryId) {
       fetchCategory(categoryId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [categoryId]);
 
   const safeCategories = categories ?? [];

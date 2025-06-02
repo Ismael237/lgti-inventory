@@ -2,6 +2,7 @@ import { type ButtonProps } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import { Button } from './chakra/button';
+import { useTranslation } from 'react-i18next';
 
 interface LinkButtonProps extends ButtonProps {
   to: string;
@@ -13,14 +14,14 @@ export const LinkButton = ({
   children,
   ...buttonProps
 }: LinkButtonProps) => {
+  const { t } = useTranslation();
   return (
     <Button
-      asChild
+      asChild={!buttonProps.loading}
+      loadingText={t('common.loading')}
       {...buttonProps}
     >
-      <Link to={to}>
-        {children}
-      </Link>
+      {!buttonProps.loading && <Link to={to}>{children}</Link>}
     </Button>
   );
 };

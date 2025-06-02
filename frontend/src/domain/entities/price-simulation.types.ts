@@ -1,5 +1,5 @@
 import type { DirectusMetadata } from '@types';
-import { z } from 'zod';
+import { z } from '@i18n';
 
 /**
  * Base interface for PriceSimulation

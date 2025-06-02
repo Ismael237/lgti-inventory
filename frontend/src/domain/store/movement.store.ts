@@ -21,6 +21,8 @@ interface MovementState extends MovementStateBase {
   // UI state
   selectedMovementId: number | null;
   setSelectedMovementId: (id: number | null) => void;
+  selectedMonth: string;
+  setSelectedMonth: (month: string) => void;
   resetError: () => void;
 }
 
@@ -39,6 +41,7 @@ const initialState: MovementStateBase = {
 export const useMovementStore = create<MovementState>()((set) => ({
   ...initialState,
   selectedMovementId: null,
+  selectedMonth: 'all',
   
   fetchMovements: async (params) => {
     try {
@@ -66,6 +69,8 @@ export const useMovementStore = create<MovementState>()((set) => ({
   },
   
   setSelectedMovementId: (id) => set({ selectedMovementId: id }),
+
+  setSelectedMonth: (month) => set({ selectedMonth: month }),
 
   resetError: () => set({ error: null}),
 }));

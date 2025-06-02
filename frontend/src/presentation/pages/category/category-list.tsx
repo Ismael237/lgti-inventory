@@ -20,11 +20,11 @@ import { getCategoryBadge } from '@utils/display-helpers';
 import { ExportButton } from '@ui/export-button';
 import { LinkButton } from '@ui/link-button';
 import { ActionMenu } from '@ui/action-menu';
+import type { ContextMenuConfig } from '@ui/context-menu';
 
 interface CategoryListComponentProps {
   viewType?: CategoryViewType;
 }
-
 
 const CategoriesList = ({ viewType }: CategoryListComponentProps) => {
   const { t } = useTranslation();
@@ -48,8 +48,13 @@ const CategoriesList = ({ viewType }: CategoryListComponentProps) => {
       page,
       limit: pageSize
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize]);
+
+  const contextMenuConfig: ContextMenuConfig<Category> = {
+    viewUrl: ({ id }) => `${baseUrl}/${id}`,
+    editUrl: ({ id }) => `${baseUrl}/${id}/edit`,
+    deleteUrl: ({ id }) => `${baseUrl}/${id}/delete`,
+  };
 
   const columns: Column<Category>[] = [
     {
@@ -136,6 +141,8 @@ const CategoriesList = ({ viewType }: CategoryListComponentProps) => {
           onPageSizeChange={setPageSize}
           keyExtractor={(category) => category.id}
           emptyMessage={t('categories.list.no_categories')}
+          enableContextMenu={true}
+          contextMenuConfig={contextMenuConfig}
         />
     </Box>
   );

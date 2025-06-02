@@ -1,0 +1,25 @@
+{
+  "collection": "movement",
+  "field": "partner_id",
+  "related_collection": "partner",
+  "meta": {
+    "junction_field": null,
+    "many_collection": "movement",
+    "many_field": "partner_id",
+    "one_allowed_collections": null,
+    "one_collection": "partner",
+    "one_collection_field": null,
+    "one_deselect_action": "nullify",
+    "one_field": "movement",
+    "sort_field": null
+  },
+  "schema": {
+    "table": "movement",
+    "column": "partner_id",
+    "foreign_key_table": "partner",
+    "foreign_key_column": "id",
+    "constraint_name": "movement_partner_id_foreign",
+    "on_update": "NO ACTION",
+    "on_delete": "SET NULL"
+  }
+}

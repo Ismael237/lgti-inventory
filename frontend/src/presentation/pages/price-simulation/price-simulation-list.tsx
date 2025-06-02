@@ -20,6 +20,7 @@ import { PriceSimulationViewType } from '@entities';
 import { ExportButton } from '@ui/export-button';
 import { LinkButton } from '@ui/link-button';
 import { ActionMenu } from '@ui/action-menu';
+import type { ContextMenuConfig } from '@ui/context-menu';
 
 interface PriceSimulationListComponentProps {
   viewType?: PriceSimulationViewType;
@@ -48,6 +49,12 @@ const PriceSimulationList = ({ viewType }: PriceSimulationListComponentProps) =>
       limit: pageSize
     });
   }, [fetchPriceSimulations, page, pageSize]);
+
+  const contextMenuConfig: ContextMenuConfig<PriceSimulation> = {
+    viewUrl: ({ id }) => `${baseUrl}/${id}`,
+    editUrl: ({ id }) => `${baseUrl}/${id}/edit`,
+    deleteUrl: ({ id }) => `${baseUrl}/${id}/delete`,
+  };
 
   const columns: Column<PriceSimulation>[] = [
     {
@@ -97,7 +104,7 @@ const PriceSimulationList = ({ viewType }: PriceSimulationListComponentProps) =>
             <ExportButton
               baseUrl={baseUrl}
             />
-            <LinkButton 
+            <LinkButton
               loading={loading}
               to={`${baseUrl}/new`}
             >
@@ -120,6 +127,8 @@ const PriceSimulationList = ({ viewType }: PriceSimulationListComponentProps) =>
         onPageSizeChange={setPageSize}
         keyExtractor={(simulation) => simulation.id}
         emptyMessage={t('price_simulations.list.no_simulations')}
+        enableContextMenu={true}
+        contextMenuConfig={contextMenuConfig}
       />
     </Box>
   );

@@ -32,7 +32,7 @@ export const FormField = <T extends FieldValues, K extends Path<T>>({
         case 'checkbox':
             return <CheckboxField field={field} control={control} errors={errors} />;
         case 'number':
-            return <NumberField field={field} register={register} errors={errors} />;
+            return <NumberField field={field} control={control} errors={errors} />;
         default:
             return <TextField field={field} register={register} errors={errors} />;
     }

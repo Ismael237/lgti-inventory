@@ -50,7 +50,6 @@ const CategoryDetails = () => {
       fetchHierarchy();
       checkHasChildren(categoryId);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (isLoading && !category) {

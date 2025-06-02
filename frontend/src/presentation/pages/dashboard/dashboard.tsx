@@ -17,113 +17,17 @@ import {
   LuArrowUpDown,
   LuArrowUpRight,
   LuArrowDownRight,
-  LuTrendingUp,
-  LuTrendingDown,
-  LuEye,
-  LuEyeOff,
   LuDollarSign,
 } from 'react-icons/lu';
 import { useProducts } from '@hooks/use-products';
 import { useCategories } from '@hooks/use-categories';
 import { useMovements } from '@hooks/use-movements';
 import { MovementType } from '@entities/movement.types';
-import { formatEURwithXAF, formatSocialCurrency, truncateText } from '@utils/format';
-import { Tooltip } from '@ui/chakra/tooltip';
-
-interface StockValueViewProps {
-  stockValue: number;
-}
-
-const StockValueView: React.FC<StockValueViewProps> = ({ stockValue }) => {
-  const { t } = useTranslation();
-  const [isVisible, setIsVisible] = useState<boolean>(() => {
-    const storedValue = localStorage.getItem('showStockValue');
-    return storedValue === null ? true : storedValue === 'true';
-  });
-
-  const toggleVisibility = () => {
-    const newValue = !isVisible;
-    setIsVisible(newValue);
-    localStorage.setItem('showStockValue', String(newValue));
-  };
-
-  return (
-    <VStack cursor="pointer" gap="0" align="stretch">
-      <Flex gap={4} alignItems="center">
-        <Tooltip content={isVisible ? formatEURwithXAF(stockValue) : '*********'}>
-          <Heading size="lg">
-            {isVisible ? formatSocialCurrency(stockValue) : '*********'}
-          </Heading>
-        </Tooltip>
-        <Icon
-          aria-label={isVisible ? t('dashboard.hide_value') : t('dashboard.show_value')}
-          size="sm"
-          onClick={toggleVisibility}
-          _hover={{ color: 'brand.500' }}
-          _active={{ color: 'brand.700' }}
-        >{isVisible ? <LuEyeOff /> : <LuEye />}</Icon>
-      </Flex>
-    </VStack>
-  );
-};
+import { truncateText } from '@utils/format';
+import ToggleableValue from '@ui/toggleable-value';
+import StatCard from '@ui/stat-card';
 
 
-interface StatCardProps {
-  title: string;
-  value: string | number | React.ReactNode;
-  icon: React.ComponentType;
-  trend?: number;
-  loading?: boolean;
-  colorPalette?: string;
-}
-
-const StatCard: React.FC<StatCardProps> = ({
-  title,
-  value,
-  icon,
-  trend = 0,
-  loading = false,
-  colorPalette = 'brand'
-}) => {
-  const trendIcon = trend > 0 ? LuTrendingUp : LuTrendingDown;
-  const trendColor = trend > 0 ? 'green.500' : 'red.500';
-
-  return (
-    <Box
-      p="4"
-      borderWidth="1px"
-      borderColor="border"
-      borderRadius="lg"
-      bg="white"
-      _dark={{ bg: 'gray.800' }}
-    >
-      <VStack gap="2" align="stretch">
-        <Flex gap="2" justify="space-between" align="center">
-          <Text fontSize="xs" color="fg.muted">{title}</Text>
-          <Icon as={icon} boxSize="4" color={`${colorPalette}.500`} />
-        </Flex>
-
-        {loading ? (
-          <Spinner size="md" />
-        ) : (
-          <VStack gap="0" align="stretch">
-            {typeof value === 'string' || typeof value === 'number' ? (
-              <Heading size="lg">{value}</Heading>
-            ) : (value)}
-            {trend !== 0 && (
-              <Flex align="center" gap="1">
-                <Icon as={trendIcon} color={trendColor} />
-                <Text fontSize="sm" color={trendColor}>
-                  {Math.abs(trend)}% {trend > 0 ? 'increase' : 'decrease'}
-                </Text>
-              </Flex>
-            )}
-          </VStack>
-        )}
-      </VStack>
-    </Box>
-  );
-};
 
 interface RecentActivityCardProps {
   title: string;
@@ -220,12 +124,11 @@ export const Dashboard = () => {
     fetchPaginatedMovement({
       limit: 5,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
 
   useEffect(() => {
     if (products && categories && movements) {
-      // Calculate total stock value
       const stockValue = products?.data.reduce((total, product) => {
         return total + (product.current_stock || 0) * product.unit_price_eur;
       }, 0) || 0;
@@ -237,7 +140,6 @@ export const Dashboard = () => {
         stockValue
       });
 
-      // Get recent movements (last 5)
       const sortedMovements = [...(movements.data || [])].sort((a, b) =>
         new Date(b.date_created).getTime() - new Date(a.date_created).getTime()
       ).slice(0, 5);
@@ -294,11 +196,13 @@ export const Dashboard = () => {
     <VStack gap="4" width="full" align="stretch">
       <Heading size="lg">{t('dashboard.title')}</Heading>
 
-      {/* Stats Cards */}
       <Grid templateColumns={["1fr", null, null, "1.3fr 1fr 1fr 1fr"]} gap="4">
         <StatCard
           title={t('dashboard.stock_value')}
-          value={<StockValueView stockValue={stats.stockValue} />}
+          value={<ToggleableValue
+            value={stats.stockValue}
+            storageKey="showStockValue"
+          />}
           icon={LuDollarSign}
           loading={productsLoading}
           colorPalette="brand"
@@ -326,7 +230,6 @@ export const Dashboard = () => {
         />
       </Grid>
 
-      {/* Activity Cards */}
       <Grid templateColumns={{ base: "1fr", lg: "repeat(2, 1fr)" }} gap="4">
         <RecentActivityCard
           title={t('dashboard.recent_movements')}

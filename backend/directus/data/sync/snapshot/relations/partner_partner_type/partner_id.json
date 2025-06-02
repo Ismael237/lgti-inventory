@@ -1,0 +1,25 @@
+{
+  "collection": "partner_partner_type",
+  "field": "partner_id",
+  "related_collection": "partner",
+  "meta": {
+    "junction_field": "partner_type_id",
+    "many_collection": "partner_partner_type",
+    "many_field": "partner_id",
+    "one_allowed_collections": null,
+    "one_collection": "partner",
+    "one_collection_field": null,
+    "one_deselect_action": "nullify",
+    "one_field": "partner_type",
+    "sort_field": null
+  },
+  "schema": {
+    "table": "partner_partner_type",
+    "column": "partner_id",
+    "foreign_key_table": "partner",
+    "foreign_key_column": "id",
+    "constraint_name": "partner_partner_type_partner_id_foreign",
+    "on_update": "NO ACTION",
+    "on_delete": "SET NULL"
+  }
+}

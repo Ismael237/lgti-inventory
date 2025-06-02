@@ -16,7 +16,7 @@ export const SelectField = <T extends FieldValues, K extends Path<T>>({
     errors
 }: SelectFieldProps<T, K>) => {
     const { t } = useTranslation();
-    const { name, label, placeholder, required, options, contentRef, helperText} = field;
+    const { name, label, placeholder, required, options, contentRef, helperText, multiple, defaultValue } = field;
     const errorText = errors[name]?.message as string;
     const isInvalid = !!errors[name];
     const optionalText = !required ? "(optional)" : undefined;
@@ -37,17 +37,19 @@ export const SelectField = <T extends FieldValues, K extends Path<T>>({
                     return (
                         <SelectRoot
                             name={controllerField.name}
-                            value={controllerField.value}
+                            value={controllerField.value || defaultValue}
+                            defaultValue={[defaultValue || '']}
                             onValueChange={({ value }) => controllerField.onChange(value)}
                             onInteractOutside={() => controllerField.onBlur()}
                             collection={options!}
                             colorPalette="brand"
+                            multiple={multiple}
                         >
                             <SelectTrigger clearable>
                                 <SelectValueText placeholder={placeholder} />
                             </SelectTrigger>
                             <SelectContent portalRef={contentRef}>
-                                {options?.items.map(option => (
+                                {options?.items.map((option: { value: string; label: string }) => (
                                     <SelectItem key={String(option.value)} item={option}>
                                         {option.label}
                                     </SelectItem>

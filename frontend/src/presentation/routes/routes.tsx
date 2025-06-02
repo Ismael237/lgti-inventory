@@ -8,6 +8,8 @@ import { CategoryViewType } from '@entities/category.types';
 import { PriceSimulationViewType } from '@entities/price-simulation.types';
 import { MovementViewType } from '@entities/movement.types';
 import { ProductViewType } from '@entities/product.types';
+import { PartnerViewType } from '@entities/partner.types';
+import { DocumentViewType } from '@entities/document.types';
 
 // Lazy loaded pages
 const Dashboard = lazy(() => import('@pages/dashboard/dashboard'));
@@ -15,6 +17,14 @@ const Category = lazy(() => import('@pages/category/category'));
 const Movement = lazy(() => import('@pages/movement/movement'));
 const PriceSimulation = lazy(() => import('@pages/price-simulation/price-simulation'));
 const Product = lazy(() => import('@pages/product/product'));
+const ProductMovementStats = lazy(() => import('@pages/product/product-movement-stats'));
+const ProductMovementStatsExport = lazy(() => import('@pages/product/product-movement-stats-export'));
+const Partner = lazy(() => import('@pages/partner/partner'));
+const DocumentList = lazy(() => import('@pages/document/document-list'));
+const DocumentDetail = lazy(() => import('@pages/document/document-detail'));
+const DocumentForm = lazy(() => import('@pages/document/document-form'));
+const DocumentPDFPage = lazy(() => import('@pages/document/document-pdf'));
+const DocumentExport = lazy(() => import('@pages/document/document-export'));
 const Login = lazy(() => import('@pages/auth/login'));
 const NotFound = lazy(() => import('@pages/not-found'));
 
@@ -278,6 +288,122 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingSpinner />}>
             <Product viewType={ProductViewType.SNAPSHOT_EXPORT} />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'products/movement-stats',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <ProductMovementStats />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'products/movement-stats/export',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <ProductMovementStatsExport />
+          </Suspense>
+        ),
+      },
+      
+      // Partners Routes
+      {
+        path: 'partners',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <Partner />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'partners/new',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <Partner viewType={PartnerViewType.NEW} />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'partners/:id',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <Partner viewType={PartnerViewType.DETAILS} />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'partners/:id/edit',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <Partner viewType={PartnerViewType.EDIT} />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'partners/:id/delete',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <Partner viewType={PartnerViewType.DELETE} />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'partners/export',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <Partner viewType={PartnerViewType.EXPORT} />
+          </Suspense>
+        ),
+      },
+
+      // Documents Routes
+      {
+        path: 'documents',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DocumentList viewType={DocumentViewType.LIST} />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'documents/create',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DocumentForm />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'documents/:id',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DocumentDetail />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'documents/:id/edit',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DocumentForm />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'documents/:id/pdf',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DocumentPDFPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'documents/export',
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <DocumentExport />
           </Suspense>
         ),
       },

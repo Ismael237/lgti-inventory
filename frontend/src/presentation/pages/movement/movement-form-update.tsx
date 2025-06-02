@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { createListCollection } from '@chakra-ui/react';
 import { useMovements } from '@hooks/use-movements';
 import { useProducts } from '@hooks/use-products';
+import { usePartners } from '@hooks/use-partners';
 import { makeField } from '@ui/field/form-field-type';
 import { SimpleForm } from '@ui/form/simple-form';
 import { useForm } from 'react-hook-form';
@@ -26,12 +27,22 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
     fetchProductsRequest,
     fetchProductByIdRequest,
   } = useProducts();
+  
+  const {
+    fetchPartnersRequest
+  } = usePartners();
 
   const {
     data: products,
     execute: fetchProducts,
     isLoading: isLoadingProducts
   } = fetchProductsRequest;
+  
+  const {
+    data: partners,
+    execute: fetchPartners,
+    isLoading: isLoadingPartners
+  } = fetchPartnersRequest;
 
   const {
     execute: fetchMovementById,
@@ -67,9 +78,14 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
   const selectedMovementType = watch('type');
 
   const safeProducts = products ?? [];
+  const safePartners = partners ?? [];
 
   const productOptions = createListCollection({
     items: safeProducts.map(product => ({ value: product.id, label: product.reference }))
+  });
+  
+  const partnerOptions = createListCollection({
+    items: safePartners.map(partner => ({ value: partner.id, label: partner.name }))
   });
 
   const movementTypeOptions = createListCollection({
@@ -149,6 +165,16 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
       helperText: getStockHelperText(),
     }),
     field({
+      name: 'partner_id' as const,
+      label: t('movements.form.partner'),
+      type: 'select' as const,
+      placeholder: t('movements.form.partner_placeholder'),
+      contentRef: selectRef,
+      required: true,
+      multiple: false,
+      options: partnerOptions,
+    }),
+    field({
       name: 'quantity' as const,
       label: t('movements.form.quantity'),
       type: 'number' as const,
@@ -168,9 +194,11 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
     if (!id || !movement) return;
 
     const productId = getFirstId(data.product_id);
+    const partnerId = getFirstId(data.partner_id);
     const movementType = getFirstId(data.type);
 
     if (!productId) throw Error(t('movements.form.product_missing'));
+    if (!partnerId) throw Error(t('movements.form.partner_missing'));
     if (!movementType) throw Error(t('movements.form.type_missing'));
 
     if (movementType === MovementType.OUT) {
@@ -199,6 +227,7 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
 
     const formattedData: MovementDTO = {
       product_id: productId,
+      partner_id: partnerId,
       type: movementType,
       quantity: data.quantity,
       notes: data.notes,
@@ -215,7 +244,8 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
     fetchProducts({
       fields: ['id', 'reference']
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchPartners();
+
   }, [id]);
 
   useEffect(() => {
@@ -223,6 +253,7 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
       reset({
         type: ensureIdArray(movement.type),
         product_id: ensureIdArray(movement.product_id?.id),
+        partner_id: ensureIdArray(movement.partner_id?.id),
         quantity: movement.quantity,
         notes: movement.notes || ''
       });
@@ -234,10 +265,10 @@ export const MovementFormUpdate = ({ selectRef }: { selectRef: RefObject<HTMLEle
     if (productId) {
       fetchProductById(productId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [selectedProductId]);
 
-  if (isLoadingMovement || isLoadingProducts) {
+  if (isLoadingMovement || isLoadingProducts || isLoadingPartners) {
     return <LoadingSpinner />;
   }
 

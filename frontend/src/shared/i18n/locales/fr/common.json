@@ -37,23 +37,46 @@
     "home": "Accueil",
     "products": "Produits",
     "categories": "Catégories",
+    "partners": "Partenaires",
     "movements": "Mouvements",
-    "simulations": "Simulations de prix"
+    "simulations": "Simulations de prix",
+    "product_movement_stats": "Statistiques produits",
+    "documents": "Documents"
   },
   "common": {
     "actions": "Actions",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "back_to_list": "Retour à la liste",
     "loading": "Chargement en cours...",
     "noData": "Aucune donnée disponible",
     "error": "Une erreur est survenue",
     "success": "Opération réussie",
     "warning": "Attention",
     "info": "Information",
+    "months": [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre"
+    ],
     "errors": {
       "id_required": "L'identifiant est requis",
       "missing_parameters": "Paramètres manquants",
       "product_id_required": "L'identifiant du produit est requis",
       "category_id_required": "L'identifiant de la catégorie est requis",
-      "snapshot_event_id_required": "L'identifiant de l'événement de snapshot est requis"
+      "snapshot_event_id_required": "L'identifiant de l'événement de snapshot est requis",
+      "type_required": "L'identifiant du type est requis",
+      "search_term_required": "Le terme de recherche est requis",
+      "document_id_required": "L'identifiant du document est requis"
     },
     "delete_warning": "Cette action ne peut pas être annulée.",
     "id": "ID",
@@ -99,6 +122,13 @@
     "not_applicable": "N/A",
     "never": "Jamais"
   },
+  "pages": {
+    "not_found": {
+      "title": "Page introuvable",
+      "message": "La page que vous cherchez n'existe pas ou a été déplacée.",
+      "back_to_home": "Retour à la page d'accueil"
+    }
+  },
   "tooltip": {
     "back_to_previous": "Revenir à la page précédente"
   },
@@ -106,12 +136,14 @@
     "price_simulation": {
       "scenario_name_required": "Le nom du scénario est requis",
       "price_not_negative": "Le prix simulé ne peut pas être négatif",
+      "factor_not_negative": "Le facteur ne peut pas être négatif",
       "product_required": "Le produit est requis"
     },
     "movement": {
       "type_required": "Le type de mouvement est requis",
       "quantity_positive": "La quantité doit être supérieure à zéro",
       "product_required": "Le produit est requis",
+      "partner_required": "Le partenaire est requis",
       "price_not_negative": "Le prix unitaire ne peut pas être négatif"
     },
     "product": {
@@ -122,6 +154,11 @@
     "category": {
       "name_required": "Le nom est requis",
       "parent_required": "La catégorie parente est requise"
+    },
+    "partner": {
+      "name_required": "Le nom est requis",
+      "email_invalid": "L'email est invalide",
+      "type_required": "Le type de partenaire est requis"
     }
   },
   "data_table": {
@@ -154,6 +191,91 @@
     "not_available": "Non disponible",
     "info": "Mes informations",
     "settings": "Paramètres"
+  },
+  "partners": {
+    "errors": {
+      "load_failed": "Échec du chargement des partenaires",
+      "load_single_failed": "Échec du chargement du partenaire",
+      "create_failed": "Échec de la création du partenaire",
+      "update_failed": "Échec de la mise à jour du partenaire",
+      "delete_failed": "Échec de la suppression du partenaire",
+      "load_by_type_failed": "Échec du chargement des partenaires par type"
+    },
+    "success": {
+      "loaded": "Partenaires chargés avec succès",
+      "created": "Partenaire créé avec succès",
+      "updated": "Partenaire mis à jour avec succès",
+      "deleted": "Partenaire supprimé avec succès"
+    },
+    "list": {
+      "title": "Partenaires",
+      "add_partner": "Ajouter un partenaire",
+      "no_partners": "Aucun partenaire trouvé",
+      "untyped": "Non typé",
+      "columns": {
+        "name": "Nom",
+        "email": "Email",
+        "type": "Type",
+        "last_updated": "Dernière mise à jour"
+      }
+    },
+    "delete": {
+      "not_found": "Partenaire non trouvé",
+      "confirm": "Êtes-vous sûr de vouloir supprimer le partenaire \"{{name}}\" (Email: {{email}})",
+      "warning": "Cette action ne peut pas être annulée. Toutes les données associées seront également supprimées.",
+      "no_email": "Pas d'email"
+    },
+    "form": {
+      "name": "Nom",
+      "name_placeholder": "Entrez le nom du partenaire",
+      "email": "Email",
+      "email_placeholder": "Entrez l'email du partenaire",
+      "type": "Type",
+      "type_placeholder": "Sélectionnez le type de partenaire",
+      "error_loading": "Erreur lors du chargement du partenaire: {{error}}",
+      "not_found": "Partenaire non trouvé"
+    },
+    "details": {
+      "not_found": "Partenaire non trouvé",
+      "general_info": "Informations générales",
+      "name": "Nom",
+      "email": "Email",
+      "type": "Type",
+      "not_specified": "Non spécifié",
+      "untyped": "Non typé",
+      "id": "ID",
+      "address_info": "Informations d'adresse",
+      "address": "Adresse",
+      "metadata": "Métadonnées",
+      "created_at": "Créé le",
+      "created_by": "Créé par",
+      "last_updated": "Dernière mise à jour",
+      "never": "Jamais",
+      "updated_by": "Mis à jour par",
+      "na": "N/A"
+    },
+    "dialog": {
+      "add_title": "Ajouter un partenaire",
+      "edit_title": "Modifier le partenaire",
+      "delete_title": "Supprimer le partenaire",
+      "details_title": "Détails du partenaire",
+      "export_title": "Exporter les partenaires"
+    },
+    "export": {
+      "loading": "Exportation en cours...",
+      "success": "Partenaires exportés avec succès",
+      "columns": {
+        "id": "ID",
+        "name": "Nom",
+        "email": "Email",
+        "types": "Types",
+        "untyped": "Non typé",
+        "createdBy": "Créé par",
+        "createdDate": "Date de création",
+        "lastUpdatedBy": "Mis à jour par",
+        "lastUpdatedDate": "Date de mise à jour"
+      }
+    }
   },
   "categories": {
     "list": {
@@ -343,6 +465,20 @@
       "error_loading": "Erreur lors du chargement de la simulation de prix"
     }
   },
+  "priceSimulations": {
+    "errors": {
+      "load_failed": "Échec du chargement des simulations de prix",
+      "load_single_failed": "Échec du chargement de la simulation de prix",
+      "create_failed": "Échec de la création de la simulation de prix",
+      "update_failed": "Échec de la mise à jour de la simulation de prix",
+      "delete_failed": "Échec de la suppression de la simulation de prix"
+    },
+    "success": {
+      "created": "Simulation de prix créée avec succès",
+      "updated": "Simulation de prix mise à jour avec succès",
+      "deleted": "Simulation de prix supprimée avec succès"
+    }
+  },
   "movements": {
     "errors": {
       "load_failed": "Échec du chargement des mouvements",
@@ -367,10 +503,13 @@
       "title": "Mouvements de stock",
       "add_movement": "Ajouter un mouvement",
       "no_movements": "Aucun mouvement trouvé",
+      "no_partner": "Aucun partenaire",
       "columns": {
         "product_name": "Nom du produit",
         "type": "Type",
+        "partner": "Partenaire",
         "quantity": "Quantité",
+        "current_stock": "Stock actuel",
         "date": "Date",
         "notes": "Notes",
         "created_at": "Créé le",
@@ -398,6 +537,9 @@
       "type_info": "Type de mouvement de stock",
       "product": "Produit",
       "product_info": "Produit affecté par ce mouvement",
+      "partner": "Partenaire",
+      "partner_info": "Partenaire impliqué dans ce mouvement",
+      "no_partner": "Aucun partenaire associé",
       "quantity": "Quantité",
       "total_amount": "Montant total",
       "total_amount_info": "Quantité × Prix unitaire",
@@ -406,6 +548,8 @@
       "no_notes": "Aucune note fournie",
       "product_info_title": "Informations sur le produit",
       "current_unit_price": "Prix unitaire actuel",
+      "current_stock": "Stock actuel",
+      "current_stock_info": "Quantité actuellement disponible en stock",
       "recent_movements": "Mouvements récents pour ce produit",
       "qty_short": "Qté",
       "price_short": "Prix"
@@ -415,6 +559,8 @@
       "type_placeholder": "Sélectionnez le type de mouvement",
       "product": "Produit",
       "product_placeholder": "Sélectionnez un produit",
+      "partner": "Partenaire",
+      "partner_placeholder": "Sélectionnez un partenaire",
       "quantity": "Quantité",
       "quantity_placeholder": "Entrez la quantité",
       "unit_price": "Prix unitaire (EUR)",
@@ -422,6 +568,7 @@
       "notes": "Notes",
       "notes_placeholder": "Entrez des notes optionnelles",
       "product_missing": "L'identifiant du produit est manquant",
+      "partner_missing": "L'identifiant du partenaire est manquant",
       "type_missing": "Le type de mouvement est manquant",
       "out_of_stock": "Stock insuffisant. Disponible: {{available}}, Demandé: {{requested}}",
       "select_product_first": "Sélectionnez d'abord un produit",
@@ -452,6 +599,41 @@
       "created": "Produit créé avec succès",
       "updated": "Produit mis à jour avec succès",
       "deleted": "Produit supprimé avec succès"
+    },
+    "movement_stats": {
+      "title": "Statistiques des mouvements de produits",
+      "no_data": "Aucune donnée de mouvement disponible",
+      "columns": {
+        "quantity_in": "Quantité entrée",
+        "quantity_out": "Quantité sortie",
+        "difference": "Différence",
+        "amount_in": "Montant entré",
+        "amount_out": "Montant sorti",
+        "profit_loss": "Profit/Perte"
+      },
+      "cards": {
+        "total_in": "Total entrées",
+        "total_out": "Total sorties",
+        "total_in_amount": "Montant total entrées",
+        "total_out_amount": "Montant total sorties",
+        "profit_loss": "Profit/Perte",
+        "units": "unités",
+        "currency": "EUR/XAF"
+      },
+      "export": {
+        "loading": "Exportation des statistiques de mouvements en cours...",
+        "success": "Statistiques de mouvements exportées avec succès",
+        "columns": {
+          "product_id": "ID Produit",
+          "product_name": "Nom du produit",
+          "total_in": "Total entrées",
+          "total_out": "Total sorties",
+          "difference": "Différence",
+          "total_in_amount": "Montant total entrées (EUR)",
+          "total_out_amount": "Montant total sorties (EUR)",
+          "profit_loss": "Profit/Perte (EUR)"
+        }
+      }
     },
     "snapshots": {
       "list": {
@@ -622,6 +804,147 @@
       "unit_price_placeholder": "Entrez le prix unitaire",
       "category": "Catégorie",
       "category_placeholder": "Sélectionnez une catégorie"
+    }
+  },
+  "documents": {
+    "errors": {
+      "load_failed": "Échec du chargement des documents",
+      "load_single_failed": "Échec du chargement du document",
+      "create_failed": "Échec de la création du document",
+      "update_failed": "Échec de la mise à jour du document",
+      "delete_failed": "Échec de la suppression du document",
+      "load_by_type_failed": "Échec du chargement des documents par type",
+      "search_failed": "Échec de la recherche de documents"
+    },
+    "success": {
+      "created": "Document créé avec succès",
+      "updated": "Document mis à jour avec succès",
+      "deleted": "Document supprimé avec succès"
+    },
+    "pdf": {
+      "loading": "Chargement du document...",
+      "not_found": "Document non trouvé",
+      "title": "Document PDF",
+      "view": "Voir le PDF",
+      "download": "Télécharger le PDF",
+      "preview": "Aperçu PDF",
+      "preview_placeholder": "Aperçu non disponible. Cliquez sur le bouton Voir le PDF pour consulter le document."
+    },
+    "types": {
+      "invoice": "Facture",
+      "estimate": "Devis"
+    },
+    "list": {
+      "title": "Documents",
+      "columns": {
+        "reference": "Référence",
+        "type": "Type",
+        "client": "Client",
+        "date": "Date",
+        "total": "Total"
+      },
+      "add_document": "Ajouter un document",
+      "export": "Exporter",
+      "view_pdf": "Voir le PDF",
+      "no_documents": "Aucun document trouvé"
+    },
+    "create": {
+      "title": "Créer un document",
+      "general_info": "Informations générales",
+      "client_info": "Informations client",
+      "items": "Articles",
+      "add_line": "Ajouter une ligne",
+      "remove_line": "Supprimer la ligne",
+      "submit": "Créer le document",
+      "success": "Document créé avec succès",
+      "error": "Erreur lors de la création du document",
+      "notes": "Notes"
+    },
+    "detail": {
+      "title": "Détails du document",
+      "not_found": "Document non trouvé",
+      "info": "Informations du document",
+      "reference": "Référence",
+      "date": "Date",
+      "client": "Client",
+      "client_address": "Adresse",
+      "client_phone": "Téléphone",
+      "client_niu": "NIU",
+      "client_rc": "RC",
+      "notes": "Notes",
+      "lines": "Lignes du document",
+      "designation": "Désignation",
+      "quantity": "Quantité",
+      "unit_price": "Prix unitaire",
+      "total": "Total",
+      "total_ht": "Total (HT)",
+      "amount_words": "Montant en lettres",
+      "no_lines": "Aucune ligne trouvée",
+      "print": "Imprimer",
+      "created_at": "Créé le",
+      "updated_at": "Mis à jour le"
+    },
+    "edit": {
+      "title": "Modifier le document",
+      "not_found": "Document non trouvé",
+      "general_info": "Informations générales",
+      "client_info": "Informations client",
+      "items": "Articles",
+      "add_line": "Ajouter une ligne",
+      "remove_line": "Supprimer la ligne",
+      "submit": "Mettre à jour le document",
+      "success": "Document mis à jour avec succès",
+      "error": "Erreur lors de la mise à jour du document",
+      "notes": "Notes"
+    },
+    "fields": {
+      "type": "Type",
+      "reference": "Référence",
+      "date": "Date",
+      "client_name": "Nom du client",
+      "client_address": "Adresse du client",
+      "client_phone": "Téléphone du client",
+      "client_niu": "NIU du client",
+      "client_rc": "RC du client",
+      "designation": "Désignation",
+      "quantity": "Quantité",
+      "unit_price": "Prix unitaire",
+      "total_price": "Prix total",
+      "total_ht": "Total (HT)",
+      "amount_words": "Montant en lettres"
+    },
+    "export": {
+      "loading": "Exportation des documents...",
+      "success": "Documents exportés avec succès",
+      "columns": {
+        "id": "ID",
+        "reference": "Référence",
+        "type": "Type",
+        "client": "Client",
+        "date": "Date",
+        "total": "Total",
+        "createdBy": "Créé par",
+        "createdDate": "Date de création",
+        "lastUpdatedBy": "Mis à jour par",
+        "lastUpdatedDate": "Date de mise à jour"
+      }
+    }
+  },
+  "document_lines": {
+    "errors": {
+      "load_failed": "Échec du chargement des lignes de document",
+      "load_single_failed": "Échec du chargement de la ligne de document",
+      "load_by_document_failed": "Échec du chargement des lignes par document",
+      "create_failed": "Échec de la création de la ligne de document",
+      "update_failed": "Échec de la mise à jour de la ligne de document",
+      "delete_failed": "Échec de la suppression de la ligne de document",
+      "batch_create_failed": "Échec de la création des lignes de document"
+    },
+    "success": {
+      "created": "Ligne de document créée avec succès",
+      "updated": "Ligne de document mise à jour avec succès",
+      "deleted": "Ligne de document supprimée avec succès",
+      "batch_created": "Lignes de document créées avec succès"
     }
   },
   "snapshotEvents": {

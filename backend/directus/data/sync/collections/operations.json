@@ -6,7 +6,7 @@
     "position_x": 41,
     "position_y": 1,
     "options": {
-      "code": "module.exports = async function(data) {\n  const products = data.get_all_products;\n  const snapshot_event_id = data.create_snapshot_event[0];\n  \n  // Calculate stock for each product\n  const stockData = [];\n  \n  for (const product of products) {\n    stockData.push({\n      snapshot_event_id: snapshot_event_id,\n      product_id: product.current_stock,\n      quantity: quantity,\n      unit_price_eur: product.unit_price_eur\n    });\n  }\n  \n  return {\n    stock_data: stockData,\n    snapshot_count: stockData.length,\n    snapshot_event_id: snapshot_event_id,\n    trigger_source: data.snapshot_info.trigger_source\n  };\n};"
+      "code": "module.exports = async function(data) {\n  const products = data.get_all_products;\n  const snapshot_event_id = data.create_snapshot_event[0];\n  \n  // Calculate stock for each product\n  const stockData = [];\n  \n  for (const product of products) {\n    stockData.push({\n      snapshot_event_id: snapshot_event_id,\n      product_id: product.id,\n      quantity: product.current_stock,\n      unit_price_eur: product.unit_price_eur\n    });\n  }\n  \n  return {\n    stock_data: stockData,\n    snapshot_count: stockData.length,\n    snapshot_event_id: snapshot_event_id,\n    trigger_source: data.snapshot_info.trigger_source\n  };\n};"
     },
     "resolve": "cac27996-6ea1-466f-ad85-c94e083db681",
     "reject": null,
@@ -240,7 +240,7 @@
     "position_x": 3,
     "position_y": 19,
     "options": {
-      "code": "module.exports = async function(data) {\n  const today = new Date().toISOString().split('T')[0];\n  return {\n    today: today,\n    today_start: today + 'T00:00:00.000Z',\n    today_end: today + 'T23:59:59.999Z'\n  };\n};"
+      "code": "module.exports = async function(data) {\n  const now = new Date();\n  const today = now.toISOString().split('T')[0];\n  const dayNumber = now.getDate();\n\n  return {\n    today: today,\n    today_start: `${today}T00:00:00.000Z`,\n    today_end: `${today}T23:59:59.999Z`,\n    day_number: dayNumber\n  };\n};"
     },
     "resolve": "558feed1-b5de-4f51-b5ec-331fe985f491",
     "reject": null,
@@ -355,18 +355,9 @@
       "query": {
         "limit": 1,
         "filter": {
-          "_and": [
-            {
-              "date_created": {
-                "_gte": "{{$last.today_start}}"
-              }
-            },
-            {
-              "date_created": {
-                "_lte": "{{$last.today_end}}"
-              }
-            }
-          ]
+          "day(date_created)": {
+            "_eq": "{{ $last.day_number }}"
+          }
         }
       },
       "collection": "snapshot_event",

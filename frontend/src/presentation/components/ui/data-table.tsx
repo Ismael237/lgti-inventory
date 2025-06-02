@@ -7,29 +7,11 @@ import {
   createListCollection,
   ButtonGroup
 } from '@chakra-ui/react';
-import { useColorModeValue } from '@ui/chakra/color-mode';
-import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 import { useTranslation } from 'react-i18next';
+import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
+import { useColorModeValue } from '@ui/chakra/color-mode';
 import { SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText } from './chakra/select';
-
-export interface Column<T> {
-  header: string;
-  accessor: keyof T | ((row: T) => React.ReactNode);
-  isNumeric?: boolean;
-}
-
-interface DataTableProps<T> {
-  columns: Column<T>[];
-  data: T[];
-  isLoading?: boolean;
-  total?: number;
-  pageSize?: number;
-  currentPage?: number;
-  onPageChange?: (page: number) => void;
-  onPageSizeChange?: (pageSize: number) => void;
-  keyExtractor: (item: T) => string | number;
-  emptyMessage?: string;
-}
+import { ContextMenuWrapper, type ContextMenuConfig } from './context-menu';
 
 interface SelectPageSizeProps {
   pageSize: number;
@@ -50,7 +32,7 @@ const SelectPageSize = ({ pageSize, onPageSizeChange }: SelectPageSizeProps) => 
 
   return (
     <SelectRoot
-      value={[pageSize.toString()]}
+    value={[pageSize.toString()]}
       onValueChange={({ value }) => onPageSizeChange(Number(value[0]))}
       collection={pageSizeCollection}
       w={["100px", "75px"]}
@@ -69,6 +51,27 @@ const SelectPageSize = ({ pageSize, onPageSizeChange }: SelectPageSizeProps) => 
   )
 }
 
+export interface Column<T> {
+  header: string;
+  accessor: keyof T | ((row: T) => React.ReactNode);
+  isNumeric?: boolean;
+}
+
+interface DataTableProps<T> {
+  columns: Column<T>[];
+  data: T[];
+  isLoading?: boolean;
+  total?: number;
+  pageSize?: number;
+  currentPage?: number;
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (pageSize: number) => void;
+  keyExtractor: (item: T) => string | number;
+  emptyMessage?: string;
+  contextMenuConfig?: ContextMenuConfig<T>;
+  enableContextMenu?: boolean;
+}
+
 export function DataTable<T>({
   columns,
   data,
@@ -78,7 +81,9 @@ export function DataTable<T>({
   onPageChange,
   onPageSizeChange,
   keyExtractor,
-  emptyMessage
+  emptyMessage,
+  contextMenuConfig,
+  enableContextMenu = false
 }: DataTableProps<T>) {
   const { t } = useTranslation();
   const defaultEmptyMessage = t('common.noData');
@@ -95,6 +100,32 @@ export function DataTable<T>({
       return column.accessor(item);
     }
     return item[column.accessor] as React.ReactNode;
+  };
+
+  const renderRow = (item: T) => {
+    const rowContent = (
+      <Table.Row cursor="pointer" key={keyExtractor(item)}>
+        {columns.map((column, index) => (
+          <Table.Cell key={index}>
+            {renderCell(item, column)}
+          </Table.Cell>
+        ))}
+      </Table.Row>
+    );
+
+    if (enableContextMenu && contextMenuConfig) {
+      return (
+        <ContextMenuWrapper
+          key={keyExtractor(item)}
+          item={item}
+          config={contextMenuConfig}
+        >
+          {rowContent}
+        </ContextMenuWrapper>
+      );
+    }
+
+    return rowContent;
   };
 
   const handlePageSizeChange = (pageSize: number) => {
@@ -114,7 +145,7 @@ export function DataTable<T>({
     >
       <Box>
         <Table.ScrollArea>
-          <Table.Root variant="outline">
+          <Table.Root variant="outline" size="sm">
             <Table.Header>
               <Table.Row bg="bg.muted">
                 {columns.map((column, index) => (
@@ -132,15 +163,7 @@ export function DataTable<T>({
                   </Table.Cell>
                 </Table.Row>
               ) : (
-                data.map((item) => (
-                  <Table.Row key={keyExtractor(item)}>
-                    {columns.map((column, index) => (
-                      <Table.Cell key={index}>
-                        {renderCell(item, column)}
-                      </Table.Cell>
-                    ))}
-                  </Table.Row>
-                ))
+                data.map((item) => renderRow(item))
               )}
             </Table.Body>
           </Table.Root>

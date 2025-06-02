@@ -86,7 +86,7 @@ const Movement: React.FC<MovementComponentProps> = ({
       default:
         break;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [movementId, viewType]);
 
   useEffect(() => {

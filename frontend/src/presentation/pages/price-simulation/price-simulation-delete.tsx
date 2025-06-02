@@ -25,7 +25,7 @@ export const PriceSimulationDeleteContent = () => {
     if (id) {
       fetchPriceSimulationById(Number(id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  
   }, [id]);
 
   if (isLoading) {
